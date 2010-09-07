@@ -1,7 +1,0 @@
-
-To build, execute the following two steps from the command
-line within this directory:
-
-cmake ./
-make
-

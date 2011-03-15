@@ -10,10 +10,6 @@ if [ -z "$2" ] ; then
     exit 0
 fi
 
-#if [ -z "$3" ] ; then
-#    $3="YOUR-NAME-HERE"
-#fi
-
 mkdir $2$1
 cd $2$1
 

@@ -18,6 +18,7 @@ endif (${WIN32})
 MACRO(ADD_BHV BHV_NAME)
   ADD_LIBRARY(${BHV_NAME} SHARED ${BHV_NAME}.cpp)
   TARGET_LINK_LIBRARIES(${BHV_NAME} 
+    helmivp
     behaviors 
     ivpbuild 
     logic 
@@ -35,6 +36,7 @@ ENDMACRO(ADD_BHV)
 ADD_LIBRARY(BHV_SimpleWaypoint SHARED 
    BHV_SimpleWaypoint.cpp AOF_SimpleWaypoint.cpp)
 TARGET_LINK_LIBRARIES(BHV_SimpleWaypoint
+   helmivp
    behaviors 
    ivpbuild 
    logic 

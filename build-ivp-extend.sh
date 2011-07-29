@@ -7,6 +7,7 @@ PWD=`pwd`
 BUILD_DIR=./build
 
 cd ${BUILD_DIR}
+rm -rf CMakeFiles CMakeCache.txt
 cmake ..
 make
 cd ${PWD}

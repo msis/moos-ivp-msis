@@ -1,8 +1,10 @@
-##############################################################################
-# FILE:        moos-ivp-extend/CMakeLists.txt
-# DATE:        2010/09/07
-# DESCRIPTION: Top-level CMakeLists.txt file for the moos-ivp-extend project
-##############################################################################
+#===========================================================================
+# FILE:  moos-ivp-extend/CMakeLists.txt
+# DATE:  2011/09/07
+# INFO:  Top-level CMakeLists.txt file for the moos-ivp-extend project
+# NAME:  Maintained by Mike Benjamin - Original setup by Christian Convey
+#        Chris Gagner, and tips from Dave Billin
+#===========================================================================
 
 
 # We are still supporting version 2.6. However, we will be upgrade to 
@@ -15,141 +17,82 @@ PROJECT( IVP_EXTEND )
 # Set the output directories for the binary and library files
 #=============================================================================
 
-GET_FILENAME_COMPONENT(IVP_EXTEND_BIN_DIR "${CMAKE_SOURCE_DIR}/bin"
-   ABSOLUTE )
-GET_FILENAME_COMPONENT(IVP_EXTEND_LIB_DIR "${CMAKE_SOURCE_DIR}/lib"
-   ABSOLUTE )
+GET_FILENAME_COMPONENT(IVP_EXTEND_BIN_DIR "${CMAKE_SOURCE_DIR}/bin"  ABSOLUTE )
+GET_FILENAME_COMPONENT(IVP_EXTEND_LIB_DIR "${CMAKE_SOURCE_DIR}/lib"  ABSOLUTE )
 
-SET( LIBRARY_OUTPUT_PATH "${IVP_EXTEND_LIB_DIR}" CACHE PATH "" )
+SET( LIBRARY_OUTPUT_PATH      "${IVP_EXTEND_LIB_DIR}" CACHE PATH "" )
 SET( ARCHIVE_OUTPUT_DIRECTORY "${IVP_EXTEND_LIB_DIR}" CACHE PATH "" )
 SET( LIBRARY_OUTPUT_DIRECTORY "${IVP_EXTEND_LIB_DIR}" CACHE PATH "" )
 
-SET( EXECUTABLE_OUTPUT_PATH "${IVP_EXTEND_BIN_DIR}" CACHE PATH "" )
-SET( RUNTIME_OUTPUT_DIRECTORY "${IVP_EXTEND_BIN_DIR}" CACHE PATH "" )
+SET( EXECUTABLE_OUTPUT_PATH    "${IVP_EXTEND_BIN_DIR}" CACHE PATH "" )
+SET( RUNTIME_OUTPUT_DIRECTORY "${IVP_EXTEND_BIN_DIR}"  CACHE PATH "" )
 
 #=============================================================================
-# Find the MOOS and IvP Directories/Header files
+# Find the MOOS and IvP Directories
 #=============================================================================
-# Using absolute pathnames seems to work better then relative, because 
-# you're never sure from which directory a relative path will be 
-# employed in commands such as LINK_DIRECTORIES() ...
 
-# At the moment, we expect the moos-ivp repository to be up one directory
-SET(MOOSIVP_DIR "../moos-ivp/" CACHE PATH "Path to the MOOS-IvP directory")
-SET(MOOSIVP_DIRR "../../moos-ivp/" CACHE PATH "Path to the MOOS-IvP directory")
+# Search for the moos-ivp folder
+find_path( MOOSIVP_SOURCE_TREE_BASE
+           NAMES build-ivp.sh build-moos.sh configure-ivp.sh
+           PATHS "../moos-ivp" "../../moos-ivp" "../../moos-ivp/trunk/" "../moos-ivp/trunk/"
+           DOC "Base directory of the MOOS-IvP source tree"
+           NO_DEFAULT_PATH
+)
+
+if (NOT MOOSIVP_SOURCE_TREE_BASE)
+    message("Please set MOOSIVP_SOURCE_TREE_BASE to the location of the \"moos-ivp\" folder")
+    return()
+endif()
+
 
 IF( ${WIN32} )
   # Windows does not have symbolic links. To handle this, subversion creates 
   # a text file that represents the symbolic link with the destination of the 
   # link inside the file. Here we extract the destination of the MOOS directory 
   # link and use it set a variable.
-  FIND_FILE(MOOS_LINK MOOS ${MOOSIVP_DIR}/trunk ${MOOSIVP_DIR}/)
+  FIND_FILE(MOOS_LINK MOOS ${MOOSIVP_SOURCE_TREE_BASE}/trunk ${MOOSIVP_SOURCE_TREE_BASE}/)
   FILE(READ ${MOOS_LINK} MOOS_LINK_DIR OFFSET 5)
 
   # For Windows, use the following paths
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_A "${MOOSIVP_DIR}/trunk/${MOOS_LINK_DIR}" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_A  "${MOOSIVP_DIR}/trunk/" ABSOLUTE)
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_B "${MOOSIVP_DIR}/${MOOS_LINK_DIR}" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_B  "${MOOSIVP_DIR}/" ABSOLUTE)
-
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_C "${MOOSIVP_DIRR}/trunk/${MOOS_LINK_DIR}" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_C  "${MOOSIVP_DIRR}/trunk/" ABSOLUTE)
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_D "${MOOSIVP_DIRR}/${MOOS_LINK_DIR}" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_D  "${MOOSIVP_DIRR}/" ABSOLUTE)
+   GET_FILENAME_COMPONENT(MOOS_BASE_DIR "${MOOSIVP_SOURCE_TREE_BASE}/${MOOS_LINK_DIR}" ABSOLUTE)
 
 ELSE( ${WIN32} )
    # For Linux and Apple, use the following paths
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_A "${MOOSIVP_DIR}/trunk/MOOS" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_A  "${MOOSIVP_DIR}/trunk/" ABSOLUTE)
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_B "${MOOSIVP_DIR}/MOOS" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_B  "${MOOSIVP_DIR}/" ABSOLUTE)
-
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_C "${MOOSIVP_DIRR}/trunk/MOOS" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_C  "${MOOSIVP_DIRR}/trunk/" ABSOLUTE)
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR_D "${MOOSIVP_DIRR}/MOOS" ABSOLUTE)
-   GET_FILENAME_COMPONENT(IVP_BASE_DIR_D  "${MOOSIVP_DIRR}/" ABSOLUTE)
+   GET_FILENAME_COMPONENT(MOOS_BASE_DIR "${MOOSIVP_SOURCE_TREE_BASE}/MOOS" ABSOLUTE)
 
 ENDIF( ${WIN32} )
+
 
 #-----------------------------------------------------------------------------
 # Specify where to find MOOS's headers and libraries...
 #-----------------------------------------------------------------------------
 
-SET(MOOS_LIB_DIR
-   ${MOOS_BASE_DIR_A}/MOOSBin
-   ${MOOS_BASE_DIR_B}/MOOSBin
-   ${MOOS_BASE_DIR_C}/MOOSBin
-   ${MOOS_BASE_DIR_D}/MOOSBin
-   )
+SET(MOOS_LIB_DIR  ${MOOS_BASE_DIR}/MOOSBin)
 
 LINK_DIRECTORIES(${MOOS_LIB_DIR})
 
 # No harm in giving all IvP software access to MOOS's include libraries.
-# MOOS and IvP both have a copy of the 'newmat' library (different versions),
-# but we don't seem to need to include MOOS's copy in our include path.
 SET(MOOS_INCLUDE_DIRS
-   ${MOOS_BASE_DIR_A}/Essentials
-   ${MOOS_BASE_DIR_A}/Core
-   ${MOOS_BASE_DIR_A}/Essentials/MOOSUtilityLib
-   ${MOOS_BASE_DIR_A}/Core/MOOSLIB
-   ${MOOS_BASE_DIR_A}/Core/MOOSGenLib
-
-   ${MOOS_BASE_DIR_B}/Essentials
-   ${MOOS_BASE_DIR_B}/Core
-   ${MOOS_BASE_DIR_B}/Essentials/MOOSUtilityLib
-   ${MOOS_BASE_DIR_B}/Core/MOOSLIB
-   ${MOOS_BASE_DIR_B}/Core/MOOSGenLib
-
-   ${MOOS_BASE_DIR_C}/Essentials
-   ${MOOS_BASE_DIR_C}/Core
-   ${MOOS_BASE_DIR_C}/Essentials/MOOSUtilityLib
-   ${MOOS_BASE_DIR_C}/Core/MOOSLIB
-   ${MOOS_BASE_DIR_C}/Core/MOOSGenLib
-
-   ${MOOS_BASE_DIR_D}/Essentials
-   ${MOOS_BASE_DIR_D}/Core
-   ${MOOS_BASE_DIR_D}/Essentials/MOOSUtilityLib
-   ${MOOS_BASE_DIR_D}/Core/MOOSLIB
-   ${MOOS_BASE_DIR_D}/Core/MOOSGenLib
+   ${MOOS_BASE_DIR}/Essentials
+   ${MOOS_BASE_DIR}/Core
+   ${MOOS_BASE_DIR}/Essentials/MOOSUtilityLib
+   ${MOOS_BASE_DIR}/Core/MOOSLIB
+   ${MOOS_BASE_DIR}/Core/MOOSGenLib
 )
 
 INCLUDE_DIRECTORIES(${MOOS_INCLUDE_DIRS})
-   
+
+
 #-----------------------------------------------------------------------------
 # Specify where to find IvP's headers and libraries...
 #-----------------------------------------------------------------------------
 
-FILE(GLOB IVP_INCLUDE_DIRS 
-   ${IVP_BASE_DIR_A}/ivp/src/lib_* 
-   ${IVP_BASE_DIR_A}/ivp/src/lib_fltk-1.1.10/bin
-
-   ${IVP_BASE_DIR_B}/ivp/src/lib_* 
-   ${IVP_BASE_DIR_B}/ivp/src/lib_fltk-1.1.10/bin
-
-   ${IVP_BASE_DIR_C}/ivp/src/lib_* 
-   ${IVP_BASE_DIR_C}/ivp/src/lib_fltk-1.1.10/bin
-
-   ${IVP_BASE_DIR_D}/ivp/src/lib_* 
-   ${IVP_BASE_DIR_D}/ivp/src/lib_fltk-1.1.10/bin
-   )
-
+FILE(GLOB IVP_INCLUDE_DIRS ${MOOSIVP_SOURCE_TREE_BASE}/ivp/src/lib_* )
 INCLUDE_DIRECTORIES(${IVP_INCLUDE_DIRS})
 
-FILE(GLOB IVP_LIBRARY_DIRS 
-   ${IVP_BASE_DIR_A}/lib
-   ${IVP_BASE_DIR_A}/lib_fltk-1.1.10
-
-   ${IVP_BASE_DIR_B}/lib 
-   ${IVP_BASE_DIR_B}/lib_fltk-1.1.10
-
-   ${IVP_BASE_DIR_C}/lib 
-   ${IVP_BASE_DIR_C}/lib_fltk-1.1.10
-
-   ${IVP_BASE_DIR_D}/lib 
-   ${IVP_BASE_DIR_D}/lib_fltk-1.1.10
-   )
-
+FILE(GLOB IVP_LIBRARY_DIRS ${MOOSIVP_SOURCE_TREE_BASE}/lib )
 LINK_DIRECTORIES(${IVP_LIBRARY_DIRS})
+
 
 #=============================================================================
 # Specify Compiler Flags
@@ -207,5 +150,3 @@ ADD_SUBDIRECTORY( src )
 ##############################################################################
 #                           END of CMakeLists.txt
 ##############################################################################
-
-

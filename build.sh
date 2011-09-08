@@ -1,5 +1,7 @@
 #!/bin/bash
 
+PWD=`pwd`
+BUILD_DIR=./build
 HELP="no"
 CLEAN="no"
 
@@ -54,32 +56,26 @@ if [ "${HELP}" = "yes" ]; then
     exit 0;
 fi
 
-#-------------------------------------------------------------------
-#  Part 3: Invoke the call to make in the build directory
-#-------------------------------------------------------------------
-
-PWD=`pwd`
-BUILD_DIR=./build
-
-cd ${BUILD_DIR}
-cmake ..
-make $@
-
 
 #-------------------------------------------------------------------
-#  Part 4: Handle a request to for make clean. Most cleaning handled
+#  Part 3: Handle a request to for make clean. Most cleaning handled
 #          by the invocation of make clean, but some extras are done.
 #-------------------------------------------------------------------
 
 if [ "${CLEAN}" = "yes" ]; then
-    rm -rf CMakeCache.txt CMakeFiles/ src/ Makefile cmake_install.cmake    
+    cd ${BUILD_DIR}
+    rm -rf CMakeFiles/ CMakeCache.txt Makefile src/ cmake_install.cmake
+    cd ${PWD}
     exit 0;
 fi
 
 #-------------------------------------------------------------------
-#  Part 5: Go back to where we started from
+#  Part 4: Invoke the call to make in the build directory
 #-------------------------------------------------------------------
 
+cd ${BUILD_DIR}
+cmake ..
+make $@
 cd ${PWD}
 
 

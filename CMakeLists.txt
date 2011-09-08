@@ -3,7 +3,7 @@
 # DATE:  2011/09/07
 # INFO:  Top-level CMakeLists.txt file for the moos-ivp-extend project
 # NAME:  Maintained by Mike Benjamin - Original setup by Christian Convey
-#        Chris Gagner, and tips from Dave Billin
+#        Chris Gagner, and tips borrowed from Dave Billin
 #===========================================================================
 
 
@@ -28,7 +28,7 @@ SET( EXECUTABLE_OUTPUT_PATH    "${IVP_EXTEND_BIN_DIR}" CACHE PATH "" )
 SET( RUNTIME_OUTPUT_DIRECTORY "${IVP_EXTEND_BIN_DIR}"  CACHE PATH "" )
 
 #=============================================================================
-# Find the MOOS and IvP Directories
+# Find the "moos-ivp" base directory
 #=============================================================================
 
 # Search for the moos-ivp folder
@@ -40,10 +40,15 @@ find_path( MOOSIVP_SOURCE_TREE_BASE
 )
 
 if (NOT MOOSIVP_SOURCE_TREE_BASE)
-    message("Please set MOOSIVP_SOURCE_TREE_BASE to the location of the \"moos-ivp\" folder")
+    message("Please set MOOSIVP_SOURCE_TREE_BASE to  ")
+    message("the location of the \"moos-ivp\" folder ")
     return()
 endif()
 
+#=============================================================================
+# Find the "MOOS" base directory handling the symlink issue. The moos-ivp
+# tree includes MOOS as a subdir but typically MOOS is a sybolic link.
+#=============================================================================
 
 IF( ${WIN32} )
   # Windows does not have symbolic links. To handle this, subversion creates 
@@ -63,9 +68,9 @@ ELSE( ${WIN32} )
 ENDIF( ${WIN32} )
 
 
-#-----------------------------------------------------------------------------
+#=============================================================================
 # Specify where to find MOOS's headers and libraries...
-#-----------------------------------------------------------------------------
+#=============================================================================
 
 SET(MOOS_LIB_DIR  ${MOOS_BASE_DIR}/MOOSBin)
 
@@ -83,9 +88,9 @@ SET(MOOS_INCLUDE_DIRS
 INCLUDE_DIRECTORIES(${MOOS_INCLUDE_DIRS})
 
 
-#-----------------------------------------------------------------------------
+#=============================================================================
 # Specify where to find IvP's headers and libraries...
-#-----------------------------------------------------------------------------
+#=============================================================================
 
 FILE(GLOB IVP_INCLUDE_DIRS ${MOOSIVP_SOURCE_TREE_BASE}/ivp/src/lib_* )
 INCLUDE_DIRECTORIES(${IVP_INCLUDE_DIRS})

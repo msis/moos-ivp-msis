@@ -64,7 +64,9 @@ fi
 
 if [ "${CLEAN}" = "yes" ]; then
     cd ${BUILD_DIR}
+    printf "Cleaning the project....."
     rm -rf CMakeFiles/ CMakeCache.txt Makefile src/ cmake_install.cmake
+    printf "Done.\n"
     cd ${PWD}
     exit 0;
 fi

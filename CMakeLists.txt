@@ -136,14 +136,6 @@ ELSE( ${WIN32} )
     
    ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 
-  IF( ${APPLE} )
-    # FLTK is not supported in 64-bit for Mac OS X. Until it is supported
-    # we will force all applications to build in 32-bit. Libtiff must also
-    # be compiled in 32-bit. 
-    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -m32")
-    SET(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m32")
-  ENDIF( ${APPLE} )
-
 ENDIF( ${WIN32} )
 
 

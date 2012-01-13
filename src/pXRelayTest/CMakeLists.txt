@@ -18,6 +18,7 @@ endif (${WIN32})
 
 SET(SRC
    Relayer.cpp  
+   Relayer_Info.cpp  
    main.cpp
 )  
 

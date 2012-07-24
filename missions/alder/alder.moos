@@ -54,7 +54,8 @@ ProcessConfig = pHelmIvP
   Domain     = course:0:359:360
   Domain     = speed:0:4:21
 
-  IVP_BEHAVIOR_DIR = /Users/mikerb/dir_one
+  IVP_BEHAVIOR_DIR = /Users/mikerb/Research/moos-ivp-extend/trunk/lib
+  IVP_BEHAVIOR_DIR = ../moos-ivp-extend/trunk/lib
 //  IVP_BEHAVIOR_DIR = /Users/mikerb/dir_two
 
   ACTIVE_START = false

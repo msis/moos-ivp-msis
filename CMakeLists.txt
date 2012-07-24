@@ -1,16 +1,12 @@
 #===========================================================================
 # FILE:  moos-ivp-extend/CMakeLists.txt
-# DATE:  2011/09/07
+# DATE:  2012/07/24
 # INFO:  Top-level CMakeLists.txt file for the moos-ivp-extend project
 # NAME:  Maintained by Mike Benjamin - Original setup by Christian Convey
 #        Chris Gagner, and tips borrowed from Dave Billin
 #===========================================================================
 
-
-# We are still supporting version 2.6. However, we will be upgrade to 
-# CMake 2.8 soon. Upgrade to version 2.8 if you can.
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
-
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
 PROJECT( IVP_EXTEND )
 
 #=============================================================================
@@ -26,6 +22,12 @@ SET( LIBRARY_OUTPUT_DIRECTORY "${IVP_EXTEND_LIB_DIR}" CACHE PATH "" )
 
 SET( EXECUTABLE_OUTPUT_PATH    "${IVP_EXTEND_BIN_DIR}" CACHE PATH "" )
 SET( RUNTIME_OUTPUT_DIRECTORY "${IVP_EXTEND_BIN_DIR}"  CACHE PATH "" )
+
+#=============================================================================
+# Find MOOS
+#=============================================================================
+find_package(MOOS 10.0)
+INCLUDE_DIRECTORIES(${MOOS_INCLUDE_DIRS})
 
 #=============================================================================
 # Find the "moos-ivp" base directory
@@ -46,49 +48,6 @@ if (NOT MOOSIVP_SOURCE_TREE_BASE)
 endif()
 
 #=============================================================================
-# Find the "MOOS" base directory handling the symlink issue. The moos-ivp
-# tree includes MOOS as a subdir but typically MOOS is a sybolic link.
-#=============================================================================
-
-IF( ${WIN32} )
-  # Windows does not have symbolic links. To handle this, subversion creates 
-  # a text file that represents the symbolic link with the destination of the 
-  # link inside the file. Here we extract the destination of the MOOS directory 
-  # link and use it set a variable.
-  FIND_FILE(MOOS_LINK MOOS ${MOOSIVP_SOURCE_TREE_BASE}/trunk ${MOOSIVP_SOURCE_TREE_BASE}/)
-  FILE(READ ${MOOS_LINK} MOOS_LINK_DIR OFFSET 5)
-
-  # For Windows, use the following paths
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR "${MOOSIVP_SOURCE_TREE_BASE}/${MOOS_LINK_DIR}" ABSOLUTE)
-
-ELSE( ${WIN32} )
-   # For Linux and Apple, use the following paths
-   GET_FILENAME_COMPONENT(MOOS_BASE_DIR "${MOOSIVP_SOURCE_TREE_BASE}/MOOS" ABSOLUTE)
-
-ENDIF( ${WIN32} )
-
-
-#=============================================================================
-# Specify where to find MOOS's headers and libraries...
-#=============================================================================
-
-SET(MOOS_LIB_DIR  ${MOOS_BASE_DIR}/MOOSBin)
-
-LINK_DIRECTORIES(${MOOS_LIB_DIR})
-
-# No harm in giving all IvP software access to MOOS's include libraries.
-SET(MOOS_INCLUDE_DIRS
-   ${MOOS_BASE_DIR}/Essentials
-   ${MOOS_BASE_DIR}/Core
-   ${MOOS_BASE_DIR}/Essentials/MOOSUtilityLib
-   ${MOOS_BASE_DIR}/Core/MOOSLIB
-   ${MOOS_BASE_DIR}/Core/MOOSGenLib
-)
-
-INCLUDE_DIRECTORIES(${MOOS_INCLUDE_DIRS})
-
-
-#=============================================================================
 # Specify where to find IvP's headers and libraries...
 #=============================================================================
 
@@ -97,7 +56,6 @@ INCLUDE_DIRECTORIES(${IVP_INCLUDE_DIRS})
 
 FILE(GLOB IVP_LIBRARY_DIRS ${MOOSIVP_SOURCE_TREE_BASE}/lib )
 LINK_DIRECTORIES(${IVP_LIBRARY_DIRS})
-
 
 #=============================================================================
 # Specify Compiler Flags
@@ -138,12 +96,7 @@ ELSE( ${WIN32} )
 
 ENDIF( ${WIN32} )
 
-
 #=============================================================================
 # Add Subdirectories
 #=============================================================================
 ADD_SUBDIRECTORY( src )
-
-##############################################################################
-#                           END of CMakeLists.txt
-##############################################################################

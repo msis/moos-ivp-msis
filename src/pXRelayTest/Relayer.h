@@ -23,7 +23,7 @@
 #ifndef P_RELAY_VAR_HEADER
 #define P_RELAY_VAR_HEADER
 
-#include "MOOSLib.h"
+#include "MOOS/libMOOS/MOOSLib.h"
 
 class Relayer : public CMOOSApp
 {

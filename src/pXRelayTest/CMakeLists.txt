@@ -25,6 +25,6 @@ SET(SRC
 ADD_EXECUTABLE(pXRelayTest ${SRC})
 
 TARGET_LINK_LIBRARIES(pXRelayTest
-   MOOS
+   ${MOOS_LIBRARIES}
    mbutil
    ${SYSTEM_LIBS} )

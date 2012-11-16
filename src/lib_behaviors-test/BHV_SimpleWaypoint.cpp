@@ -104,8 +104,6 @@ void BHV_SimpleWaypoint::onIdleState()
 void BHV_SimpleWaypoint::postViewPoint(bool viewable) 
 {
   m_nextpt.set_label(m_us_name + "'s next waypoint");
-  m_nextpt.set_type("waypoint");
-  m_nextpt.set_source(m_descriptor);
   
   string point_spec;
   if(viewable)

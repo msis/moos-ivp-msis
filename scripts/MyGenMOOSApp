@@ -55,7 +55,7 @@ class ${1} : public CMOOSApp
   bool Iterate();
   bool OnConnectToServer();
   bool OnStartUp();
-  bool RegisterVariables();
+  void RegisterVariables();
 
 protected:
   // insert local vars here
@@ -130,7 +130,7 @@ cat >> ${1}.cpp <<EOF
 
 #include <list>
 #include <iterator>
-#include "MBUtil.h"
+#include "MBUtils.h"
 #include "${1}.h"
 
 using namespace std;

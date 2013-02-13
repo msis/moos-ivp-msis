@@ -25,6 +25,7 @@ ADD_EXECUTABLE($2$1 \${SRC})
 
 TARGET_LINK_LIBRARIES($2$1
    \${MOOS_LIBRARIES}
+   mbutil
    m
    pthread)
 
@@ -46,17 +47,18 @@ cat >> ${1}.h <<EOF
 
 class ${1} : public CMOOSApp
 {
-public:
-	${1}();
-	virtual ~${1}();
+ public:
+  ${1}();
+  virtual ~${1}();
 
-	bool OnNewMail(MOOSMSG_LIST &NewMail);
-	bool Iterate();
-	bool OnConnectToServer();
-	bool OnStartUp();
+  bool OnNewMail(MOOSMSG_LIST &NewMail);
+  bool Iterate();
+  bool OnConnectToServer();
+  bool OnStartUp();
+  bool RegisterVariables();
 
 protected:
-	// insert local vars here
+  // insert local vars here
 };
 
 #endif 
@@ -126,8 +128,13 @@ cat >> ${1}.cpp <<EOF
 /*    DATE:                                                 */
 /************************************************************/
 
+#include <list>
 #include <iterator>
+#include "MBUtil.h"
 #include "${1}.h"
+
+using namespace std;
+
 //---------------------------------------------------------
 // Constructor
 
@@ -161,11 +168,7 @@ bool ${1}::OnNewMail(MOOSMSG_LIST &NewMail)
 
 bool ${1}::OnConnectToServer()
 {
-   // register for variables here
-   // possibly look at the mission file?
-   // m_MissionReader.GetConfigurationParam("Name", <string>);
-   // m_Comms.Register("VARNAME", is_float(int));
-	
+   RegisterVariables();
    return(true);
 }
 
@@ -181,12 +184,38 @@ bool ${1}::Iterate()
 
 //---------------------------------------------------------
 // Procedure: OnStartUp()
+// happens before connection is open
 
 bool ${1}::OnStartUp()
 {
-   // happens before connection is open
-	
-   return(true);
+  list<string> sParams;                                                                                         
+  if(m_MissionReader.GetConfiguration(GetAppName(), sParams)) {         
+    list<string>::iterator p;                                           
+    for(p=sParams.begin(); p!=sParams.end(); p++) {                 
+      string original_line = *p;                                    
+      string line = *p;                                    
+      string param = stripBlankEnds(toupper(biteString(line, '=')));  
+      string value = stripBlankEnds(line);
+                                                           
+      if(param == "FOO") {                                      
+        //handled                                               
+      }                                                             
+      else if(param == "BAR") {                                  
+        //handled                                     
+      }                            
+    }
+  } 
+
+  RegisterVariables();	
+  return(true);
+}
+
+//---------------------------------------------------------
+// Procedure: RegisterVariables
+
+void ${1}::RegisterVariables()
+{
+  // Register("FOOBAR", 0);
 }
 
 EOF

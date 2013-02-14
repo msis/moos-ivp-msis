@@ -17,8 +17,6 @@ INCLUDE_DIRECTORIES(${LOCAL_LIBRARY_DIRS})
 ADD_SUBDIRECTORY(lib_behaviors-test)
 ADD_SUBDIRECTORY(pXRelayTest)
 ADD_SUBDIRECTORY(pExampleApp)
-ADD_SUBDIRECTORY(pOdometry)
-ADD_SUBDIRECTORY(pTester)
 
 ##############################################################################
 #                           END of CMakeLists.txt

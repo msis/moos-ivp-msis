@@ -154,6 +154,9 @@ IvPFunction *BHV_SimpleWaypoint::onRunState()
     ipf = buildFunctionWithReflector();
   if(ipf == 0) 
     postWMessage("Problem Creating the IvP Function");
+
+  if(ipf)
+    ipf->setPWT(m_priority_wt);
   
   return(ipf);
 }

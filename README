@@ -1,6 +1,6 @@
 ##############################################################################
 # FILE:        moos-ivp-extend/README
-# DATE:        2011/09/07
+# DATE:        2014/01/02
 # DESCRIPTION: Contains important information regarding the moos-ivp-extend
 #              repository.
 ##############################################################################
@@ -22,7 +22,6 @@ build            - Directory for build object files
 build.sh         - Script for building moos-ivp-extend
 CMakeLists.txt   - CMake configuration file for the project
 data             - Directory for storing data
-docs             - Directory for storing documents
 lib              - Directory for generated library files
 missions         - Directory for mission files
 README           - Contains helpful information - (this file).

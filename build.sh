@@ -35,9 +35,10 @@ done
 #  Part 2: Invoke the call to make in the build directory
 #-------------------------------------------------------------------
 
-cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ./
-
 cd build
+
+cmake -DCMAKE_BUILD_TYPE=${BUILD_TYPE} ../
+
 make ${CMD_LINE_ARGS}
 cd ${INVOCATION_ABS_DIR}
 

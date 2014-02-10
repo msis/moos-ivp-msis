@@ -30,29 +30,6 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-
-  list<string> my_strings;
-  my_strings.push_back("apples");
-  my_strings.push_back("watermelons");
-  my_strings.push_back("pears");
-  my_strings.push_back("blackberry");
-
-  list<string>::iterator p;
-  for(p=my_strings.begin(); p!=my_strings.end(); ) {
-    string str = *p;
-    if(str.length() > 6) {
-      cout << "Removing long fruit: " << str << endl;
-      p = my_strings.erase(p);
-    }
-    else
-      ++p;
-  }
-  cout << "List size: " << my_strings.size() << endl;
-
-  exit(0);
-
-
-
   string mission_file;
   string run_command = argv[0];
   string incoming_var;

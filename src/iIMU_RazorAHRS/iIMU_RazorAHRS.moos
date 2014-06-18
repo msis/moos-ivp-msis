@@ -1,0 +1,19 @@
+//------------------------------------------------
+// iIMU_RazorAHRS config block
+
+ProcessConfig = iIMU_RazorAHRS
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   SERIAL_PORT = /dev/ttyUSB0
+
+   MODE = ANGLES_CALIBRATED_SENSOR_DATA
+		   // RAW_SENSOR_DATA
+		   // CALIBRATED_SENSOR_DATA
+		   // ANGLES_CALIBRATED_SENSOR_DATA
+		   // ANGLES_RAW_SENSOR_DATA
+		   // ANGLES
+   
+}
+

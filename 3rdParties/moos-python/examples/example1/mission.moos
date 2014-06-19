@@ -1,0 +1,314 @@
+
+ServerHost = localhost
+ServerPort = 9000
+Simulator  = true
+Community  = seafox
+
+LatOrigin  = 47.6947081
+LongOrigin = -122.6104348
+
+// Antler configuration  block
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB 				@ NewConsole = true
+  //Run = iEtherCan2			
+  Run = uXMS 				@ NewConsole = true 
+  //Run = iFurunoSC30_2k		@ NewConsole = true 
+  //Run = pLogger
+  //Run = testSeaFox          @ NewConsole = true
+}
+
+/------------------------------------------
+// pLogger config block
+
+ProcessConfig = pLogger
+{
+  AppTick   = 100
+  CommsTick = 100
+
+  File            = Op1
+  PATH            = ./Log/
+  SyncLog         = true
+  AsyncLog        = false
+  FileTimeStamp   = true
+  WildCardLogging = true
+	Log = PGN_127506 @ 1
+	Log = PGN_127508 @ 1
+	Log = PGN_065280 @ 1
+	Log = PGN_126992 @ 1
+	Log = PGN_127250 @ 1
+	Log = PGN_127251 @ 1
+	Log = PGN_127257 @ 1
+	Log = PGN_127258 @ 1
+	Log = PGN_129025 @ 1
+	Log = PGN_129026 @ 1
+	Log = PGN_129029 @ 1
+	Log = PGN_129033 @ 1
+    Log = SystemTime_Year @ 1
+    Log = SystemTime_Date @ 1
+    Log = SystemTime_Time	 @ 1
+    Log = SystemTime_Sid	 @ 1
+    
+    // PGN127250 VesselHeading
+    Log = VesselHeading_SID @ 1
+    Log = VesselHeading_HeadingSensorReading @ 1
+    Log = VesselHeading_Deviation @ 1
+    Log = VesselHeading_Variation @ 1
+    Log = VesselHeading_HeadingSensorReference @ 1
+    Log = VesselHeading_Degrees @ 1
+    Log = VesselHeading_DegreesLimited @ 1
+
+    // PGN127251 RateOfTurn
+    
+    Log = RateOfTurn_Sid @ 1
+    Log = RateOfTurn_RateOfTurn @ 1
+    Log = RateOfTurn_Degrees @ 1
+    Log = RateOfTurn_DegreesLimited @ 1
+    
+    // PGN127257 Attitude
+    Log = Attitude_SID @ 1
+    Log = Attitude_Yaw @ 1
+    Log = Attitude_Pitch @ 1
+    Log = Attitude_PitchDegrees @ 1
+    Log = Attitude_PitchDegreesLimited @ 1
+    Log = Attitude_Roll @ 1
+    Log = Attitude_RollDegrees @ 1
+    Log = Attitude_RollDegreesLimited @ 1
+
+    
+    // PGN127258 Magnetic Variation
+    Log = MagneticVariation_SID @ 1
+    Log = MagneticVariation_VariationSource @ 1
+    Log = MagneticVariation_AgeOfService @ 1
+    Log = MagneticVariation_Variation @ 1
+    
+    // PGN129025 Position Rapid Update
+    Log = PositionRapidUpdate_Latitude @ 1
+    Log = PositionRapidUpdate_Longitude @ 1
+    Log = PositionRapidUpdate_LatitudeDouble @ 1
+    Log = PositionRapidUpdate_LongitudeDouble @ 1
+    
+    
+    // PGN129026 Cog Sog Rapid Update
+    Log = CogSogRapidUpdate_SID @ 1
+    Log = CogSogRapidUpdate_CogReference @ 1
+    Log = CogSogRapidUpdate_COG @ 1
+    Log = CogSogRapidUpdate_SOG @ 1
+    Log = CogSogRapidUpdate_CogDouble @ 1
+    Log = CogSogRapidUpdate_SogKnots @ 1
+    Log = CogSogRapidUpdate_VelocityNorth @ 1
+    Log = CogSogRapidUpdate_VelocityEast @ 1
+				
+    Log = Autopilot_TestThrottle	 @ 1
+    Log = Autopilot_TestRudder	 @ 1
+    Log = Autopilot_TestEngine	 @ 1
+}
+
+ProcessConfig = uXMS
+{
+	AppTick = 100
+	CommsTick = 100
+	
+	// from sat parser
+	//VAR = SystemTime_Year
+	
+	// from ether can 
+	//VAR = PGN_127506 // bat
+	//VAR = PGN_127508 // bat
+	//VAR = PGN_065280 // sat heave 					proprietary
+	//VAR = PGN_126992 // sat systime 				single frame
+	//VAR = PGN_127250 // sat heading 				single frame
+	//VAR = PGN_127251 // sat	rate of turn 			single frame 
+	//VAR = PGN_127257 // sat	attitude 				single frame
+	//VAR = PGN_127258 // sat magnetic var 			single frame
+	VAR = PGN_129025 // sat position,rapid update 	single frame
+	//VAR = PGN_129026 // sat cog sog rapid update 	single frame 
+	//VAR = PGN_129029 // sat gnss position data  	multi frame
+	//VAR = PGN_129033 // sat	time and date 			single frame 
+	
+	// NameUsedInCodeBehindDoNotChange = ChangeableNameThatWillBeInMOOSDB 
+		
+	// PGN126992 System Time
+    VAR = SystemTime_Year
+    VAR = SystemTime_Date
+    VAR = SystemTime_Time	
+    VAR = SystemTime_Sid	
+    
+    // PGN127250 VesselHeading
+    VAR = VesselHeading_SID
+    VAR = VesselHeading_HeadingSensorReading
+    VAR = VesselHeading_Deviation
+    VAR = VesselHeading_Variation
+    VAR = VesselHeading_HeadingSensorReference
+    VAR = VesselHeading_Degrees
+    VAR = VesselHeading_DegreesLimited
+
+    // PGN127251 RateOfTurn
+    
+    VAR = RateOfTurn_Sid
+    VAR = RateOfTurn_RateOfTurn
+    VAR = RateOfTurn_Degrees
+    VAR = RateOfTurn_DegreesLimited
+    
+    // PGN127257 Attitude
+    VAR = Attitude_SID
+    VAR = Attitude_Yaw
+    VAR = Attitude_Pitch
+    VAR = Attitude_PitchDegrees
+    VAR = Attitude_PitchDegreesLimited
+    VAR = Attitude_Roll
+    VAR = Attitude_RollDegrees
+    VAR = Attitude_RollDegreesLimited
+
+    
+    // PGN127258 Magnetic Variation
+    VAR = MagneticVariation_SID
+    VAR = MagneticVariation_VariationSource
+    VAR = MagneticVariation_AgeOfService
+    VAR = MagneticVariation_Variation
+    
+    // PGN129025 Position Rapid Update
+    VAR = PositionRapidUpdate_Latitude
+    VAR = PositionRapidUpdate_Longitude
+    VAR = PositionRapidUpdate_LatitudeDouble
+    VAR = PositionRapidUpdate_LongitudeDouble
+    
+    
+    // PGN129026 Cog Sog Rapid Update
+    VAR = CogSogRapidUpdate_SID
+    VAR = CogSogRapidUpdate_CogReference
+    VAR = CogSogRapidUpdate_COG
+    VAR = CogSogRapidUpdate_SOG
+    VAR = CogSogRapidUpdate_CogDouble
+    VAR = CogSogRapidUpdate_SogKnots
+    VAR = CogSogRapidUpdate_VelocityNorth
+    VAR = CogSogRapidUpdate_VelocityEast
+			
+				
+	REFRESH_MODE = 	events
+	DISPLAY_VIRGINS = true
+	DISPLAY_SOURCE = false
+	//DISPLAY_EMPTY_STRINGS = true
+	DISPLAY_TIME = true
+	DISPLAY_COMMUNITY = true
+		
+    VAR = Autopilot_TestThrottle	
+    VAR = Autopilot_TestRudder	
+    VAR = Autopilot_TestEngine	
+	
+}
+
+//------------------------------------------
+//Sim config block
+ProcessConfig = iEtherCan2
+{
+	AppTick		= 1000 
+	CommsTick	= 10
+  
+	// RUN_TYPE is mandatory. Must be "file" or "live"
+	RUN_TYPE	= live
+
+	// SIM_FILE is the input file for RUN_TYPE of FILE.
+	SIM_FILE = NMEA0183test.txt
+
+	// verbose will turn on printed output. Defaults to false
+	verbose = true
+}
+
+//------------------------------------------
+//iFurunoSC30_2k config block
+ProcessConfig = iFurunoSC30_2k
+{
+	AppTick	= 100
+	CommsTick	= 100
+  
+	// RUN_TYPE is mandatory. Must be "file" or "live"
+	RUN_TYPE	= live
+
+	// SIM_FILE is the input file for RUN_TYPE of FILE.
+	SIM_FILE = NMEA0183test.txt
+
+	// verbose will turn on printed output. Defaults to false
+	verbose = true
+	
+	
+	
+	// NameUsedInCodeBehindDoNotChange = ChangeableNameThatWillBeInMOOSDB 
+		
+	// PGN126992 System Time
+    SystemTime_Year = SystemTime_Year
+    SystemTime_Date = SystemTime_Date
+    SystemTime_Time = SystemTime_Time	
+    SystemTime_Sid = SystemTime_Sid	
+    
+    // PGN127250 VesselHeading
+    VesselHeading_SID = VesselHeading_SID
+    VesselHeading_HeadingSensorReading = VesselHeading_HeadingSensorReading
+    VesselHeading_Deviation = VesselHeading_Deviation
+    VesselHeading_Variation = VesselHeading_Variation
+    VesselHeading_HeadingSensorReference = VesselHeading_HeadingSensorReference
+    VesselHeading_Degrees = VesselHeading_Degrees
+    VesselHeading_DegreesLimited = VesselHeading_DegreesLimited
+
+    // PGN127251 RateOfTurn
+    RateOfTurn
+    RateOfTurn_Sid = RateOfTurn_Sid
+    RateOfTurn_RateOfTurn = RateOfTurn_RateOfTurn
+    RateOfTurn_Degrees = RateOfTurn_Degrees
+    RateOfTurn_DegreesLimited = RateOfTurn_DegreesLimited
+    
+    // PGN127257 Attitude
+    Attitude_SID = Attitude_SID
+    Attitude_Yaw = Attitude_Yaw
+    Attitude_Pitch = Attitude_Pitch
+    Attitude_PitchDegrees = Attitude_PitchDegrees
+    Attitude_PitchDegreesLimited = Attitude_PitchDegreesLimited
+    Attitude_Roll = Attitude_Roll
+    Attitude_RollDegrees = Attitude_RollDegrees
+    Attitude_RollDegreesLimited = Attitude_RollDegreesLimited
+
+    
+    // PGN127258 Magnetic Variation
+    MagneticVariation_SID = MagneticVariation_SID
+    MagneticVariation_VariationSource = MagneticVariation_VariationSource
+    MagneticVariation_AgeOfService = MagneticVariation_AgeOfService
+    MagneticVariation_Variation = MagneticVariation_Variation
+    
+    // PGN129025 Position Rapid Update
+    PositionRapidUpdate_Latitude = PositionRapidUpdate_Latitude
+    PositionRapidUpdate_Longitude = PositionRapidUpdate_Longitude
+    PositionRapidUpdate_LatitudeDouble = PositionRapidUpdate_LatitudeDouble
+    PositionRapidUpdate_LongitudeDouble = PositionRapidUpdate_LongitudeDouble
+    
+    
+    // PGN129026 Cog Sog Rapid Update
+    CogSogRapidUpdate_SID = CogSogRapidUpdate_SID
+    CogSogRapidUpdate_CogReference = CogSogRapidUpdate_CogReference
+    CogSogRapidUpdate_COG = CogSogRapidUpdate_COG
+    CogSogRapidUpdate_SOG = CogSogRapidUpdate_SOG
+    CogSogRapidUpdate_CogDouble = CogSogRapidUpdate_CogDouble
+    CogSogRapidUpdate_SogKnots = CogSogRapidUpdate_SogKnots
+    CogSogRapidUpdate_VelocityNorth = CogSogRapidUpdate_VelocityNorth
+    CogSogRapidUpdate_VelocityEast = CogSogRapidUpdate_VelocityEast
+    
+}
+
+ProcessConfig = testSeaFox
+{
+  AppTick	= 1000
+  CommsTick	= 1000
+  Port = /dev/ttyS2
+  BaudRate = 9600 
+  Streaming = false
+  Type = USV
+  RUDDER_CENTER_VAL = 50 
+  
+  PF_CONTROL_SERRET_FRENET = 1
+  TURN_RATE_CTRL_P_GAIN = 1.0 
+  TURN_RATE_CTRL_I_GAIN = 0.0
+  TURN_RATE_CTRL_D_GAIN = 0.0
+  
+  WP_FILE = /root/Track_op1.out
+}

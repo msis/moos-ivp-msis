@@ -1,0 +1,79 @@
+ServerHost = localhost		
+ServerPort = 9000
+Community  = alpha
+
+MOOSTimeWarp = 1
+TERM_REPORTING = true
+
+// Forest Lake
+LatOrigin  = 43.825300 
+LongOrigin = -70.330400 
+
+// MIT Sailing Pavilion (use this one)
+// LatOrigin  = 42.358456 
+// LongOrigin = -71.087589
+
+
+//------------------------------------------
+// Antler configuration  block
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB		@ NewConsole = false
+  Run = uMS		@ NewConsole = false
+  Run = iIMU_RazorAHRS  @ NewConsole = false
+  Run = pLogger 	@ NewConsole = false
+}
+
+//------------------------------------------------
+// iIMU_RazorAHRS config block
+
+ProcessConfig = iIMU_RazorAHRS
+{
+   AppTick   = 20
+   CommsTick = 20
+
+   SERIAL_PORT = /dev/ttyUSB0
+
+   MODE = ANGLES_CALIBRATED_SENSOR_DATA
+		   // RAW_SENSOR_DATA
+		   // CALIBRATED_SENSOR_DATA
+		   // ANGLES_CALIBRATED_SENSOR_DATA
+		   // ANGLES_RAW_SENSOR_DATA
+		   // ANGLES
+   
+}
+
+ProcessConfig = pLogger
+{
+  AppTick   = 8
+  CommsTick = 8
+
+  SyncLog = true @ 0.2
+  AsyncLog = true
+
+  // For variables that are published in a bundle on their first post,
+  // explicitly declare their logging request
+
+  Log = YAW @ 0
+  Log = PITCH @ 0
+  Log = ROLL @ 0
+  Log = ACC_X @ 0
+  Log = ACC_Y @ 0
+  Log = ACC_Z @ 0
+  Log = MAG_X @ 0
+  Log = MAG_Y @ 0
+  Log = MAG_Z @ 0
+  Log = GYRO_X @ 0
+  Log = GYRO_Y @ 0
+  Log = GYRO_Z @ 0
+
+
+  LogAuxSrc = true
+  WildCardLogging = true
+  WildCardOmitPattern = *_STATUS
+  WildCardOmitPattern = *_DEBUG
+  WildCardExclusionLog = true
+}
+

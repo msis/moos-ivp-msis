@@ -23,7 +23,7 @@ ProcessConfig = ANTLER
   Run = MOOSDB		@ NewConsole = false
   Run = uMS		@ NewConsole = false
   Run = iIMU_RazorAHRS  @ NewConsole = false
-  Run = pLogger 	@ NewConsole = false
+  //Run = pLogger 	@ NewConsole = false
 }
 
 //------------------------------------------------
@@ -31,8 +31,8 @@ ProcessConfig = ANTLER
 
 ProcessConfig = iIMU_RazorAHRS
 {
-   AppTick   = 20
-   CommsTick = 20
+   AppTick   = 4
+   CommsTick = 4
 
    SERIAL_PORT = /dev/ttyUSB0
 

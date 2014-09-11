@@ -18,6 +18,8 @@ ADD_SUBDIRECTORY(lib_behaviors-test)
 ADD_SUBDIRECTORY(pXRelayTest)
 ADD_SUBDIRECTORY(pExampleApp)
 ADD_SUBDIRECTORY(iIMU_RazorAHRS)
+ADD_SUBDIRECTORY(iSonar)
+
 
 ##############################################################################
 #                           END of CMakeLists.txt

@@ -151,6 +151,7 @@ void Sonar::ListenSonarMessages()
           SeaNetMsg_SendData msg_SendData;
           msg_SendData.setTime(MOOSTime());
           SendSonarMessage(msg_SendData);
+          Notify("SONAR_CONNECTED", "true");
         }   
         
         // Update m_bSonarReady
@@ -256,15 +257,9 @@ bool Sonar::OnStartUp()
                 
 	MOOSPause(50);
 	bool sonarReady = SendSonarMessage(m_msgHeadCommand);
-	if (portOpened && sonarReady)
-	{
-		Notify("SONAR_CONNECTED", "true");
-	}
-	else
-	{
-		Notify("SONAR_CONNECTED", "false");
-		return(false);
-	}
+	
+	Notify("SONAR_CONNECTED", "false");
+
 	//////
         
 	return(true);

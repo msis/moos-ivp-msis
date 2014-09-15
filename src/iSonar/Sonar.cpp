@@ -233,15 +233,6 @@ bool Sonar::OnStartUp()
 		MOOSTrace("No configuration read.\n");
 
 	bool portOpened = this->m_Port.Create(m_portName.c_str(), 115200);
-	if (portOpened)
-	{
-		Notify("SONAR_CONNECTED", "true");
-	}
-	else
-	{
-		Notify("SONAR_CONNECTED", "false");
-		return(false);
-	}
 
 	//this->m_Port.SetTermCharacter('\n');
 	m_Port.Flush();
@@ -264,7 +255,16 @@ bool Sonar::OnStartUp()
 	SendSonarMessage(SeaNetMsg_SendBBUser());
                 
 	MOOSPause(50);
-	SendSonarMessage(m_msgHeadCommand);
+	bool sonarReady = SendSonarMessage(m_msgHeadCommand);
+	if (portOpened && sonarReady)
+	{
+		Notify("SONAR_CONNECTED", "true");
+	}
+	else
+	{
+		Notify("SONAR_CONNECTED", "false");
+		return(false);
+	}
 	//////
         
 	return(true);

@@ -14,6 +14,8 @@ ProcessConfig = ANTLER
   Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
 
   Run = iIMU_RazorAHRS  @ NewConsole = false
+
+  Run = iEchoSounder    @ NewConsole = true
 }
 
 
@@ -68,4 +70,12 @@ ProcessConfig = iIMU_RazorAHRS
        // ANGLES_RAW_SENSOR_DATA
        // ANGLES
    
+}
+
+ProcessConfig = iEchoSounder
+{
+  AppTick   = 4
+  CommsTick = 4
+  
+  SERIAL_PORT_NAME = /dev/ttyUSB4
 }

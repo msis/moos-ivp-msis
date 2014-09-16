@@ -1,0 +1,13 @@
+//------------------------------------------------
+// pLocalizationSonar config block
+
+ProcessConfig = pLocalizationSonar
+{
+   POOL_WIDTH = 50.
+   POOL_HEIGHT = 50.
+   POOL_UTM_X = 0.
+   POOL_UTM_Y = 0.
+   POOL_ANGLE = 0.
+   USE_RAZOR_HEADING = true
+}
+

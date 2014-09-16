@@ -12,6 +12,8 @@ ProcessConfig = ANTLER
   Run = pSensorViewer    @ NewConsole = false 
   Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
   Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
+
+  Run = iIMU_RazorAHRS  @ NewConsole = false
 }
 
 
@@ -50,4 +52,20 @@ ProcessConfig = iCamera_SIDE
   IDENTIFIANT_CV_CAMERA = 1
   DISPLAY_IMAGE = false
   INVERT_IMAGE = false
+}
+
+ProcessConfig = iIMU_RazorAHRS
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   SERIAL_PORT = /dev/ttyUSB1
+
+   MODE = ANGLES_CALIBRATED_SENSOR_DATA
+       // RAW_SENSOR_DATA
+       // CALIBRATED_SENSOR_DATA
+       // ANGLES_CALIBRATED_SENSOR_DATA
+       // ANGLES_RAW_SENSOR_DATA
+       // ANGLES
+   
 }

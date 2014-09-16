@@ -15,7 +15,7 @@ ProcessConfig = ANTLER
 
   Run = iIMU_RazorAHRS  @ NewConsole = false
 
-  Run = iEchoSounder    @ NewConsole = true
+  Run = iEchoSounder    @ NewConsole = false
 }
 
 

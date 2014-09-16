@@ -22,6 +22,8 @@ ADD_SUBDIRECTORY(iSonar)
 ADD_SUBDIRECTORY(iCISCREA)
 ADD_SUBDIRECTORY(iCamera)
 ADD_SUBDIRECTORY(iEchoSounder)
+ADD_SUBDIRECTORY(pSensorViewer)
+
 
 
 ##############################################################################

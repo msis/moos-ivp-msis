@@ -1,0 +1,53 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+  Run = MOOSDB           @ NewConsole = false 
+  Run = uMS              @ NewConsole = false
+  
+  Run = iSonar           @ NewConsole = false
+  Run = pSensorViewer    @ NewConsole = false 
+  Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
+  Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
+}
+
+
+ProcessConfig = iSonar
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SERIAL_PORT_NAME = /dev/ttyUSB2
+  RANGE = 10 //IN METERS
+  NBINS = 100 //NUMBER OF SAMPLES PER SCANLINE
+  ANGLESTEP = 1.8 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)
+  GAIN = 45 // MUST BE BETWEEN 0 AND 100 (PERCENTAGE)
+  CONTINUOUS = true //TRUE FOR 360  ROTATION. SET RIGHT AND LEFT LIMIT IF FALSE 
+  //LEFTLIMIT = 70.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
+  //RIGHTLIMIT = 110.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
+}
+
+ProcessConfig = pSensorViewer
+{
+  AppTick   = 4
+  CommsTick = 4
+}
+
+ProcessConfig = iCamera_BOTTOM
+{
+  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
+  IDENTIFIANT_CV_CAMERA = 0
+  DISPLAY_IMAGE = true
+  INVERT_IMAGE = true
+}
+
+ProcessConfig = iCamera_SIDE
+{
+  VARIABLE_IMAGE_NAME = CAMERA_SIDE
+  IDENTIFIANT_CV_CAMERA = 1
+  DISPLAY_IMAGE = true
+  INVERT_IMAGE = false
+}

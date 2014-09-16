@@ -21,7 +21,7 @@ ADD_SUBDIRECTORY(iIMU_RazorAHRS)
 ADD_SUBDIRECTORY(iSonar)
 ADD_SUBDIRECTORY(iCISCREA)
 ADD_SUBDIRECTORY(iCamera)
-
+ADD_SUBDIRECTORY(iEchoSounder)
 
 
 ##############################################################################

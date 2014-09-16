@@ -20,6 +20,8 @@ ADD_SUBDIRECTORY(pExampleApp)
 ADD_SUBDIRECTORY(iIMU_RazorAHRS)
 ADD_SUBDIRECTORY(iSonar)
 ADD_SUBDIRECTORY(iCISCREA)
+ADD_SUBDIRECTORY(iCamera)
+
 
 
 ##############################################################################

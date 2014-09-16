@@ -99,26 +99,23 @@ bool SensorViewer::OnNewMail(MOOSMSG_LIST &NewMail)
 		//cout << msg.GetKey() << en
 		double pool_angle = MOOSDeg2Rad(0.0);
 		
-		if( msg.GetKey() == "VVV_VX_DESIRED") {
+		if( msg.GetKey() == "DESIRED_THRUST") {
 		  vx = msg.GetDouble();
 		}
-		if( msg.GetKey() == "VVV_HEADING") {
-		//  heading = MOOSDeg2Rad(msg.GetDouble());
-		}
-		if( msg.GetKey() == "VVV_HEADING_RAZOR") {
+		if( msg.GetKey() == "YAW") {
 		  heading_razor = MOOSDeg2Rad(msg.GetDouble());
 		  double a = MOOSDeg2Rad(-12.6), b = 0.45, c = MOOSDeg2Rad(-10.5);
 		  heading = heading_razor - ( a*sin(heading_razor+b) + c);
 		  
 		  heading += pool_angle;
 		}
-		if( msg.GetKey() == "VVV_HEADING_CISCREA") {
+		if( msg.GetKey() == "HEADING") {
 		  heading_ciscrea = MOOSDeg2Rad(msg.GetDouble());
 		}
-		if( msg.GetKey() == "VVV_IMAGE_SIDE") {
+		if( msg.GetKey() == "CAMERA_SIDE") {
 		  memcpy(img1.data, msg.GetBinaryData(), img1.rows*img1.step);
 		}
-		if( msg.GetKey() == "VVV_IMAGE_BOTTOM") {
+		if( msg.GetKey() == "CAMERA_BOTTOM") {
 		  memcpy(img2.data, msg.GetBinaryData(), img2.rows*img2.step);
 		}
 		if( msg.GetKey() == "SONAR_RAW_DATA") {
@@ -269,12 +266,11 @@ bool SensorViewer::OnStartUp()
 void SensorViewer::RegisterVariables()
 {
 	// m_Comms.Register("FOOBAR", 0);
-	m_Comms.Register("VVV_IMAGE_SIDE", 0);
-	m_Comms.Register("VVV_IMAGE_BOTTOM", 0);
+	m_Comms.Register("CAMERA_SIDE", 0);
+	m_Comms.Register("CAMERA_BOTTOM", 0);
 	m_Comms.Register("SONAR_RAW_DATA", 0);
-	m_Comms.Register("VVV_HEADING", 0);
-	m_Comms.Register("VVV_HEADING_RAZOR", 0);
-	m_Comms.Register("VVV_HEADING_CISCREA", 0);
-	m_Comms.Register("VVV_VX_DESIRED", 0);
-	m_Comms.Register("VVV_VY_DESIRED", 0);
+	m_Comms.Register("HEADING", 0);
+	m_Comms.Register("YAW", 0);
+	m_Comms.Register("DESIRED_THRUST", 0);
+	m_Comms.Register("DESIRED_SLIDE", 0);
 }

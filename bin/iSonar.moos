@@ -7,7 +7,7 @@ ProcessConfig = ANTLER
 	MSBetweenLaunches = 200
 	Run = MOOSDB         			@ NewConsole = false 
 	Run = iSonar					@ NewConsole = true
-	Run = pSensorViewer				@ NewConsole = true
+	//Run = pSensorViewer				@ NewConsole = true
 	Run = uMS						@ NewConsole = false
 }
 
@@ -17,7 +17,7 @@ ProcessConfig = iSonar
   AppTick   = 4
   CommsTick = 4
 
-  SERIAL_PORT_NAME = /dev/ttyUSB3
+  SERIAL_PORT_NAME = /dev/ttyUSB2
   RANGE = 10 //IN METERS
   NBINS = 100 //NUMBER OF SAMPLES PER SCANLINE
   ANGLESTEP = 1.8 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)

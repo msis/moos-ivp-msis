@@ -7,7 +7,6 @@ SET(SRC
   seanetmsg.cpp
   Sonar.cpp
   Sonar_Info.cpp
-  Sonar_Tests.cpp
   main.cpp
 )
 

@@ -14,15 +14,13 @@ INCLUDE_DIRECTORIES(${LOCAL_LIBRARY_DIRS})
 #============================================================================
 # List the subdirectories to build...
 #============================================================================
-#ADD_SUBDIRECTORY(lib_behaviors-test)
-#ADD_SUBDIRECTORY(pXRelayTest)
-#ADD_SUBDIRECTORY(pExampleApp)
 ADD_SUBDIRECTORY(iIMU_RazorAHRS)
 ADD_SUBDIRECTORY(iSonar)
 ADD_SUBDIRECTORY(iCISCREA)
 ADD_SUBDIRECTORY(iCamera)
 ADD_SUBDIRECTORY(iEchoSounder)
 ADD_SUBDIRECTORY(pSensorViewer)
+ADD_SUBDIRECTORY(lib_common)
 
 
 

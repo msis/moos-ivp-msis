@@ -15,10 +15,10 @@
 #include <opencv/cv.h>
 #include <opencv2/highgui/highgui.hpp>
 
-#include "../common/constantes.h"
 #include "MOOS/libMOOS/App/MOOSApp.h"
 
 #include "videograbv4l2.h"
+#include "Ciscrea_Images/Ciscrea_Images.h"
 
 using namespace std;
 using namespace cv;

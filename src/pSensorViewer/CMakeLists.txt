@@ -22,5 +22,6 @@ TARGET_LINK_LIBRARIES(pSensorViewer
    pthread
    opencv_core
    opencv_imgproc
-   opencv_highgui)
-
+   opencv_highgui
+   # Our libraries
+   Ciscrea_Images)

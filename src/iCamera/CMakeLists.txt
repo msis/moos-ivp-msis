@@ -9,7 +9,6 @@ SET(SRC
   videograbv4l2.cpp
   Camera.cpp
   Camera_Info.cpp
-  Camera_Tests.cpp
   main.cpp
 )
 
@@ -25,5 +24,6 @@ TARGET_LINK_LIBRARIES(iCamera
    opencv_imgproc
    opencv_highgui
    opencv_video
-   opencv_legacy)
-
+   opencv_legacy
+   # Our libraries
+   Ciscrea_Images)

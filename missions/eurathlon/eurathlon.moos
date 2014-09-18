@@ -1,0 +1,10 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+  Run = MOOSDB           @ NewConsole = false 
+  Run = uMS              @ NewConsole = false
+}

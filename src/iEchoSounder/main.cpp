@@ -14,14 +14,12 @@
 #include "ColorParse.h"
 #include "EchoSounder.h"
 #include "EchoSounder_Info.h"
-#include "EchoSounder_Tests.h"
 
 using namespace std;
 
 int main(int argc, char *argv[])
 {
 	string mission_file;
-	bool lancer_tests = false;
 	string run_command = argv[0];
 
 	for(int i = 1; i < argc ; i++)
@@ -39,9 +37,6 @@ int main(int argc, char *argv[])
 			
 		else if((argi == "-i") || (argi == "--interface"))
 			showInterfaceAndExit();
-			
-		else if((argi == "-tests"))
-			lancer_tests = true;
 		
 		else if(strEnds(argi, ".moos") || strEnds(argi, ".moos++"))
 			mission_file = argv[i];
@@ -56,18 +51,12 @@ int main(int argc, char *argv[])
 	if(mission_file == "")
 		showHelpAndExit();
 
-	if(lancer_tests)
-		launchTestsAndExitIfOk();
-	
-	else
-	{
-		cout << termColor("green");
-		cout << "Lancement de " << run_command << endl;
-		cout << termColor() << endl;
+	cout << termColor("green");
+	cout << "Lancement de " << run_command << endl;
+	cout << termColor() << endl;
 
-		EchoSounder EchoSounder;
-		EchoSounder.Run(run_command.c_str(), mission_file.c_str());
-	}
+	EchoSounder EchoSounder;
+	EchoSounder.Run(run_command.c_str(), mission_file.c_str());
 
 	return(0);
 }

@@ -12,11 +12,12 @@
 #ifndef SensorViewer_HEADER
 #define SensorViewer_HEADER
 
-#include "../common/constantes.h"
 #include "MOOS/libMOOS/App/MOOSApp.h"
 
 #include <opencv/cv.h>
 #include <opencv2/highgui/highgui.hpp>
+
+#include "Ciscrea_Images/Ciscrea_Images.h"
 
 
 using namespace std;

@@ -8,7 +8,6 @@
 SET(SRC
   EchoSounder.cpp
   EchoSounder_Info.cpp
-  EchoSounder_Tests.cpp
   main.cpp
 )
 

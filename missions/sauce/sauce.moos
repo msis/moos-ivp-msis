@@ -10,6 +10,7 @@ ProcessConfig = ANTLER
 
 	# Command
     Run = iCISCREA        @ NewConsole = true
+    Run = pHelmIvP        @ NewConsole = true
 	
 	# Sensors
     Run = iCamera         @ NewConsole = false ~ iCamera_BOTTOM
@@ -114,4 +115,21 @@ ProcessConfig = pSensorViewer
 {
   AppTick   = 4
   CommsTick = 4
+}
+
+ProcessConfig = pHelmIvP
+{
+  AppTick    = 2
+  CommsTick  = 2
+  
+  Behaviors    = sauce.bhv  
+  Verbose      = false
+  Domain       = course:0:359:36
+  Domain       = speed:0:0.5:15
+  Domain       = depth:0:0.1:10:optional
+
+  IVP_BEHAVIOR_DIR = ./../../lib
+
+  ok_skew = any
+  active_start = true
 }

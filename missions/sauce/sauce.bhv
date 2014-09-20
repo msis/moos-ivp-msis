@@ -1,0 +1,63 @@
+// -----------------------------------------------
+//             CISCREA SAUC-E BEHAVIOR
+// -----------------------------------------------
+
+initialize DEPLOY = false
+initialize RETURN = false
+
+set MODE = ACTIVE
+{
+  DEPLOY = true
+} INACTIVE
+
+set MODE = QUALIFICATION
+{
+  MODE = ACTIVE
+}
+
+set MODE = WALL_FOLLOWING
+{ 
+  MODE = ACTIVE
+}
+
+set MODE = SURFACE
+{ 
+  MODE = INACTIVE
+}
+
+// SURFACE (MODE = SURFACE)
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_surface_depth
+    priority = 100
+    condition = MODE == SURFACE
+    duration = no-time-limit
+    depth = 0             // meters
+  }
+
+// TASK 1: QUALIFICATIONS (MODE = QUALIFICATION)
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_qualification_waypoint
+    priority = 100
+    condition = MODE == QUALIFICATION
+    endflag = MODE = SURFACE
+    
+    points = label,survey_points:60,20:30,20:40,30
+    speed = 3             // meters per second
+    capture_radius = 2    // meters
+    nm_radius = 4         // meters
+    repeat = 0            // number of iterations
+    lead = 4              // meters
+  }
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_qualification_depth
+    priority = 100
+    condition = MODE == QUALIFICATION
+    duration = no-time-limit
+    depth = 2             // meters
+  }

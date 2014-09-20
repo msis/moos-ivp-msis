@@ -10,12 +10,22 @@ set MODE = ACTIVE
   DEPLOY = true
 } INACTIVE
 
-set MODE = QUALIFICATION
+set MODE = T1_QUALIFICATION
 {
   MODE = ACTIVE
 }
 
-set MODE = WALL_FOLLOWING
+set MODE = T2_UNDERWATER_INSPECTION
+{ 
+  MODE = ACTIVE
+}
+
+set MODE = T3_FIND_ANOMALY
+{ 
+  MODE = ACTIVE
+}
+
+set MODE = T4_BLACK_BOX
 { 
   MODE = ACTIVE
 }
@@ -42,10 +52,10 @@ set MODE = SURFACE
   {
     name = bhv_qualification_waypoint
     priority = 100
-    condition = MODE == QUALIFICATION
+    condition = MODE == T1_QUALIFICATION
     endflag = MODE = SURFACE
     
-    points = label,survey_points:60,20:30,20:40,30
+    points = label,survey_points:50,20:30,20:40,30
     speed = 3             // meters per second
     capture_radius = 2    // meters
     nm_radius = 4         // meters
@@ -57,7 +67,65 @@ set MODE = SURFACE
   {
     name = bhv_qualification_depth
     priority = 100
-    condition = MODE == QUALIFICATION
+    condition = MODE == T1_QUALIFICATION
     duration = no-time-limit
     depth = 2             // meters
   }
+
+// TASK 2: UNDERWATER STRUCTURE INSPECTION
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_underwater_inspection_waypoint
+    priority = 100
+    condition = MODE == T2_UNDERWATER_INSPECTION
+    endflag = MODE = SURFACE
+  }
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_underwater_inspection_depth
+    priority = 100
+    condition = MODE == T2_UNDERWATER_INSPECTION
+    duration = no-time-limit
+    depth = 2             // meters
+  }
+
+// TASK 3: INSPECT THE WALL, FIND AN ANOMALY, AND CALL A FRIEND
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_find_anomaly_waypoint
+    priority = 100
+    condition = MODE == T3_FIND_ANOMALY
+    endflag = MODE = SURFACE
+  }
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_find_anomaly_depth
+    priority = 100
+    condition = MODE == T3_FIND_ANOMALY
+    duration = no-time-limit
+    depth = 2             // meters
+  }
+
+// TASK 4: SURVEY AND FIND A BLACK BOX
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_black_box_waypoint
+    priority = 100
+    condition = MODE == T4_BLACK_BOX
+    endflag = MODE = SURFACE
+  }
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_black_box_depth
+    priority = 100
+    condition = MODE == T4_BLACK_BOX
+    duration = no-time-limit
+    depth = 2             // meters
+  }
+

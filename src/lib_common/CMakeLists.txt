@@ -1,7 +1,7 @@
 ##############################################################################
-# FILE:        moos-ivp-extend/src/CMakeLists.txt
+# FILE:        moos-ivp-extend/src/lib_common/CMakeLists.txt
 # DATE:        2010/09/07
-# DESCRIPTION: CMakeLists.txt file for the moos-ivp-extend source directory
+# DESCRIPTION: CMakeLists.txt file
 ##############################################################################
 
 
@@ -14,18 +14,11 @@ INCLUDE_DIRECTORIES(${LOCAL_LIBRARY_DIRS})
 #============================================================================
 # List the subdirectories to build...
 #============================================================================
-ADD_SUBDIRECTORY(iIMU_RazorAHRS)
-ADD_SUBDIRECTORY(iSonar)
-ADD_SUBDIRECTORY(iCISCREA)
-ADD_SUBDIRECTORY(iCamera)
-ADD_SUBDIRECTORY(iEchoSounder)
-ADD_SUBDIRECTORY(pSensorViewer)
-ADD_SUBDIRECTORY(lib_common)
-ADD_SUBDIRECTORY(lib_behaviors)
 
+# Common libs
+ADD_SUBDIRECTORY(Ciscrea_Images)
 
 
 ##############################################################################
 #                           END of CMakeLists.txt
 ##############################################################################
-

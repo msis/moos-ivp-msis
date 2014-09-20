@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../../lib/libCiscrea_Images.a  CMakeFiles/Ciscrea_Images.dir/Ciscrea_Images.cpp.o
+/usr/bin/ranlib ../../../lib/libCiscrea_Images.a

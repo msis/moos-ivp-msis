@@ -1,0 +1,14 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/simon/moos-ivp-msis/src/lib_common/Ciscrea_Images/Ciscrea_Images.cpp
+Ciscrea_Images.h
+/home/simon/moos-ivp-msis/src/lib_common/Ciscrea_Images/Ciscrea_Images.h
+
+/home/simon/moos-ivp-msis/src/lib_common/Ciscrea_Images/Ciscrea_Images.h
+

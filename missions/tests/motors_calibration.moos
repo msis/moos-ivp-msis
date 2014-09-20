@@ -1,0 +1,60 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+	MSBetweenLaunches = 200
+	Run = MOOSDB         			@ NewConsole = false 
+	Run = iCISCREA					@ NewConsole = true
+	Run = uMS						@ NewConsole = false
+
+  Run = uTimerScript  @ NewConsole = false
+}
+
+//------------------------------------------------
+// iCISCREA config block
+
+ProcessConfig = iCISCREA
+{
+    AppTick   = 4
+    CommsTick = 4
+
+	  //Serial port 
+  SERIAL_PORT = /dev/ttyUSB0
+                                                                
+  // Max number of retries before giving up
+  MAX_MODBUS_RETRIES = 10
+  MAX_TURNON_RETRIES = 100
+                                                                
+  // Lower and upper bound for motors deadzone
+  FRRI_LO_DZ = 0
+  RERI_LO_DZ = 0
+  RELE_LO_DZ = 0
+  FRLE_LO_DZ = 0
+  VERT_LO_DZ = 0
+  FRRI_UP_DZ = 0
+  RERI_UP_DZ = 0
+  RELE_UP_DZ = 0
+  FRLE_UP_DZ = 0
+  VERT_UP_DZ = 0
+                                                                
+  // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
+  FRRI_SENS = 1
+  RERI_SENS = 0
+  RELE_SENS = 0
+  FRLE_SENS = 0
+  VERT_SENS = 0
+
+  DEPTH_OFFSET = -0.02
+
+}
+
+ProcessConfig = uTimerScript
+{
+  AppTick = 2
+  CommsTick = 2
+
+  event = var=DESIRED_THRUST, val=100, time=1
+  event = var=DESIRED_THRUST, val=0, time=10
+}

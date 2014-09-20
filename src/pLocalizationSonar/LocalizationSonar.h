@@ -38,7 +38,6 @@ class LocalizationSonar : public CMOOSApp
         double pool_angle;
         double heading;
         double heading_razor;
-        bool use_razor_heading;
         Mat img, edge, gray, color_dst, sonarImg;
         
         unsigned int timeWindow; //200

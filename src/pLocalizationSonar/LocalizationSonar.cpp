@@ -22,7 +22,6 @@ LocalizationSonar::LocalizationSonar(): pool(50.,50.), pool_utm(0.,0.) //width, 
     timeWindow = 200;
     pool_angle = MOOSDeg2Rad(0.0);
     sonarImg.create(400,400,CV_8UC1);
-    use_razor_heading = true;
 }
 
 /**
@@ -59,17 +58,12 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
         bool   mstr  = msg.IsString();
         #endif
 
-        if( msg.GetKey() == "VVV_HEADING_RAZOR" && use_razor_heading)
+        if( msg.GetKey() == "YAW")
         {
             heading_razor = MOOSDeg2Rad(msg.GetDouble());
             double a = MOOSDeg2Rad(-12.6), b = 0.45, c = MOOSDeg2Rad(-10.5);
             heading = heading_razor - ( a*sin(heading_razor+b) + c);
 
-            heading += pool_angle;
-        }
-        if( msg.GetKey() == "VVV_HEADING_CISCREA" && !use_razor_heading)
-        {
-            heading = MOOSDeg2Rad(msg.GetDouble());
             heading += pool_angle;
         }
         if( msg.GetKey() == "SONAR_RAW_DATA")
@@ -168,9 +162,6 @@ bool LocalizationSonar::OnStartUp()
             if(param == "POOL_ANGLE")
                 pool_angle = MOOSDeg2Rad(atof((char*)value.c_str()));
 
-            if(param == "USE_RAZOR_HEADING")
-                use_razor_heading = (value == "true");
-
             if(param == "TIME_WINDOW")
                 timeWindow = atoi((char*)value.c_str());
 
@@ -198,8 +189,7 @@ void LocalizationSonar::RegisterVariables()
 {
     // m_Comms.Register("FOOBAR", 0);
     m_Comms.Register("SONAR_RAW_DATA", 0);
-    m_Comms.Register("VVV_HEADING_RAZOR", 0);
-    m_Comms.Register("VVV_HEADING_CISCREA", 0);
+    m_Comms.Register("YAW", 0);
 }
 
 void LocalizationSonar::processImage(Mat img)
@@ -224,10 +214,10 @@ void LocalizationSonar::processImage(Mat img)
     robotUTM.x = robot.x*cos(angle) + robot.y*sin(angle);
     robotUTM.y = -robot.x*sin(angle) + robot.y*cos(angle);
     
-    m_Comms.Notify("ROBOT_X",robot.x);
-    m_Comms.Notify("ROBOT_Y",robot.y);
-    m_Comms.Notify("ROBOT_UTM_X",robotUTM.x);
-    m_Comms.Notify("ROBOT_UTM_Y",robotUTM.y);
+    m_Comms.Notify("NAV_X",robot.x);
+    m_Comms.Notify("NAV_Y",robot.y);
+    m_Comms.Notify("NAV_UTM_X",robotUTM.x);
+    m_Comms.Notify("NAV_UTM_Y",robotUTM.y);
 
 }
 

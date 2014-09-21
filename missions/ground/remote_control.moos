@@ -48,8 +48,10 @@ ProcessConfig = pShare
   AppTick    = 2
   CommsTick  = 2
 
-  output = src_name=DESIRED_SLIDE_VICI, dest_name=DESIRED_SLIDE, route=192.168.0.110:9301
-  output = src_name=DESIRED_THRUST_VICI, dest_name=DESIRED_THRUST, route=192.168.0.110:9301
-  output = src_name=DESIRED_RUDDER_VICI, dest_name=DESIRED_RUDDER, route=192.168.0.110:9301
-  output = src_name=DESIRED_ELEVATOR_VICI, dest_name=DESIRED_ELEVATOR, route=192.168.0.110:9301
+  input = route = multicast_21
+  
+  output = src_name=DESIRED_SLIDE_VICI, dest_name=DESIRED_SLIDE, route=multicast_21
+  output = src_name=DESIRED_THRUST_VICI, dest_name=DESIRED_THRUST, route=multicast_21
+  output = src_name=DESIRED_RUDDER_VICI, dest_name=DESIRED_RUDDER, route=multicast_21
+  output = src_name=DESIRED_ELEVATOR_VICI, dest_name=DESIRED_ELEVATOR, route=multicast_21
 }

@@ -1,6 +1,6 @@
 ServerHost = localhost
-ServerPort = 9000
-Community = ciscreaSaucE
+ServerPort = 9001
+Community = VICI
 
 ProcessConfig = ANTLER
 {
@@ -24,8 +24,6 @@ ProcessConfig = ANTLER
     
   # Software communications
     Run = pShare          @ NewConsole = false
-    Run = pHostInfo       @ NewConsole = false
-    Run = uFldShoreBroker @ NewConsole = false
 }
 
 ProcessConfig = iEchoSounder
@@ -144,19 +142,5 @@ ProcessConfig = pShare
   AppTick    = 2
   CommsTick  = 2
 
-  input = route = localhost:9300
-}
-
-ProcessConfig = pHostInfo
-{
-  AppTick   = 1
-  CommsTick   = 1
-
-  DEFAULT_HOSTIP = localhost
-}
-
-ProcessConfig = uFldShoreBroker
-{
-  AppTick   = 1
-  CommsTick = 1
+  input = route = 192.168.0.110:9301
 }

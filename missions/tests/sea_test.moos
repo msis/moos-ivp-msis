@@ -142,7 +142,7 @@ ProcessConfig = pLogger
 
 
   LogAuxSrc = true
-  WildCardPatter = *
+  WildCardPattern = *
   WildCardOmitPattern = *_STATUS
   WildCardOmitPattern = *_DEBUG
   WildCardOmitPattern = *_BOTTOM

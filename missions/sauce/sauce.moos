@@ -11,7 +11,6 @@ ProcessConfig = ANTLER
 	# Command
     Run = iCISCREA        @ NewConsole = true
     Run = pHelmIvP        @ NewConsole = true
-    Run = uJoystick       @ NewConsole = false
 	
 	# Sensors
     Run = iCamera         @ NewConsole = false ~ iCamera_BOTTOM
@@ -21,7 +20,12 @@ ProcessConfig = ANTLER
     Run = iSonar          @ NewConsole = false
   
   # Viewers
-    Run = pSensorViewer   @ NewConsole = false 
+    Run = pSensorViewer   @ NewConsole = false
+    
+  # Software communications
+    Run = pShare          @ NewConsole = false
+    Run = pHostInfo       @ NewConsole = false
+    Run = uFldShoreBroker @ NewConsole = false
 }
 
 ProcessConfig = iEchoSounder
@@ -135,31 +139,24 @@ ProcessConfig = pHelmIvP
   active_start = true
 }
 
-ProcessConfig = uJoystick
+ProcessConfig = pShare
 {
-   AppTick   = 4
-   CommsTick = 4
-   
-   SHOW_ALL_EVENTS = 1
-   
-   SCALE = 100
-   
-   DEVICE_NAME = /dev/input/js0
-   
-   AXIS_SCALE_RATIO = 0.5
-   AXIS = 0
-   DEST_VAR = DESIRED_SLIDE
-   
-   AXIS_SCALE_RATIO = 0.5
-   AXIS = 1
-   DEST_VAR = DESIRED_THRUST
-   
-   AXIS_SCALE_RATIO = 0.5
-   AXIS = 2
-   DEST_VAR = DESIRED_RUDDER
-   
-   AXIS_SCALE_RATIO = 0.5
-   AXIS = 3
-   DEST_VAR = DESIRED_ELEVATOR
+  AppTick    = 2
+  CommsTick  = 2
+
+  input = route = localhost:9300
 }
 
+ProcessConfig = pHostInfo
+{
+  AppTick   = 1
+  CommsTick   = 1
+
+  DEFAULT_HOSTIP = localhost
+}
+
+ProcessConfig = uFldShoreBroker
+{
+  AppTick   = 1
+  CommsTick = 1
+}

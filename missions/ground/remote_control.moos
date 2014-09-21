@@ -1,0 +1,75 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+    Run = MOOSDB          @ NewConsole = false
+    Run = uMS             @ NewConsole = false
+
+	# Command
+    Run = uJoystick       @ NewConsole = false
+    
+  # Software communications
+    Run = pShare          @ NewConsole = false
+    Run = pHostInfo       @ NewConsole = false
+    Run = uFldShoreBroker @ NewConsole = false
+}
+
+ProcessConfig = uJoystick
+{
+   AppTick   = 4
+   CommsTick = 4
+   
+   SHOW_ALL_EVENTS = 1
+   
+   SCALE = 100
+   
+   DEVICE_NAME = /dev/input/js0
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 0
+   DEST_VAR = DESIRED_SLIDE
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 1
+   DEST_VAR = DESIRED_THRUST
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 2
+   DEST_VAR = DESIRED_RUDDER
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 3
+   DEST_VAR = DESIRED_ELEVATOR
+}
+
+ProcessConfig = pShare
+{
+  AppTick    = 2
+  CommsTick  = 2
+
+  input = route = localhost:9301
+}
+
+ProcessConfig = pHostInfo
+{
+  AppTick   = 1
+  CommsTick   = 1
+
+  DEFAULT_HOSTIP = localhost
+}
+
+ProcessConfig = uFldNodeBroker
+{
+  AppTick   = 5
+  CommsTick = 5
+
+  TRY_SHORE_HOST = pshare_route = 192.168.0.101:9300
+  
+  bridge =  src=DESIRED_THRUST
+  bridge =  src=DESIRED_ELEVATOR
+  bridge =  src=DESIRED_SLIDE
+  bridge =  src=DESIRED_RUDDER
+}

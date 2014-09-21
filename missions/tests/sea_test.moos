@@ -145,7 +145,8 @@ ProcessConfig = pLogger
   WildCardLogging = true
   WildCardOmitPattern = *_STATUS
   WildCardOmitPattern = *_DEBUG
-  WildCardOmitPattern = *AMERA_*
+  WildCardOmitPattern = *_BOTTOM
+  WildCardOmitPattern = *_SIDE
   WildCardExclusionLog = true
 }
 

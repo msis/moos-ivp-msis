@@ -23,8 +23,8 @@ ProcessConfig = ANTLER
 
 
 //logs
-  Run = pCameraLogger                    @ NewConsole = false ~ iCamera_SIDE
-  Run = pCameraLogger                    @ NewConsole = false ~ iCamera_BOTTOM
+  Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
+  Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
   Run = pLogger   @ NewConsole = false
 }
 

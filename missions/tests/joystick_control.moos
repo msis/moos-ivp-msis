@@ -55,4 +55,13 @@ ProcessConfig = pShare
   Input = route=multicast_1
 
   Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=DEPTH, route=multicast_1
+  Output = src_name=CURRENT_BATT1, route=multicast_1
+  Output = src_name=CURRENT_BATT2, route=multicast_1
+  Output = src_name=VOLTAGE_BATT1, route=multicast_1
+  Output = src_name=VOLTAGE_BATT2, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT1, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT2, route=multicast_1
+  Output = src_name=HEADING, route=multicast_1
+
 }

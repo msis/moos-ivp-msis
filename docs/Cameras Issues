@@ -1,0 +1,11 @@
+In order to make the cameras work properly, be sure that both cameras are powered and plugged in your computer.
+
+First remove the kernel module, wrongly started by your system, with the follow command:
+
+    $ sudo rmmod em28xx
+
+After that, re-enable the kernel module with the correct card information. 
+
+    $ sudo modprobe em28xx card=67,67
+
+This command should take 1 or 2 seconds. If don't, you did something wrong. \o/

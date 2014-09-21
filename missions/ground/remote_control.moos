@@ -45,9 +45,6 @@ ProcessConfig = uJoystick
 
 ProcessConfig = pShare
 {
-  AppTick    = 2
-  CommsTick  = 2
-
   input = route = multicast_1
   
   output = src_name=DESIRED_SLIDE_VICI, dest_name=DESIRED_SLIDE, route=multicast_1

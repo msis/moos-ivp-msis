@@ -6,8 +6,10 @@ ProcessConfig = ANTLER
 {
 	MSBetweenLaunches = 200
 	Run = MOOSDB         			@ NewConsole = false 
-	Run = iCISCREA					@ NewConsole = true
+	Run = iCISCREA					@ NewConsole = false
 	Run = uMS						@ NewConsole = false
+
+  Run = pShare @ NewConsole = false
 }
 
 //------------------------------------------------
@@ -46,4 +48,11 @@ ProcessConfig = iCISCREA
 
   DEPTH_OFFSET = -0.02
 
+}
+
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
 }

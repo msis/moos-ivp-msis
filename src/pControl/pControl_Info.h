@@ -1,5 +1,5 @@
 /**
- * \file iControl_Info.h
+ * \file pControl_Info.h
  * \brief Informations sur l'application pLocalization
  * \author Team CISSAU - Veni Vidi Vici (ENSTA Bretagne)
  * \version 0.1
@@ -9,8 +9,8 @@
  *
  */
 
-#ifndef iControl_INFO_HEADER
-#define iControl_INFO_HEADER
+#ifndef pControl_INFO_HEADER
+#define pControl_INFO_HEADER
 
 void showSynopsis();
 void showHelpAndExit();

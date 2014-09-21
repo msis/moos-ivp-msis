@@ -1,12 +1,12 @@
 /**
- * \file iControl.cpp
- * \brief Classe iControl
+ * \file pControl.cpp
+ * \brief Classe pControl
  * \author Team CISSAU - Veni Vidi Vici (ENSTA Bretagne)
  * \version 0.1
  * \date Jun 5th 2013
  */
 
-#include "iControl.h"
+#include "pControl.h"
 
 using namespace std;
 
@@ -15,7 +15,7 @@ using namespace std;
  * \brief Constructeur de l'application MOOS
  */
 
-iControl::iControl() : razor_heading(0.0), desired_heading(0.0)
+pControl::pControl() : razor_heading(0.0), desired_heading(0.0)
 {
     m_iterations = 0;
     m_timewarp   = 1;
@@ -26,7 +26,7 @@ iControl::iControl() : razor_heading(0.0), desired_heading(0.0)
  * \brief Destructeur de l'instance de l'application
  */
 
-iControl::~iControl()
+pControl::~pControl()
 {
 }
 
@@ -36,7 +36,7 @@ iControl::~iControl()
  * N'est appelée que si l'application s'est liée à la variable en question
  */
 
-bool iControl::OnNewMail(MOOSMSG_LIST &NewMail)
+bool pControl::OnNewMail(MOOSMSG_LIST &NewMail)
 {
     MOOSMSG_LIST::iterator p;
 
@@ -73,7 +73,7 @@ bool iControl::OnNewMail(MOOSMSG_LIST &NewMail)
  * \brief Méthode appelée dès que le contact avec la MOOSDB est effectué
  */
 
-bool iControl::OnConnectToServer()
+bool pControl::OnConnectToServer()
 {
     // register for variables here
     // possibly look at the mission file?
@@ -90,7 +90,7 @@ bool iControl::OnConnectToServer()
  * Implémentation du comportement de l'application
  */
 
-bool iControl::Iterate()
+bool pControl::Iterate()
 {
     double motor_force = ihc.heading(razor_heading,desired_heading);
     m_iterations++;
@@ -107,7 +107,7 @@ bool iControl::Iterate()
  * \brief Méthode appelée au lancement de l'application
  */
 
-bool iControl::OnStartUp()
+bool pControl::OnStartUp()
 {
     setlocale(LC_ALL, "C");
     list<string> sParams;
@@ -141,7 +141,7 @@ bool iControl::OnStartUp()
  * \brief Inscription de l'application à l'évolution de certaines variables de la MOOSDB
  */
 
-void iControl::RegisterVariables()
+void pControl::RegisterVariables()
 {
     // m_Comms.Register("FOOBAR", 0);
     m_Comms.Register("YAW", 0);

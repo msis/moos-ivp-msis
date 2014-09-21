@@ -1,6 +1,6 @@
 /**
- * \file iControl_Info.cpp
- * \brief Informations sur l'application iControl
+ * \file pControl_Info.cpp
+ * \brief Informations sur l'application pControl
  * \author Team CISSAU - Veni Vidi Vici (ENSTA Bretagne)
  * \version 0.1
  * \date Jun 5th 2013
@@ -11,7 +11,7 @@
 
 #include <cstdlib>
 #include <iostream>
-#include "iControl_Info.h"
+#include "pControl_Info.h"
 #include "ColorParse.h"
 #include "ReleaseInfo.h"
 
@@ -26,7 +26,7 @@ void showSynopsis()
 {
   blk("SYNOPSIS:                                                       ");
   blk("------------------------------------                            ");
-  blk("  The iControl application is used for               ");
+  blk("  The pControl application is used for               ");
   blk("                                                                ");
   blk("                                                                ");
   blk("                                                                ");
@@ -42,15 +42,15 @@ void showHelpAndExit()
 {
   blk("                                                                ");
   blu("=============================================================== ");
-  blu("Usage: iControl file.moos [OPTIONS]                   ");
+  blu("Usage: pControl file.moos [OPTIONS]                   ");
   blu("=============================================================== ");
   blk("                                                                ");
   showSynopsis();
   blk("                                                                ");
   blk("Options:                                                        ");
   mag("  --alias","=<ProcessName>                                      ");
-  blk("      Launch iControl with the given process name         ");
-  blk("      rather than iControl.                           ");
+  blk("      Launch pControl with the given process name         ");
+  blk("      rather than pControl.                           ");
   mag("  --example, -e                                                 ");
   blk("      Display example MOOS configuration block.                 ");
   mag("  --help, -h                                                    ");
@@ -58,7 +58,7 @@ void showHelpAndExit()
   mag("  --interface, -i                                               ");
   blk("      Display MOOS publications and subscriptions.              ");
   mag("  --version,-v                                                  ");
-  blk("      Display the release version of iControl.        ");
+  blk("      Display the release version of pControl.        ");
   blk("                                                                ");
   blk("Note: If argv[2] does not otherwise match a known option,       ");
   blk("      then it will be interpreted as a run alias. This is       ");
@@ -76,10 +76,10 @@ void showExampleConfigAndExit()
 {
   blk("                                                                ");
   blu("=============================================================== ");
-  blu("iControl Example MOOS Configuration                   ");
+  blu("pControl Example MOOS Configuration                   ");
   blu("=============================================================== ");
   blk("                                                                ");
-  blk("ProcessConfig = iControl                              ");
+  blk("ProcessConfig = pControl                              ");
   blk("{                                                               ");
   blk("  AppTick   = 4                                                 ");
   blk("  CommsTick = 4                                                 ");
@@ -99,7 +99,7 @@ void showInterfaceAndExit()
 {
   blk("                                                                ");
   blu("=============================================================== ");
-  blu("iControl INTERFACE                                    ");
+  blu("pControl INTERFACE                                    ");
   blu("=============================================================== ");
   blk("                                                                ");
   showSynopsis();
@@ -123,7 +123,7 @@ void showInterfaceAndExit()
 
 void showReleaseInfoAndExit()
 {
-  showReleaseInfo("iControl", "gpl");
+  showReleaseInfo("pControl", "gpl");
   exit(0);
 }
 

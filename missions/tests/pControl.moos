@@ -9,11 +9,11 @@ ProcessConfig = ANTLER
 	Run = MOOSDB		@ NewConsole = false
 	Run = uMS			@ NewConsole = false 
 
-	Run = iControl 		@ NewConsole = true
+	Run = pControl 		@ NewConsole = true
     Run = iIMU_RazorAHRS  @ NewConsole = false
 }
 
-ProcessConfig = iControl
+ProcessConfig = pControl
 {
    AppTick   = 10
    CommsTick = 10

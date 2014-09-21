@@ -1,7 +1,7 @@
 //------------------------------------------------
-// iControl config block
+// pControl config block
 
-ProcessConfig = iControl
+ProcessConfig = pControl
 {
    AppTick   = 10
    CommsTick = 10

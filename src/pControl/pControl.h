@@ -1,13 +1,13 @@
 /**
- * \file iControl.h
- * \brief Classe iControl
+ * \file pControl.h
+ * \brief Classe pControl
  * \author Team CISSAU - Veni Vidi Vici (ENSTA Bretagne)
  * \version 0.1
  * \date Jun 5th 2013
  */
 
-#ifndef iControl_HEADER
-#define iControl_HEADER
+#ifndef pControl_HEADER
+#define pControl_HEADER
 
 #include <iterator>
 #include "MBUtils.h"
@@ -16,11 +16,11 @@
 
 using namespace std;
 
-class iControl : public CMOOSApp
+class pControl : public CMOOSApp
 {
     public:
-        iControl();
-        ~iControl();
+        pControl();
+        ~pControl();
 
     protected:
         bool OnNewMail(MOOSMSG_LIST &NewMail);

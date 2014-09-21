@@ -1,6 +1,6 @@
 /**
  * \file main.cpp
- * \brief Programme principal de iControl
+ * \brief Programme principal de pControl
  * \author Team CISSAU - Veni Vidi Vici (ENSTA Bretagne)
  * \version 0.1
  * \date Jun 5th 2013
@@ -12,8 +12,8 @@
 #include <string>
 #include "MBUtils.h"
 #include "ColorParse.h"
-#include "iControl.h"
-#include "iControl_Info.h"
+#include "pControl.h"
+#include "pControl_Info.h"
 
 using namespace std;
 
@@ -58,8 +58,8 @@ int main(int argc, char *argv[])
 		cout << "Lancement de " << run_command << endl;
 		cout << termColor() << endl;
 
-		iControl icontrol;
-		icontrol.Run(run_command.c_str(), mission_file.c_str());
+		pControl pcontrol;
+		pcontrol.Run(run_command.c_str(), mission_file.c_str());
 	}
 
 	return(0);

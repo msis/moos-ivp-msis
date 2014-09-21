@@ -1,5 +1,5 @@
 #--------------------------------------------------------
-# The CMakeLists.txt for:                       iControl
+# The CMakeLists.txt for:                       pControl
 # Author(s):                              Équipe Ciscrea - Veni Vidi Vici
 #--------------------------------------------------------
 
@@ -7,16 +7,16 @@
 
 SET(SRC
   iheadingcontroller.cpp
-  iControl.cpp
-  iControl_Info.cpp
+  pControl.cpp
+  pControl_Info.cpp
   main.cpp
 )
 
 
 
-ADD_EXECUTABLE(iControl ${SRC})
+ADD_EXECUTABLE(pControl ${SRC})
 
-TARGET_LINK_LIBRARIES(iControl
+TARGET_LINK_LIBRARIES(pControl
    MOOS
    mbutil
    m

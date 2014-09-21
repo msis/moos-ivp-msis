@@ -23,7 +23,7 @@ ADD_SUBDIRECTORY(pSensorViewer)
 ADD_SUBDIRECTORY(lib_common)
 ADD_SUBDIRECTORY(lib_behaviors)
 ADD_SUBDIRECTORY(pLocalizationSonar)
-ADD_SUBDIRECTORY(iControl)
+ADD_SUBDIRECTORY(pControl)
 
 
 

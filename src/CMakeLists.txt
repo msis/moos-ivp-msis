@@ -24,6 +24,7 @@ ADD_SUBDIRECTORY(pSensorViewer)
 ADD_SUBDIRECTORY(uJoystick)
 ADD_SUBDIRECTORY(lib_common)
 ADD_SUBDIRECTORY(lib_behaviors)
+ADD_SUBDIRECTORY(pCameraLogger)
 
 
 

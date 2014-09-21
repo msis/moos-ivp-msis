@@ -142,14 +142,14 @@ ProcessConfig = pShare
   AppTick    = 2
   CommsTick  = 2
 
-  input = route = multicast_21
-  output = src_name=DEPTH, dest_name=DEPTH_VICI, route=multicast_21
-  output = src_name=CURRENT_BATT1, dest_name=CURRENT_BATT1_VICI, route=multicast_21
-  output = src_name=CURRENT_BATT2, dest_name=CURRENT_BATT2_VICI, route=multicast_21
-  output = src_name=VOLTAGE_BATT1, dest_name=VOLTAGE_BATT1_VICI, route=multicast_21
-  output = src_name=VOLTAGE_BATT2, dest_name=VOLTAGE_BATT2_VICI, route=multicast_21
-  output = src_name=CONSUMPTION_BATT1, dest_name=CONSUMPTION_BATT1_VICI, route=multicast_21
-  output = src_name=CONSUMPTION_BATT2, dest_name=CONSUMPTION_BATT2_VICI, route=multicast_21
-  output = src_name=HEADING, dest_name=HEADING_VICI, route=multicast_21
-  output = src_name=CISCREA_ON, dest_name=CISCREA_ON_VICI, route=multicast_21
+  input = route = multicast_1
+  output = src_name=DEPTH, dest_name=DEPTH_VICI, route=multicast_1
+  output = src_name=CURRENT_BATT1, dest_name=CURRENT_BATT1_VICI, route=multicast_1
+  output = src_name=CURRENT_BATT2, dest_name=CURRENT_BATT2_VICI, route=multicast_1
+  output = src_name=VOLTAGE_BATT1, dest_name=VOLTAGE_BATT1_VICI, route=multicast_1
+  output = src_name=VOLTAGE_BATT2, dest_name=VOLTAGE_BATT2_VICI, route=multicast_1
+  output = src_name=CONSUMPTION_BATT1, dest_name=CONSUMPTION_BATT1_VICI, route=multicast_1
+  output = src_name=CONSUMPTION_BATT2, dest_name=CONSUMPTION_BATT2_VICI, route=multicast_1
+  output = src_name=HEADING, dest_name=HEADING_VICI, route=multicast_1
+  output = src_name=CISCREA_ON, dest_name=CISCREA_ON_VICI, route=multicast_1
 }

@@ -1,0 +1,30 @@
+//------------------------------------------------
+// uJoystick config block
+
+ProcessConfig = uJoystick
+{
+   AppTick   = 4
+   CommsTick = 4
+   
+   SHOW_ALL_EVENTS = 1
+   
+   SCALE = 100
+   
+   DEVICE_NAME = /dev/input/js0
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 0
+   DEST_VAR = DESIRED_SLIDE
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 1
+   DEST_VAR = DESIRED_THRUST
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 2
+   DEST_VAR = DESIRED_RUDDER
+   
+   AXIS_SCALE_RATIO = 0.5
+   AXIS = 3
+   DEST_VAR = DESIRED_ELEVATOR
+}

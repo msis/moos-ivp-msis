@@ -6,8 +6,10 @@ ProcessConfig = ANTLER
 {
 	MSBetweenLaunches = 200
 	Run = MOOSDB         			@ NewConsole = false 
-	Run = iCISCREA					@ NewConsole = true
+	Run = iCISCREA					@ NewConsole = false
 	Run = uMS						@ NewConsole = false
+
+  Run = uTimerScript  @ NewConsole = false
 }
 
 //------------------------------------------------
@@ -46,4 +48,17 @@ ProcessConfig = iCISCREA
 
   DEPTH_OFFSET = -0.02
 
+}
+
+ProcessConfig = uTimerScript
+{
+  AppTick = 2
+  CommsTick = 2
+
+  reset_time = end
+  reset_max = unlimited
+  delay_reset = 10
+
+  event = var=DESIRED_THRUST, val=100, time=0
+  event = var=DESIRED_THRUST, val=0, time=10
 }

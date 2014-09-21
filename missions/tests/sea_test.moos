@@ -145,8 +145,7 @@ ProcessConfig = pLogger
   WildCardLogging = true
   WildCardOmitPattern = *_STATUS
   WildCardOmitPattern = *_DEBUG
-  WildCardOmitPattern = CAMERA_BOTTOM
-  WildCardOmitPattern = CAMERA_SIDE
+  WildCardOmitPattern = *AMERA_*
   WildCardExclusionLog = true
 }
 

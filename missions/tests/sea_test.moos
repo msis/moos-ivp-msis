@@ -113,7 +113,7 @@ ProcessConfig = pCameraLogger_SIDE
    CommsTick = 1
   VARIABLE_IMAGE_NAME = CAMERA_SIDE
   DISPLAY_IMAGE = false
-  SAVE_IN_FOLDER = /tmp
+  SAVE_IN_FOLDER = ./
   IMAGE_NAME_PATTERN = SIDE_%06d.jpg
 }
 
@@ -125,7 +125,7 @@ ProcessConfig = pCameraLogger_BOTTOM
    CommsTick = 1
   VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
   DISPLAY_IMAGE = false
-  SAVE_IN_FOLDER = /tmp
+  SAVE_IN_FOLDER = ./
   IMAGE_NAME_PATTERN = BOTTOM_%06d.jpg
 }
 
@@ -134,6 +134,8 @@ ProcessConfig = pLogger
 {
   AppTick   = 8
   CommsTick = 8
+
+  File = VICI_data
 
   SyncLog = false
   AsyncLog = true
@@ -146,9 +148,9 @@ ProcessConfig = pLogger
   WildCardPattern = *
   WildCardOmitPattern = *_STATUS
   WildCardOmitPattern = *_DEBUG
-  WildCardOmitPattern = *_BOTTOM
-  WildCardOmitPattern = *_SIDE
-  WildCardExclusionLog = true
+  WildCardOmitPattern = *CAMERA_BOTTOM*
+  WildCardOmitPattern = *CAMERA_SIDE*
+  //WildCardExclusionLog = true
 }
 
 

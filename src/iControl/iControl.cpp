@@ -57,11 +57,11 @@ bool iControl::OnNewMail(MOOSMSG_LIST &NewMail)
 
         if( msg.GetKey() == "YAW") // HEADING, MAG_Z
         {
-            razor_heading = msg.GetDouble();
+            razor_heading = MOOSDeg2Rad(msg.GetDouble());
         }
         if( msg.GetKey() == "DESIRED_HEADING")
         {
-            desired_heading = msg.GetDouble();
+            desired_heading = MOOSDeg2Rad(msg.GetDouble());
         }
     }
 

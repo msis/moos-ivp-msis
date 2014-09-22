@@ -27,6 +27,7 @@ ProcessConfig = ANTLER
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
   Run = pLogger   @ NewConsole = false
+  Run = pSauceCSV @ NewConsole = false
 }
 
 
@@ -203,4 +204,13 @@ ProcessConfig = pLocalizationSonar
    POOL_ANGLE = 0.31276672156874197
    ZONE = 32T
    USE_RAZOR_HEADING = true
+}
+
+
+ProcessConfig = pSauceCSV
+{
+   AppTick   = 1
+   CommsTick = 5
+   
+   LOGS_FOLDER = "./logs"
 }

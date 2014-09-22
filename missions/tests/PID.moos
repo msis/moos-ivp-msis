@@ -26,9 +26,9 @@ ProcessConfig = uTimerScript
   event = var=SPEED, val=0, time=0
   event = var=DESIRED_SPEED, val=0, time=0
   event = var=DESIRED_HEADING, val=0, time=0
-  event = var=DESIRED_DEPTH, val=-1, time=0
+  event = var=DESIRED_DEPTH, val=1, time=0
 
-  event = var=DESIRED_DEPTH, val=1, time=10
+  event = var=DESIRED_DEPTH, val=0, time=10
 
 }
 

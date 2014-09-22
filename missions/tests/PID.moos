@@ -24,12 +24,12 @@ ProcessConfig = uTimerScript
   reset_max = unlimited
   delay_reset = 5
 
-  event = var=SPEED, val=0, time=0
-  event = var=DESIRED_SPEED, val=0, time=0
+  event = var=SPEED, val=1, time=0
+  event = var=DESIRED_SPEED, val=1, time=0
   event = var=DESIRED_HEADING, val=0, time=0
-  event = var=DESIRED_DEPTH, val=1, time=0
+//  event = var=DESIRED_DEPTH, val=1, time=0
 
-  event = var=DESIRED_DEPTH, val=0, time=10
+//  event = var=DESIRED_DEPTH, val=0, time=10
 
 }
 
@@ -94,8 +94,8 @@ ProcessConfig = pMarinePID
   ACTIVE_START  = true
   
   // Yaw PID controller
-  YAW_PID_KP             = 0.4
-  YAW_PID_KD             = 0.1
+  YAW_PID_KP             = 0.02
+  YAW_PID_KD             = 0.5
   YAW_PID_KI             = 0.0
   YAW_PID_INTEGRAL_LIMIT = 0.07
   
@@ -118,7 +118,7 @@ ProcessConfig = pMarinePID
   Z_TO_PITCH_PID_INTEGRAL_LIMIT  = 0.05
 
   // Maximums
-  MAXRUDDER   = 100
+  MAXRUDDER   = 10
   MAXTHRUST   = 100
   MAXPITCH    = 15
   MAXELEVATOR = 100

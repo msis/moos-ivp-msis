@@ -18,7 +18,8 @@ using namespace std;
 pCameraLogger::pCameraLogger() : show_image(false),
                                  start_record(false),
                                  path_save(""),
-                                 image_name_pattern("/frame_%06d.jpg")
+                                 folder_name_pattern("/DATASET_%F_%H-%M-%S"),
+                                 image_name_pattern("/image_%H_%M_%S.jpg")
 {
     m_iterations = 0;
     m_timewarp   = 1;
@@ -109,10 +110,17 @@ bool pCameraLogger::Iterate()
     }
     
     m_iterations++;
-    char name[18];
-    sprintf(name,image_name_pattern.c_str(),m_iterations);
+    
+    char name[80];
+    time_t     now = time(0);
+    struct tm  tstruct;
+    tstruct = *localtime(&now);
+    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+    // for more information about date/time format
+    strftime(name, sizeof(name), image_name_pattern.c_str(), &tstruct);
+    
     imwrite(path_save+name, img);
-    m_Comms.Notify("IMAGE_SAVED", path_save+name);
+    m_Comms.Notify(image_name+"_IMAGE_SAVED", path_save+name);
     return(true);
 }
 
@@ -143,6 +151,10 @@ bool pCameraLogger::OnStartUp()
             {
                 image_name_pattern = "/"+value;
             }
+            if(param == "FOLDER_NAME_PATTERN")
+            {
+                folder_name_pattern = "/"+value;
+            }
             if(param == "SAVE_IN_FOLDER")
             {
                 path_save = value;
@@ -157,6 +169,16 @@ bool pCameraLogger::OnStartUp()
     }
 
     m_timewarp = GetMOOSTimeWarp();
+    
+    char folder_name[80];
+    time_t     now = time(0);
+    struct tm  tstruct;
+    tstruct = *localtime(&now);
+    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+    // for more information about date/time format
+    strftime(folder_name, sizeof(folder_name), folder_name_pattern.c_str(), &tstruct);
+    path_save += folder_name;
+    mkdir(path_save.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
 
     RegisterVariables();
     return(true);

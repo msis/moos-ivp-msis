@@ -16,6 +16,8 @@
 #include <opencv2/core/core.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <time.h>
+#include <sys/stat.h>
 
 using namespace std;
 using namespace cv;
@@ -38,7 +40,7 @@ class pCameraLogger : public CMOOSApp
     private: // State variables
         unsigned int    m_iterations;
         double            m_timewarp;
-        string image_name, path_save, image_name_pattern;
+        string image_name, path_save, image_name_pattern, folder_name_pattern;
         bool show_image, start_record;
         Mat img;
 };

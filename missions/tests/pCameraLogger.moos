@@ -6,7 +6,7 @@ ProcessConfig = ANTLER
 {
     MSBetweenLaunches = 200
     Run = MOOSDB                     @ NewConsole = false 
-    Run = pCameraLogger                    @ NewConsole = true
+    Run = pCameraLogger                    @ NewConsole = false
 	//Run = iCamera 		@ NewConsole = false ~ iCamera_BOTTOM
 	Run = iCamera 		@ NewConsole = false ~ iCamera_SIDE
     Run = uMS                        @ NewConsole = false
@@ -27,5 +27,7 @@ ProcessConfig = pCameraLogger
 	VARIABLE_IMAGE_NAME = CAMERA_SIDE
 	DISPLAY_IMAGE = false
 	SAVE_IN_FOLDER = /home/schvarcz/Desktop/images
-	IMAGE_NAME_PATTERN = image_%06d.jpg
+	// http://www.cplusplus.com/reference/ctime/strftime/
+	IMAGE_NAME_PATTERN = image_%H_%M_%S.jpg
+	FOLDER_NAME_PATTERN = DATASET_%F_%H-%M-%S
 }

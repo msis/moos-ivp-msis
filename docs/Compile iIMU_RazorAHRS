@@ -1,0 +1,22 @@
+To compile the iIMU_RazorAHRS remember to use g++ version 4.7.
+
+If don't have it yet, you can add the test repository from Ubuntu and install it from there, following these commands:
+
+Add the test repository:
+    sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+
+Update your computer:
+    sudo apt-get update
+
+Install g++ v4.7:
+    sudo apt-get install g++-4.7
+
+
+After that, you need change the default gcc and g++ of your computer. First let your computer know the two versions:
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.6 60 --slave /usr/bin/g++ g++ /usr/bin/g++-4.6
+    sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.7 40 --slave /usr/bin/g++ g++ /usr/bin/g++-4.7
+
+
+And then, configure to use the proper version.
+    sudo update-alternatives --config gcc
+

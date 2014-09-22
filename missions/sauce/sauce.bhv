@@ -4,25 +4,48 @@
 
 initialize DEPLOY = false
 initialize RETURN = false
+initialize T1_DONE = false
+initialize T2_DONE = false
+initialize T3_DONE = false
+initialize T4_DONE = false
 
 set MODE = ACTIVE
 {
   DEPLOY = true
 } INACTIVE
 
-set MODE = QUALIFICATION
+set MODE = T1_QUALIFICATION
 {
   MODE = ACTIVE
+  DEPLOY = true
+  T1_DONE = false
 }
 
-set MODE = WALL_FOLLOWING
+set MODE = T2_UNDERWATER_INSPECTION
+{
+  MODE = ACTIVE
+  T1_DONE = true
+  T2_DONE = false
+}
+
+set MODE = T3_FIND_ANOMALY
 { 
   MODE = ACTIVE
+  T1_DONE = true
+  T3_DONE = false
+}
+
+set MODE = T4_BLACK_BOX
+{ 
+  MODE = ACTIVE
+  T1_DONE = true
+  T4_DONE = false
 }
 
 set MODE = SURFACE
-{ 
+{
   MODE = INACTIVE
+  RETURN = true
 }
 
 // SURFACE (MODE = SURFACE)
@@ -42,13 +65,13 @@ set MODE = SURFACE
   {
     name = bhv_qualification_waypoint
     priority = 100
-    condition = MODE == QUALIFICATION
-    endflag = MODE = SURFACE
+    condition = MODE == T1_QUALIFICATION
+    endflag = T1_DONE = true
     
-    points = label,survey_points:60,20:30,20:40,30
+    points = label,survey_points:40,20:25,20:25,12.5:25,8
     speed = 3             // meters per second
-    capture_radius = 2    // meters
-    nm_radius = 4         // meters
+    capture_radius = 1.5  // meters
+    nm_radius = 3         // meters
     repeat = 0            // number of iterations
     lead = 4              // meters
   }
@@ -57,7 +80,66 @@ set MODE = SURFACE
   {
     name = bhv_qualification_depth
     priority = 100
-    condition = MODE == QUALIFICATION
+    condition = MODE == T1_QUALIFICATION
+    duration = no-time-limit
+    depth = 2             // meters
+  }
+
+// TASK 2: UNDERWATER STRUCTURE INSPECTION
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_underwater_inspection_waypoint
+    priority = 100
+    condition = MODE == T2_UNDERWATER_INSPECTION
+    endflag = T2_DONE = true
+    
+    //points = label,survey_points:40,20:25,20:25,12.5:25,8
+  }
+  
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_underwater_inspection_depth
+    priority = 100
+    condition = MODE == T2_UNDERWATER_INSPECTION
+    duration = no-time-limit
+    depth = 2             // meters
+  }
+
+// TASK 3: INSPECT THE WALL, FIND AN ANOMALY, AND CALL A FRIEND
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_find_anomaly_waypoint
+    priority = 100
+    condition = MODE == T3_FIND_ANOMALY
+    endflag = T3_DONE = true
+  }
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_find_anomaly_depth
+    priority = 100
+    condition = MODE == T3_FIND_ANOMALY
+    duration = no-time-limit
+    depth = 2             // meters
+  }
+
+// TASK 4: SURVEY AND FIND A BLACK BOX
+
+  Behavior = BHV_Waypoint
+  {
+    name = bhv_black_box_waypoint
+    priority = 100
+    condition = MODE == T4_BLACK_BOX
+    endflag = T4_DONE = true
+  }
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_black_box_depth
+    priority = 100
+    condition = MODE == T4_BLACK_BOX
     duration = no-time-limit
     depth = 2             // meters
   }

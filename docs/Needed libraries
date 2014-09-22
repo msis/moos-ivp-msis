@@ -1,0 +1,17 @@
+# Needed to access serial ports without conflicts
+# (also check if the user is a member of the "dialout" group)
+sudo apt-get remove modemmanager
+
+# Lib MODBUS for communication with JACK-ROV (iCiscrea)
+sudo apt-get install libmodbus-dev
+# OpenCV (needed by iCiscrea for matrices, and also by vision and visualization modules)
+sudo apt-get install libcv-dev
+# v4l (for iCamera acquisition with video for linux)
+sudo apt-get install libv4l-dev
+
+# NOTE DUE TO NEW MOOSGeodesy IMPLEMENTATION IN moos-ivp
+# If compilation fails beacause "proj_api.h" is not found, go to MOOS/proj-4.8.0/ folder
+# of the moos-ivp directory, and try to install proj4 again using the following commands
+# ./configure --prefix=/usr/local
+# make
+# sudo make install

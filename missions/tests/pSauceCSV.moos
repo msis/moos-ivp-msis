@@ -1,0 +1,20 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+	MSBetweenLaunches = 200
+	Run = MOOSDB      @ NewConsole = false 
+	Run = pSauceCSV		@ NewConsole = true
+	Run = uMS			    @ NewConsole = false
+}
+
+ProcessConfig = pSauceCSV
+{
+  AppTick   = 1
+  CommsTick = 5
+  
+  LOGS_FOLDER = ./logs
+  //LOGS_FILE_NAME = logs_sauce.csv
+}

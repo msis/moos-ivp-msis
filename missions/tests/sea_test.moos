@@ -111,8 +111,8 @@ ProcessConfig = pShare
 
 ProcessConfig = pCameraLogger_SIDE
 {
-   AppTick   = 1
-   CommsTick = 1
+   AppTick   = 4
+   CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_SIDE
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
@@ -123,8 +123,8 @@ ProcessConfig = pCameraLogger_SIDE
 
 ProcessConfig = pCameraLogger_BOTTOM
 {
-   AppTick   = 1
-   CommsTick = 1
+   AppTick   = 4
+   CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
@@ -203,7 +203,7 @@ ProcessConfig = pLocalizationSonar
    POOL_UTM_Y = 4882924.769567073
    POOL_ANGLE = 0.31276672156874197
    ZONE = 32T
-   USE_RAZOR_HEADING = true
+   USE_RAZOR_HEADING = false
 }
 
 

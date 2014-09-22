@@ -23,6 +23,7 @@ ProcessConfig = uTimerScript
   reset_max = unlimited
   delay_reset = 5
 
+  event = var=SPEED, val=0, time=0
   event = var=DESIRED_SPEED, val=0, time=0
   event = var=DESIRED_HEADING, val=0, time=0
   event = var=DESIRED_DEPTH, val=-1, time=0

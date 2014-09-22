@@ -39,7 +39,8 @@ class LocalizationSonar : public CMOOSApp
         double heading;
         double heading_razor;
         Mat img, edge, gray, color_dst, sonarImg;
-        
+        bool hasImage;
+
         unsigned int timeWindow; //200
         int **ptTime;
         Point ptW1, ptW2;

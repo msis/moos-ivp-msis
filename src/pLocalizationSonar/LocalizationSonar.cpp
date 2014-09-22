@@ -15,7 +15,7 @@ using namespace std;
  * \brief Constructeur de l'application MOOS
  */
 
-LocalizationSonar::LocalizationSonar(): pool(50.,50.), pool_utm(0.,0.) //width, height
+LocalizationSonar::LocalizationSonar(): hasImage(false), pool(50.,50.), pool_utm(0.,0.) //width, height
 {
     m_iterations = 0;
     m_timewarp   = 1;
@@ -93,6 +93,7 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
                         sonarImg.at<unsigned char>(x,y) = scanline[i];
                 }
             }
+            hasImage = true;
         }
     }
 
@@ -124,7 +125,8 @@ bool LocalizationSonar::OnConnectToServer()
 bool LocalizationSonar::Iterate()
 {
     m_iterations++;
-    processImage(sonarImg);
+    if (hasImage)
+        processImage(sonarImg);
     return(true);
 }
 

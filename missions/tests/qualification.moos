@@ -20,6 +20,7 @@ ProcessConfig = ANTLER
   Run = iEchoSounder    @ NewConsole = false
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
+
   Run = pLogger   @ NewConsole = false
   Run = pSauceCSV @ NewConsole = false
 }
@@ -33,19 +34,19 @@ ProcessConfig = uTimerScript
   //reset_time = end
   delay_reset = 5
 
-  event = var=SPEED, val=2, time=0
+  event = var=SPEED, val=1.5, time=30
   event = var=DESIRED_DEPTH, val=1, time=0
-  event = var=DESIRED_HEADING, val=155, time=0
-  event = var=DESIRED_SPEED, val=2, time=5
+  event = var=DESIRED_HEADING, val=165, time=0
+  event = var=DESIRED_SPEED, val=1.5, time=35
   
-  event = var=DESIRED_SPEED, val=0.1, time=105
-  event = var=DESIRED_HEADING, val=245, time=105
+  event = var=DESIRED_SPEED, val=0.1, time=245
+  event = var=DESIRED_HEADING, val=245, time=245
 
-  event = var=DESIRED_SPEED, val=2, time=125
+  event = var=DESIRED_SPEED, val=1.5, time=265
   
-  event = var=DESIRED_SPEED, val=0, time=200
-  event = var=DESIRED_DEPTH, val=0, time=200
-  event = var=SPEED, val=0, time=200
+  event = var=DESIRED_SPEED, val=0, time=340
+  event = var=DESIRED_DEPTH, val=0, time=500
+  event = var=SPEED, val=0, time=340
 
   //  event = var=DESIRED_DEPTH, val=0, time=10
 }
@@ -97,8 +98,8 @@ ProcessConfig = iCISCREA
 
 ProcessConfig = pMarinePID
 {
-  AppTick    = 10
-  CommsTick  = 10
+  AppTick    = 5
+  CommsTick  = 5
   
   tardy_helm_threshold = 100.0                                    
   tardy_nav_threshold  = 100.0
@@ -132,8 +133,8 @@ ProcessConfig = pMarinePID
   Z_TO_PITCH_PID_INTEGRAL_LIMIT  = 0.05
 
   // Maximums
-  MAXRUDDER   = 5
-  MAXTHRUST   = 100
+  MAXRUDDER   = 2
+  MAXTHRUST   = 50
   MAXPITCH    = 50
   MAXELEVATOR = 100
   
@@ -155,26 +156,6 @@ ProcessConfig = iSonar
   CONTINUOUS = true //TRUE FOR 360  ROTATION. SET RIGHT AND LEFT LIMIT IF FALSE 
   //LEFTLIMIT = 70.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
   //RIGHTLIMIT = 110.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
-}
-
-ProcessConfig = pCameraLogger_SIDE
-{
-  AppTick   = 4
-  CommsTick = 4
-  VARIABLE_IMAGE_NAME = CAMERA_SIDE
-  DISPLAY_IMAGE = false
-  SAVE_IN_FOLDER = ./
-  IMAGE_NAME_PATTERN = SIDE_%06d.jpg
-}
-
-ProcessConfig = pCameraLogger_BOTTOM
-{
-  AppTick   = 4
-  CommsTick = 4
-  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
-  DISPLAY_IMAGE = false
-  SAVE_IN_FOLDER = ./
-  IMAGE_NAME_PATTERN = BOTTOM_%06d.jpg
 }
 
 ProcessConfig = iIMU_RazorAHRS
@@ -200,11 +181,10 @@ ProcessConfig = iEchoSounder
   SERIAL_PORT_NAME = /dev/ttyUSB4
 }
 
-
 ProcessConfig = pCameraLogger_SIDE
 {
-  AppTick   = 4
-  CommsTick = 4
+   AppTick   = 4
+   CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_SIDE
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
@@ -215,14 +195,13 @@ ProcessConfig = pCameraLogger_SIDE
 
 ProcessConfig = pCameraLogger_BOTTOM
 {
-  AppTick   = 4
-  CommsTick = 4
+   AppTick   = 4
+   CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
   IMAGE_NAME_PATTERN = BOTTOM_%06d.jpg
 }
-
 
 ProcessConfig = pLogger
 {
@@ -254,3 +233,20 @@ ProcessConfig = pSauceCSV
    
    LOGS_FOLDER = ./
 }
+
+ProcessConfig = iCamera_BOTTOM
+{
+  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
+  IDENTIFIANT_CV_CAMERA = 0
+  DISPLAY_IMAGE = false
+  INVERT_IMAGE = true
+}
+
+ProcessConfig = iCamera_SIDE
+{
+  VARIABLE_IMAGE_NAME = CAMERA_SIDE
+  IDENTIFIANT_CV_CAMERA = 1
+  DISPLAY_IMAGE = false
+  INVERT_IMAGE = false
+}
+

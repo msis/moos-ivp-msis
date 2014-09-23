@@ -4,14 +4,14 @@ Community = VICI
 
 ProcessConfig = ANTLER
 {
-	MSBetweenLaunches = 200
-	Run = MOOSDB		@ NewConsole = false
-	Run = uMS			@ NewConsole = false 
+  MSBetweenLaunches = 200
+  Run = MOOSDB		@ NewConsole = false
+  //Run = uMS			@ NewConsole = false 
+  Run = pLogger   @ NewConsole = false
+  Run = pShare @ NewConsole = false
 
-	Run = pMarinePID	@ NewConsole = false
-	Run = iCISCREA		@ NewConsole = false
-	Run = uTimerScript  @ NewConsole = false
-	Run = pEchoVar  @ NewConsole = false
+  Run = pEchoVar  @ NewConsole = false
+  Run = iCISCREA    @ NewConsole = false
 
   Run = iSonar           @ NewConsole = false
   Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
@@ -21,8 +21,9 @@ ProcessConfig = ANTLER
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
 
-  Run = pLogger   @ NewConsole = false
   Run = pSauceCSV @ NewConsole = false
+  Run = pMarinePID  @ NewConsole = false
+  Run = uTimerScript  @ NewConsole = false
 }
 
 
@@ -136,7 +137,7 @@ ProcessConfig = pMarinePID
   MAXRUDDER   = 2
   MAXTHRUST   = 50
   MAXPITCH    = 50
-  MAXELEVATOR = 100
+  MAXELEVATOR = 50
   
   // A non-zero SPEED_FACTOR overrides use of SPEED_PID
   // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR
@@ -250,3 +251,19 @@ ProcessConfig = iCamera_SIDE
   INVERT_IMAGE = false
 }
 
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=DEPTH, route=multicast_1
+  Output = src_name=VOLTAGE_BATT1, route=multicast_1
+  Output = src_name=VOLTAGE_BATT2, route=multicast_1
+  Output = src_name=HEADING, route=multicast_1
+  Output = src_name=DESIRED_HEADING, route=multicast_1
+  Output = src_name=DESIRED_THRUST, route=multicast_1
+  Output = src_name=DESIRED_RUDDER, route=multicast_1
+  Output = src_name=DESIRED_DEPTH, route=multicast_1
+  Output = src_name=DESIRED_ELEVATOR, route=multicast_1
+
+}

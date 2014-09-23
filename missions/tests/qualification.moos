@@ -35,7 +35,7 @@ ProcessConfig = uTimerScript
   //reset_time = end
   delay_reset = 5
 
-  event = var=SPEED, val=1.5, time=30
+  event = var=SPEED, val=1.5, time=10
   event = var=DESIRED_DEPTH, val=1, time=0
   event = var=DESIRED_HEADING, val=165, time=0
   event = var=DESIRED_SPEED, val=1.5, time=35
@@ -141,7 +141,7 @@ ProcessConfig = pMarinePID
   
   // A non-zero SPEED_FACTOR overrides use of SPEED_PID
   // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR
-  SPEED_FACTOR = 20
+  SPEED_FACTOR = 15
 }
 
 ProcessConfig = iSonar

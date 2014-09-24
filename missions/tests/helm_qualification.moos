@@ -181,24 +181,26 @@ ProcessConfig = iEchoSounder
 
 ProcessConfig = pCameraLogger_SIDE
 {
-   AppTick   = 4
-   CommsTick = 4
+  AppTick   = 4
+  CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_SIDE
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
-  IMAGE_NAME_PATTERN = SIDE_%06d.jpg
+  // http://www.cplusplus.com/reference/ctime/strftime/
+  IMAGE_NAME_PATTERN = SIDE_%H_%M_%S.jpg
+  FOLDER_NAME_PATTERN = PICS_%F_%H-%M-%S
 }
-
-
 
 ProcessConfig = pCameraLogger_BOTTOM
 {
-   AppTick   = 4
-   CommsTick = 4
+  AppTick   = 4
+  CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
-  IMAGE_NAME_PATTERN = BOTTOM_%06d.jpg
+  // http://www.cplusplus.com/reference/ctime/strftime/
+  IMAGE_NAME_PATTERN = BOTTOM_%H_%M_%S.jpg
+  FOLDER_NAME_PATTERN = PICS_%F_%H-%M-%S
 }
 
 ProcessConfig = pLogger

@@ -50,10 +50,10 @@ ProcessConfig = pMarineViewer
   //set_pan_x            = -90                                    
   //set_pan_y            = -280                                   
   //zoom                 = 0.65                                   
-  //vehicle_shape_scale  = 1.35                                   
+  vehicle_shape_scale  = 1.35                                   
                                                                 
   // BackView Pull-Down Menu ===================================
-  hash_delta           = 50    // {10,50,200,500}               
+  hash_delta           = 10    // {10,50,200,500}               
   hash_shade           = 0.4   // [0.0, 1.0]                    
   hash_viewable        = true  // {TRUE, false}                 
   full_screen          = false // {true, FALSE}                 
@@ -85,9 +85,9 @@ ProcessConfig = pMarineViewer
                                                                 
   // Vehicles Pull-Down Menu ===================================
   vehicles_viewable       = true   // {TRUE, false}             
-  vehicles_name_mode      = names  // {names, names+depth, off  
-                                       names+mode, names+auxmode
-                                       names+shortmode}         
+  vehicles_name_mode      = names+depth // {names, names+depth, off  
+                                       //names+mode, names+auxmode
+                                       //names+shortmode}         
   stale_report_thresh     = 30     // [5, inf)                  
   stale_remove_thresh     = 30     // [0, inf)                  
   vehicles_active_color   = red    // {yellow,white,blue,green} 
@@ -106,29 +106,10 @@ ProcessConfig = pMarineViewer
   appcast_width        = 40       // {20, 25, 30, ..., 65, 70}  
   appcast_height       = 70       // {30, 35, 40, ..., 85, 90}  
                                                                 
-  // Context Pull-Down Menu ====================================
-  left_context[survey-point] = SURVEY_UPDATES = points =        
-         vname=$(VNAME), x=$(XPOS), y=$(YPOS), format=lawnmower,
-         label=delta, width=70, height=30, lane_width=8,        
-         rows=north-south, degs=80                              
-  left_context[survey-point] = SURVEY = true                    
-                                                                
-  // MOOS-Scope Pull-Down Menu ================================ 
-  scope = SURVEY_UPDATES                                        
-  scope = TIME_AT_SURFACE                                       
-                                                                
-  // Action Pull-Down Menu                                      
-  action = DEPTH_VALUE="depth=50"                             
-  action = DEPTH_VALUE="depth=25"                             
-  action = DEPTH_VALUE="depth=7"                              
-  action = UP_LOITER="speed=0"                                
-  action = UP_LOITER="speed=1.2"                              
-                                                                
-  // Button Configurations                                      
   button_one   = DEPLOY # DEPLOY=true                           
-  button_one   = MOOS_MANUAL_OVERIDE=false # RETURN=false       
-  button_two   = RETURN # RETURN=true                           
-  button_three = SURVEY-true # SURVEY=true                      
-  button_four  = SURVEY-false # SURVEY=false                    
+  //button_one   = MOOS_MANUAL_OVERIDE=false # RETURN=false       
+  //button_two   = RETURN # RETURN=true                           
+  //button_three = SURVEY-true # SURVEY=true                      
+  //button_four  = SURVEY-false # SURVEY=false                    
 }                                
    

@@ -88,8 +88,8 @@ bool DeReCISCREA::Iterate()
   double new_time = MOOSTime();
   double dt = new_time - m_time;
 
-  m_nav_x += cos(MOOSDeg2Rad(m_nav_heading))*m_speed_factor*m_desired_thrust*dt;
-  m_nav_y += sin(MOOSDeg2Rad(m_nav_heading))*m_speed_factor*m_desired_thrust*dt;
+  m_nav_x += sin(MOOSDeg2Rad(m_nav_heading))*m_speed_factor*m_desired_thrust*dt;
+  m_nav_y += cos(MOOSDeg2Rad(m_nav_heading))*m_speed_factor*m_desired_thrust*dt;
 
   m_time = new_time;
 

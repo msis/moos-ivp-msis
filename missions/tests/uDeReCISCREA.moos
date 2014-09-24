@@ -1,0 +1,26 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = VICI
+
+ProcessConfig = ANTLER
+{
+	MSBetweenLaunches = 200
+	Run = MOOSDB      @ NewConsole = false 
+	Run = uDeReCISCREA		@ NewConsole = true
+	Run = uMS			    @ NewConsole = false
+}
+
+//------------------------------------------------
+// uDeReCISCREA config block
+                                    
+ProcessConfig = uDeReCISCREA
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SPEED_FACTOR = 0.0115
+
+  START_X = 0
+  START_Y = 0
+}                                                               
+   

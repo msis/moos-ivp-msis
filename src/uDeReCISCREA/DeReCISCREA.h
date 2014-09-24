@@ -37,7 +37,7 @@ class DeReCISCREA : public AppCastingMOOSApp
  	double m_nav_x, m_nav_y;
  	double m_nav_heading;
  	double m_desired_thrust,m_desired_speed;
- 	double m_time;
+ 	double m_time, m_time_start;
 
 };
 

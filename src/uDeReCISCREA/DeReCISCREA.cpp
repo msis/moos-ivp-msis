@@ -23,6 +23,7 @@ DeReCISCREA::DeReCISCREA():
   m_desired_thrust(0),m_desired_speed(0)
 {
   m_time = MOOSTime();
+  m_time_start = MOOSTime();
 }
 
 //---------------------------------------------------------
@@ -92,6 +93,9 @@ bool DeReCISCREA::Iterate()
 
   m_time = new_time;
 
+  Notify("NAV_X",m_nav_x);
+  Notify("NAV_Y",m_nav_y);
+
   AppCastingMOOSApp::PostReport();
   return(true);
 }
@@ -149,6 +153,8 @@ void DeReCISCREA::registerVariables()
   Register("DESIRED_THRUST",0);
   Register("DESIRED_SPEED",0);
   Register("NAV_HEADING",0);
+  Register("NAV_X",0);
+  Register("NAV_Y",0);
   Register("SPEED_FACTOR",0);
 }
 
@@ -159,13 +165,19 @@ void DeReCISCREA::registerVariables()
 bool DeReCISCREA::buildReport() 
 {
   m_msgs << "============================================ \n";
-  m_msgs << "File:                                        \n";
+  m_msgs << "CISCREA Dead Reckoning App                                        \n";
   m_msgs << "============================================ \n";
 
-  ACTable actab(4);
-  actab << "Alpha | Bravo | Charlie | Delta";
+  ACTable actab(3);
+  actab << "Variables | Values | Time ";
   actab.addHeaderLines();
-  actab << "one" << "two" << "three" << "four";
+  actab << "NAV_X" << m_nav_x << (m_time - m_time_start);
+  actab << "NAV_Y" << m_nav_y << (m_time - m_time_start);
+  actab << "NAV_HEADING" << m_nav_heading << (m_time - m_time_start);
+  actab << "SUPPOSED_SPEED" << m_desired_thrust*m_speed_factor << (m_time - m_time_start);
+  actab << "DESIRED_THRUST" << m_desired_thrust << (m_time - m_time_start);
+  actab << "SPEED_FACTOR" << m_speed_factor << (m_time - m_time_start);
+
   m_msgs << actab.getFormattedString();
 
   return(true);

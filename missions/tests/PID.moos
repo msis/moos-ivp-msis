@@ -93,7 +93,7 @@ ProcessConfig = pMarinePID
   tardy_nav_threshold  = 100.0
 
   VERBOSE       = true
-  DEPTH_CONTROL = true
+  DEPTH_CONTROL = false
   ACTIVE_START  = true
   
   // Yaw PID controller

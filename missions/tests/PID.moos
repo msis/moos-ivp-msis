@@ -123,8 +123,8 @@ ProcessConfig = pMarinePID
   // Maximums
   MAXRUDDER   = 5
   MAXTHRUST   = 100
-  MAXPITCH    = 50
-  MAXELEVATOR = 100
+  MAXPITCH    = 5
+  MAXELEVATOR = 50
   
   // A non-zero SPEED_FACTOR overrides use of SPEED_PID
   // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR

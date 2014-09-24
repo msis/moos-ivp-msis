@@ -38,8 +38,7 @@ ProcessConfig = uTimerScript
   delay_reset = 5
 
   event = var=DEPLOY, val=true, time=0
-
-  event = var=SPEED, val=2, time=3
+  event = var=SPEED, val=2, time=1
   event = var=GOTO_MID, val=true, time=3
 
   event = var=GOTO_GATE, val=true, time=140
@@ -103,7 +102,7 @@ ProcessConfig = pMarinePID
   tardy_nav_threshold  = 100.0
 
   VERBOSE       = true
-  DEPTH_CONTROL = false
+  DEPTH_CONTROL = true
   ACTIVE_START  = true
   
   // Yaw PID controller

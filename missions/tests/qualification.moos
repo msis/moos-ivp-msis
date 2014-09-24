@@ -48,16 +48,16 @@ ProcessConfig = uTimerScript
   event = var=DESIRED_SPEED, val=2, time=60
   event = var=DESIRED_HEADING, val=165, time=60
 
-  event = var=DESIRED_SPEED, val=0.1, time=140
+  event = var=DESIRED_SPEED, val=0.1, time=110
+
+  event = var=DESIRED_HEADING, val=245, time=110
+  event = var=DESIRED_SPEED, val=2, time=113
 
   event = var=DESIRED_HEADING, val=245, time=140
   event = var=DESIRED_SPEED, val=2, time=143
 
-  event = var=DESIRED_HEADING, val=245, time=170
-  event = var=DESIRED_SPEED, val=2, time=173
-
-  event = var=DESIRED_SPEED, val=0, time=245
-  event = var=DESIRED_DEPTH, val=0, time=245
+  event = var=DESIRED_SPEED, val=0, time=210
+  event = var=DESIRED_DEPTH, val=0, time=210
 
 }
 
@@ -101,7 +101,7 @@ ProcessConfig = iCISCREA
   RERI_SENS = 1
   RELE_SENS = 1
   FRLE_SENS = 1
-  VERT_SENS = -1
+  VERT_SENS = 1
 
   DEPTH_OFFSET = -0.02
 }
@@ -116,7 +116,7 @@ ProcessConfig = pMarinePID
   tardy_nav_threshold  = 100.0
 
   VERBOSE       = true
-  DEPTH_CONTROL = false
+  DEPTH_CONTROL = true
   ACTIVE_START  = true
   
   // Yaw PID controller

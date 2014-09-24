@@ -8,6 +8,7 @@ ProcessConfig = ANTLER
 	Run = MOOSDB      @ NewConsole = false 
 	Run = uDeReCISCREA		@ NewConsole = true
 	Run = uMS			    @ NewConsole = false
+	Run = pMarineViewer		@ NewConsole = false
 }
 
 //------------------------------------------------

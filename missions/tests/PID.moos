@@ -97,7 +97,7 @@ ProcessConfig = pMarinePID
   ACTIVE_START  = true
   
   // Yaw PID controller
-  YAW_PID_KP             = 0.2
+  YAW_PID_KP             = 0.1
   YAW_PID_KD             = 1.0
   YAW_PID_KI             = 0.0
   YAW_PID_INTEGRAL_LIMIT = 0.07
@@ -123,8 +123,8 @@ ProcessConfig = pMarinePID
   // Maximums
   MAXRUDDER   = 5
   MAXTHRUST   = 100
-  MAXPITCH    = 5
-  MAXELEVATOR = 50
+  MAXPITCH    = 50
+  MAXELEVATOR = 100
   
   // A non-zero SPEED_FACTOR overrides use of SPEED_PID
   // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR

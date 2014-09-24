@@ -40,10 +40,10 @@ ProcessConfig = uTimerScript
   event = var=DESIRED_SPEED, val=2, time=0
   event = var=DESIRED_HEADING, val=60, time=0
 
-  event = var=DESIRED_DEPTH, val=3, time=30
-  event = var=DESIRED_SPEED, val=1, time=30
-  event = var=SPEED, val=1, time=30
-  event = var=DESIRED_HEADING, val=50, time=30
+  event = var=DESIRED_DEPTH, val=3, time=35
+  event = var=DESIRED_SPEED, val=1, time=35
+  event = var=SPEED, val=1, time=35
+  event = var=DESIRED_HEADING, val=50, time=35
 
   event = var=DESIRED_DEPTH, val=3, time=60
   event = var=DESIRED_SPEED, val=1, time=60

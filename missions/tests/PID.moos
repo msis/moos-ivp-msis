@@ -1,0 +1,132 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = VICI
+
+ProcessConfig = ANTLER
+{
+	MSBetweenLaunches = 500
+	Run = MOOSDB		@ NewConsole = false
+	Run = iCISCREA		@ NewConsole = false
+	Run = uMS			@ NewConsole = false 
+
+	Run = pMarinePID	@ NewConsole = false
+	Run = uTimerScript  @ NewConsole = false
+	Run = pEchoVar  @ NewConsole = false
+}
+
+
+ProcessConfig = uTimerScript
+{
+  AppTick = 2
+  CommsTick = 2
+
+  //reset_time = end
+  delay_reset = 5
+
+  event = var=SPEED, val=2, time=0
+  //event = var=DESIRED_DEPTH, val=1.0, time=0
+  event = var=DESIRED_SPEED, val=2, time=0
+  //event = var=DESIRED_SPEED, val=0.1, time=120
+  event = var=DESIRED_HEADING, val=160, time=0
+  //event = var=DESIRED_HEADING, val=245, time=120
+
+  //event = var=DESIRED_SPEED, val=2, time=125
+
+  //event = var=DESIRED_DEPTH, val=0.5, time=20
+
+}
+
+                                                               
+ProcessConfig = pEchoVar                                        
+{                                                               
+  AppTick   = 4                                                 
+  CommsTick = 4                                                 
+                                                                
+  Echo    = DEPTH   ->  NAV_DEPTH                       
+  Echo    = HEADING ->  NAV_HEADING                   
+  Echo    = SPEED   ->  NAV_SPEED                     
+                                                                
+}     
+
+ProcessConfig = iCISCREA
+{
+    AppTick   = 4
+    CommsTick = 4
+
+	  //Serial port 
+  SERIAL_PORT = /dev/ttyUSB0
+                                                                
+  // Max number of retries before giving up
+  MAX_MODBUS_RETRIES = 10
+  MAX_TURNON_RETRIES = 100
+                                                                
+  // Lower and upper bound for motors deadzone
+  FRRI_LO_DZ = 0
+  RERI_LO_DZ = 0
+  RELE_LO_DZ = 0
+  FRLE_LO_DZ = 0
+  VERT_LO_DZ = 0
+  FRRI_UP_DZ = 0
+  RERI_UP_DZ = 0
+  RELE_UP_DZ = 0
+  FRLE_UP_DZ = 0
+  VERT_UP_DZ = 0
+                                                                
+  // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
+  FRRI_SENS = 1
+  RERI_SENS = 1
+  RELE_SENS = 1
+  FRLE_SENS = 1
+  VERT_SENS = 1
+
+  DEPTH_OFFSET = -0.6
+
+}
+
+
+ProcessConfig = pMarinePID
+{
+  AppTick    = 10
+  CommsTick  = 10
+  
+  tardy_helm_threshold = 100.0                                    
+  tardy_nav_threshold  = 100.0
+
+  VERBOSE       = true
+  DEPTH_CONTROL = false
+  ACTIVE_START  = true
+  
+  // Yaw PID controller
+  YAW_PID_KP             = 0.2
+  YAW_PID_KD             = 1.0
+  YAW_PID_KI             = 0.0
+  YAW_PID_INTEGRAL_LIMIT = 0.07
+  
+  // Speed PID controller
+  SPEED_PID_KP           = 1.0
+  SPEED_PID_KD           = 0.0
+  SPEED_PID_KI           = 0.0
+  SPEED_PID_INTEGRAL_LIMIT = 0.07
+  
+  //Pitch PID controller
+  PITCH_PID_KP                   = 1.0
+  PITCH_PID_KD                   = 1.0
+  PITCH_PID_KI                   = 0
+  PITCH_PID_INTEGRAL_LIMIT       = 0
+
+  //ZPID controller
+  Z_TO_PITCH_PID_KP              = 7.0
+  Z_TO_PITCH_PID_KD              = 0
+  Z_TO_PITCH_PID_KI              = 0.00
+  Z_TO_PITCH_PID_INTEGRAL_LIMIT  = 0.05
+
+  // Maximums
+  MAXRUDDER   = 3
+  MAXTHRUST   = 100
+  MAXPITCH    = 50
+  MAXELEVATOR = 100
+  
+  // A non-zero SPEED_FACTOR overrides use of SPEED_PID
+  // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR
+  SPEED_FACTOR = 10
+}

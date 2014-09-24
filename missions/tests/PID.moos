@@ -121,7 +121,7 @@ ProcessConfig = pMarinePID
   Z_TO_PITCH_PID_INTEGRAL_LIMIT  = 0.05
 
   // Maximums
-  MAXRUDDER   = 5
+  MAXRUDDER   = 3
   MAXTHRUST   = 100
   MAXPITCH    = 50
   MAXELEVATOR = 100

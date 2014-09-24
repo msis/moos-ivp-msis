@@ -1,13 +1,13 @@
 ServerHost = localhost
-ServerPort = 9000
-Community = ciscreaSaucE
+ServerPort = 9006
+Community = ciscreaSaucESonar
 
 ProcessConfig = ANTLER
 {
 	MSBetweenLaunches = 200
 	Run = MOOSDB         			@ NewConsole = false 
 	Run = iSonar					@ NewConsole = true
-	//Run = pSensorViewer				@ NewConsole = true
+	Run = pSensorViewer				@ NewConsole = true
 	Run = uMS						@ NewConsole = false
 }
 
@@ -18,8 +18,8 @@ ProcessConfig = iSonar
   CommsTick = 4
 
   SERIAL_PORT_NAME = /dev/ttyUSB2
-  RANGE = 10 //IN METERS
-  NBINS = 100 //NUMBER OF SAMPLES PER SCANLINE
+  RANGE = 75 //IN METERS
+  NBINS = 200 //NUMBER OF SAMPLES PER SCANLINE
   ANGLESTEP = 1.8 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)
   GAIN = 45 // MUST BE BETWEEN 0 AND 100 (PERCENTAGE)
   CONTINUOUS = true //TRUE FOR 360  ROTATION. SET RIGHT AND LEFT LIMIT IF FALSE 

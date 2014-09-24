@@ -40,10 +40,10 @@ ProcessConfig = iCISCREA
   VERT_UP_DZ = 0
                                                                 
   // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
-  FRRI_SENS = -1
-  RERI_SENS = -1
+  FRRI_SENS = 1
+  RERI_SENS = 1
   RELE_SENS = 1
-  FRLE_SENS = -1
+  FRLE_SENS = 1
   VERT_SENS = 1
 
   DEPTH_OFFSET = -0.02

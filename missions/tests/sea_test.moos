@@ -27,6 +27,7 @@ ProcessConfig = ANTLER
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
   Run = pLogger   @ NewConsole = false
+  Run = pSauceCSV @ NewConsole = false
 }
 
 
@@ -36,10 +37,10 @@ ProcessConfig = iSonar
   CommsTick = 4
 
   SERIAL_PORT_NAME = /dev/ttyUSB2
-  RANGE = 70 //IN METERS
-  NBINS = 100 //NUMBER OF SAMPLES PER SCANLINE
-  ANGLESTEP = 1.8 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)
-  GAIN = 45 // MUST BE BETWEEN 0 AND 100 (PERCENTAGE)
+  RANGE = 150 //IN METERS
+  NBINS = 700 //NUMBER OF SAMPLES PER SCANLINE
+  ANGLESTEP = 2.7 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)
+  GAIN = 70 // MUST BE BETWEEN 0 AND 100 (PERCENTAGE)
   CONTINUOUS = true //TRUE FOR 360  ROTATION. SET RIGHT AND LEFT LIMIT IF FALSE 
   //LEFTLIMIT = 70.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
   //RIGHTLIMIT = 110.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
@@ -110,8 +111,8 @@ ProcessConfig = pShare
 
 ProcessConfig = pCameraLogger_SIDE
 {
-   AppTick   = 1
-   CommsTick = 1
+   AppTick   = 4
+   CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_SIDE
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
@@ -122,8 +123,8 @@ ProcessConfig = pCameraLogger_SIDE
 
 ProcessConfig = pCameraLogger_BOTTOM
 {
-   AppTick   = 1
-   CommsTick = 1
+   AppTick   = 4
+   CommsTick = 4
   VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
   DISPLAY_IMAGE = false
   SAVE_IN_FOLDER = ./
@@ -180,11 +181,11 @@ ProcessConfig = iCISCREA
   VERT_UP_DZ = 0
                                                                 
   // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
-  FRRI_SENS = -1
-  RERI_SENS = -1
+  FRRI_SENS = 1
+  RERI_SENS = 1
   RELE_SENS = 1
-  FRLE_SENS = -1
-  VERT_SENS = 1
+  FRLE_SENS = 1
+  VERT_SENS = -1
 
   DEPTH_OFFSET = -0.02
 
@@ -202,5 +203,14 @@ ProcessConfig = pLocalizationSonar
    POOL_UTM_Y = 4882924.769567073
    POOL_ANGLE = 0.31276672156874197
    ZONE = 32T
-   USE_RAZOR_HEADING = true
+   USE_RAZOR_HEADING = false
+}
+
+
+ProcessConfig = pSauceCSV
+{
+   AppTick   = 1
+   CommsTick = 5
+   
+   LOGS_FOLDER = ./logs
 }

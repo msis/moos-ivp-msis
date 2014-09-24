@@ -1,6 +1,9 @@
 ServerHost = localhost
 ServerPort = 9000
-Community = GROUND
+Community = VICI_PLAYBACK
+
+LatOrigin    = 44.09623
+LongOrigin   = 9.86509
 
 ProcessConfig = ANTLER
 {
@@ -49,10 +52,10 @@ ProcessConfig = pMarineViewer
   CommsTick = 4                                                 
                                                                 
   // BackView Options ==========================================
-  //tiff_file            = forrest19.tif                          
-  //set_pan_x            = -90                                    
-  //set_pan_y            = -280                                   
-  //zoom                 = 0.65                                   
+  tiff_file            = /home/tough/moos-ivp-msis/data/CMRE.tif                          
+  set_pan_x            = -100                                   
+  set_pan_y            = -100                                   
+  zoom                 = 0.65                                   
   vehicle_shape_scale  = 1.35                                   
                                                                 
   // BackView Pull-Down Menu ===================================

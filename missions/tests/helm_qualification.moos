@@ -35,7 +35,7 @@ ProcessConfig = uTimerScript
   CommsTick = 2
 
   //reset_time = end
-  delay_reset = 5
+  //delay_reset = 5
 
   event = var=DEPLOY, val=true, time=0
   event = var=SPEED, val=2, time=1

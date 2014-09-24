@@ -10,7 +10,6 @@ initialize GOTO_MID = false
 set MODE = ACTIVE
 {
   DEPLOY = true
-  RETURN = false
 } INACTIVE
 
 set MODE = GO_MID
@@ -84,7 +83,7 @@ set MODE = SURFACE
   {
     name = bhv_cruise_speed
     priority = 100
-    condition = MODE == GO_MID
+    condition = MODE == GO_GATE
 
     duration = 160
 
@@ -95,7 +94,7 @@ set MODE = SURFACE
   {
     name = bhv_heading_to_mid
     priority = 100
-    condition = MODE == GO_MID
+    condition = MODE == GO_GATE
 
     duration = 160
 

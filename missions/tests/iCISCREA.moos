@@ -44,6 +44,6 @@ ProcessConfig = iCISCREA
   FRLE_SENS = 1
   VERT_SENS = 1
 
-  DEPTH_OFFSET = -0.02
+  DEPTH_OFFSET = -0.6
 
 }

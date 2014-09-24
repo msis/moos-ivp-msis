@@ -143,14 +143,14 @@ ProcessConfig = pMarinePID
   Z_TO_PITCH_PID_INTEGRAL_LIMIT  = 0.05
 
   // Maximums
-  MAXRUDDER   = 3
+  MAXRUDDER   = 5
   MAXTHRUST   = 50
   MAXPITCH    = 50
   MAXELEVATOR = 100
   
   // A non-zero SPEED_FACTOR overrides use of SPEED_PID
   // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR
-  SPEED_FACTOR = 13
+  SPEED_FACTOR = 10
 }
 
 ProcessConfig = iSonar

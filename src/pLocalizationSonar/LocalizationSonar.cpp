@@ -8,6 +8,7 @@
 
 #include "LocalizationSonar.h"
 
+
 using namespace std;
 
 /**
@@ -15,11 +16,14 @@ using namespace std;
  * \brief Constructeur de l'application MOOS
  */
 
-LocalizationSonar::LocalizationSonar(): pool(50.,50.), pool_utm(0.,0.) //width, height
+LocalizationSonar::LocalizationSonar(): 
+    hasImage(false),
+    pool(50.,50.),
+    pool_utm(0.,0.) //width, height
 {
     m_iterations = 0;
     m_timewarp   = 1;
-    timeWindow = 200;
+    timeWindow = 50;
     pool_angle = MOOSDeg2Rad(0.0);
     sonarImg.create(400,400,CV_8UC1);
 }
@@ -66,10 +70,16 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
 
             heading += pool_angle;
         }
+        if( msg.GetKey() == "HEADING")
+        {
+            heading = MOOSDeg2Rad(msg.GetDouble());
+            heading += pool_angle;
+        }
         if( msg.GetKey() == "SONAR_RAW_DATA")
         {
             float angle = 0;
             MOOSValFromString(angle, msg.GetString(), "bearing");
+            
             vector<unsigned int> scanline;
             int nRows, nCols;
             MOOSValFromString(scanline, nRows, nCols, msg.GetString(), "scanline");
@@ -77,10 +87,10 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
             float ad_interval = 0.25056;
             MOOSValFromString(ad_interval, msg.GetString(), "ad_interval");
             //double scale = 60.0;
-            double scale = 8.0;
+            double scale = 4.0;
             double mag_step = scale * ad_interval / 2.0;
 
-            for (double alpha = angle-2.0; alpha <angle+2.0; alpha+=0.5)
+            for (double alpha = angle-2.; alpha <angle+2.; alpha+=0.5)
             {
                 double cos_b = cos(MOOSDeg2Rad(-alpha) + heading );
                 double sin_b = sin(MOOSDeg2Rad(-alpha) + heading );
@@ -93,6 +103,7 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
                         sonarImg.at<unsigned char>(x,y) = scanline[i];
                 }
             }
+            hasImage = true;
         }
     }
 
@@ -123,8 +134,10 @@ bool LocalizationSonar::OnConnectToServer()
 
 bool LocalizationSonar::Iterate()
 {
-    m_iterations++;
-    processImage(sonarImg);
+    if (hasImage)
+    {
+        processImage(sonarImg);
+    }
     return(true);
 }
 
@@ -160,7 +173,7 @@ bool LocalizationSonar::OnStartUp()
                 pool_utm.y = atof((char*)value.c_str());
 
             if(param == "POOL_ANGLE")
-                pool_angle = MOOSDeg2Rad(atof((char*)value.c_str()));
+                pool_angle = atof((char*)value.c_str());
 
             if(param == "TIME_WINDOW")
                 timeWindow = atoi((char*)value.c_str());
@@ -168,10 +181,16 @@ bool LocalizationSonar::OnStartUp()
         }
     }
 
-    ptTime = new int*[timeWindow];
+    ptTime = new int**[timeWindow];
     for(unsigned int i=0;i<timeWindow;i++)
     {
-        ptTime[i] = new int[4];
+        ptTime[i] = new int*[4];
+        for(unsigned int j=0;j<4;j++)
+        {
+            ptTime[i][j] = new int[2];
+            ptTime[i][j][0] = 0;
+            ptTime[i][j][1] = 0;
+        }
     }
 
     m_timewarp = GetMOOSTimeWarp();
@@ -189,138 +208,215 @@ void LocalizationSonar::RegisterVariables()
 {
     // m_Comms.Register("FOOBAR", 0);
     m_Comms.Register("SONAR_RAW_DATA", 0);
-    m_Comms.Register("YAW", 0);
+    //m_Comms.Register("YAW", 0);
+    m_Comms.Register("HEADING", 0);
 }
 
 void LocalizationSonar::processImage(Mat img)
 {
+    img.copyTo(gray);
+    char name[80];
+    //sprintf(name,"/home/schvarcz/Desktop/sonar/SONAR_%06d.jpg",m_iterations);
+    //imwrite(name,gray);
+    Mat er,er2,blur,eq,thresh, sharpe, poly = Mat::zeros(Size(400,400),img.type());
     
-    cvtColor(img,gray,CV_RGB2GRAY);
-    GaussianBlur(gray,gray,Size(3,3),0);
-    Canny(gray,edge,90,150);
-    cvtColor( edge, color_dst, CV_GRAY2BGR );
-
+//    imshow("Original",gray);
+    //GaussianBlur(gray,blur,Size(7,7),0);
+//    threshold(gray,blur,60,255,CV_THRESH_TOZERO);
+    GaussianBlur(gray,blur,Size(11,11),0);
+//    imshow("Blur",blur);
+    //GaussianBlur(gray,blur,Size(7,7),0);
+    threshold(blur,blur,15,255,CV_THRESH_TOZERO);
+//    imshow("Blur2",blur);
+    GaussianBlur(blur,sharpe,Size(9,9),0);
+    addWeighted(blur,1.5,sharpe,-0.5,0,sharpe);
+//    imshow("Sharpe",sharpe);
+    equalizeHist(sharpe,eq);
+//    imshow("equalizeHist",eq);
+    threshold(eq,thresh,205,255,CV_THRESH_BINARY);
+    //threshold(sharpe,thresh,40,255,CV_THRESH_BINARY);
+//    imshow("threshold",thresh);
+    
+    erode(thresh,thresh,Mat(Size(3,3),CV_8U),Point(-1,-1),4);
+//    imshow("Erode",thresh);
+    vector<vector<Point> > contours, contoursToDraw;
+    findContours(thresh,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
+    for (int i =0;i<contours.size();i++)
+    {
+        if (contourArea(contours.at(i)) >200)
+        {
+            contoursToDraw.push_back(contours.at(i));
+        }
+    }
+    drawContours(poly,contoursToDraw,-1,Scalar(255,255,255),-1);
+//    imshow("poly",poly);
+    
+//    erode(poly,er,Mat(Size(3,3),CV_8U),Point(-1,-1),5);
+//    imshow("Erode",er);
+    if (robot.x <10 || abs(pool.width-robot.x) <10 || robot.y <10)
+        dilate(poly,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),11);
+    else
+        dilate(poly,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),9);
+//    imshow("Dilate",er2);
+    erode(er2,er,Mat(Size(3,3),CV_8U),Point(-1,-1),4);
+//    imshow("Erode2",er);
+//    dilate(er,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),15);
+//    imshow("Dilate2",er2);
+    
+    Canny(er,edge,90,150);
+//    imshow("edges",edge);
+    cvtColor( gray, color_dst, CV_GRAY2BGR );
+    
+//    vector<Vec4i> lines;
+//    HoughLinesP( edge, lines, 1, CV_PI/180, 80, 30, 10 );
+//    for( size_t i = 0; i < lines.size(); i++ )
+//    {
+//        line( color_dst, Point(lines[i][0], lines[i][1]),
+//            Point(lines[i][2], lines[i][3]), Scalar(0,255,0), 3, 8 );
+//    }
+    
+//    vector<Vec2f> lines;
+//    HoughLines( edge, lines, 1, CV_PI/180, 50,100,300 );
+//    for( size_t i = 0; i < lines.size(); i++ )
+//    {
+//        float rho = lines[i][0];
+//        float theta = lines[i][1];
+//        double a = cos(theta), b = sin(theta);
+//        double x0 = a*rho, y0 = b*rho;
+//        Point pt1(cvRound(x0 + 1000*(-b)),
+//                  cvRound(y0 + 1000*(a)));
+//        Point pt2(cvRound(x0 - 1000*(-b)),
+//                  cvRound(y0 - 1000*(a)));
+//        line( color_dst, pt1, pt2, Scalar(0,255,0) );
+//    }
+    
+    
     computePoints(edge);
-
     updateAverageTimeWindow();
 
+//    drawPoints();
 
-    robot.x = (pt2.x-img.cols/2.0)*pool.width/(pt2.x-pt1.x);
-    robot.y = (pt2.y-img.rows/2.0)*pool.height/(pt2.y-pt1.y)    ;
+    if (m_iterations)
+    {
+        float resolution = pool.width/(pts[1].x-pts[3].x);
+        Point2f origin = translatePt2f(pts[1],Point2f(-img.cols/2.,-img.rows/2.));
+        //cout << origin.x << " - " << origin.y << endl;
+        origin = rotatePt2f(origin,MOOSDeg2Rad(lastPoolDetected.angle));
+        origin = translatePt2f(origin,Point2f(img.cols/2.,img.rows/2.));
+        robot.x = (origin.x-img.cols/2.0)*resolution;
+        robot.y = (origin.y-img.rows/2.0)*resolution;
 
-    //printf("x = %d\t y = %d meters\n",robot.x, robot.y);
+//        printf("x = %d\t y = %d meters\n",robot.x, robot.y);
 
-    double angle = pool_angle;
-    robotUTM.x = robot.x*cos(angle) + robot.y*sin(angle);
-    robotUTM.y = -robot.x*sin(angle) + robot.y*cos(angle);
-    
-    m_Comms.Notify("NAV_X",robot.x);
-    m_Comms.Notify("NAV_Y",robot.y);
-    m_Comms.Notify("NAV_UTM_X",robotUTM.x);
-    m_Comms.Notify("NAV_UTM_Y",robotUTM.y);
+        double angle = pool_angle;
+        robotUTM.x = robot.x*cos(angle) + robot.y*sin(angle) + pool_utm.x;
+        robotUTM.y = -robot.x*sin(angle) + robot.y*cos(angle) + pool_utm.y;
+        
+        m_Comms.Notify("NAV_X",robot.x);
+        m_Comms.Notify("NAV_Y",robot.y);
+        m_Comms.Notify("NAV_UTM_X",robotUTM.x);
+        m_Comms.Notify("NAV_UTM_Y",robotUTM.y);
+    }
+
+//    int k = waitKey(20) & 255;
+//    if (k == 10)
+//    {
+//        cout << "Saved" << endl;
+//        imwrite("simon.jpg",img);
+//    }
 
 }
 
 void LocalizationSonar::computePoints(Mat &sonarEdges)
 {
-    //The main ideia is, how much arrows we have per row/col?
-    //Take the first and last row/col if the number of arrows is more than avg.
-    int col,row,sumGrayLevel,grayLevel,accumulated=0,average;
-    float sumPerColumn[800],sumPerRow[800];
-    for(col=0; col<sonarEdges.cols-1; col++)
-    {
-        sumGrayLevel=0;
-        for(row=0; row<sonarEdges.rows-1; row++)
-        {
-            grayLevel = *(sonarEdges.data + row*sonarEdges.cols + col*sonarEdges.channels() + 1);
-            sumGrayLevel = sumGrayLevel+grayLevel;
-        }
-        sumPerColumn[col] = sumGrayLevel;
-        accumulated = accumulated+sumGrayLevel;
-    }
-    average = accumulated/(sonarEdges.cols-1);
 
-    //Select the first max from left
-    for(col=0; col<sonarEdges.cols-1; col++)
+    vector<vector<Point> > contours;
+    findContours(sonarEdges,contours,CV_RETR_CCOMP,CV_CHAIN_APPROX_NONE);
+    int max = -1;
+    for (int i =0;i<contours.size();i++)
     {
-        if ((sumPerColumn[col]>average) && (sumPerColumn[col+1] < sumPerColumn[col]))
+        if ((max<0) || (arcLength(contours.at(max),false) < arcLength(contours.at(i),false)))
         {
-            pt1.x = col;
-            break;
+            max = i;
         }
     }
-
-    //Select the first max from right
-    for(col=sonarEdges.cols-2; col>2; col--)
+    if (max > 0)
     {
-        if ((sumPerColumn[col]>average) && (sumPerColumn[col-1] < sumPerColumn[col]))
-        {
-            pt2.x = col;
-            break;
-        }
-    }
-
-    ///////////---------------------------------
-    accumulated=0;average=0;
-
-    for(row=0; row<sonarEdges.rows-1; row++)
-    {
-        sumGrayLevel=0;
-        for(col=0; col<sonarEdges.cols-1; col++)
-        {
-
-            grayLevel= *(sonarEdges.data + row*sonarEdges.cols + col*sonarEdges.channels() + 1); //Direct access the memory
-            sumGrayLevel=sumGrayLevel+grayLevel;
-
-        }
-        sumPerRow[row]=sumGrayLevel;
-        accumulated=accumulated+sumGrayLevel;
-    }
-    average=accumulated/(sonarEdges.rows-1);
-
-    //Select the first max from above
-    for(row=0; row<sonarEdges.rows-1; row++)
-    {
-        if ((sumPerRow[row] > average) && (sumPerRow[row+1] < sumPerRow[row]))
-        {
-            pt1.y = row;
-            break;
-        }
-    }
-
-
-    //Select the first max from bottom
-    for(row = sonarEdges.rows-2; row>2; row--)
-    {
-        if ((sumPerRow[row] > average) && (sumPerRow[row-1] < sumPerRow[row]))
-        {
-            pt2.y = row;
-            break;
-        }
+        drawContours(color_dst,contours,max,Scalar(0,0,255),-1);
+        RotatedRect rect = minAreaRect(contours.at(max));
+        if ((rect.size.width > 200) && (rect.size.height > 200))
+            if ((rect.size.width < 275) && (rect.size.height < 275))
+            {
+                m_iterations++;
+                rect.points(pts);
+                lastPoolDetected = rect;
+            }
     }
 }
 
 void LocalizationSonar::updateAverageTimeWindow()
 {
-    ptW1.x = 0;
-    ptW1.y = 0;
-    ptW2.x = 0;
-    ptW2.y = 0;
-    ptTime[m_iterations%timeWindow][0] = pt1.x;
-    ptTime[m_iterations%timeWindow][1] = pt1.y;
-    ptTime[m_iterations%timeWindow][2] = pt2.x;
-    ptTime[m_iterations%timeWindow][3] = pt2.y;
+    if (m_iterations == 0)
+        return;
+
+    for(unsigned int i=0;i<4;i++)
+    {
+        ptsW[i].x = 0;
+        ptsW[i].y = 0;
+        ptTime[m_iterations%timeWindow][i][0] = pts[i].x;
+        ptTime[m_iterations%timeWindow][i][1] = pts[i].y;
+    }
 
     for(unsigned int i =0;i<m_iterations && i<timeWindow;i++)
     {
-        ptW1.x += ptTime[i][0];
-        ptW1.y += ptTime[i][1];
-        ptW2.x += ptTime[i][2];
-        ptW2.y += ptTime[i][3];
+        for(unsigned int j =0;j<4;j++)
+        {
+            ptsW[j].x += ptTime[i][j][0];
+            ptsW[j].y += ptTime[i][j][1];
+        }
     }
     int divisor = min(m_iterations,timeWindow);
-    ptW1.x /= divisor;
-    ptW1.y /= divisor;
-    ptW2.x /= divisor;
-    ptW2.y /= divisor;
+    
+    for(unsigned int i=0;i<4;i++)
+    {
+        ptsW[i].x /= divisor;
+        ptsW[i].y /= divisor;
+    }
 }
+
+void LocalizationSonar::drawPoints()
+{
+    line(color_dst,pts[0], pts[1], Scalar(255,0,255));
+    line(color_dst,pts[0], pts[3], Scalar(255,0,255));
+    line(color_dst,pts[1], pts[2], Scalar(255,0,255));
+    line(color_dst,pts[2], pts[3], Scalar(255,0,255));
+
+    for(unsigned int i=0;i<4;i++)
+        circle(color_dst,pts[i],3,Scalar(255,0,0),-1);
+    
+    line(color_dst,ptsW[0], ptsW[1], Scalar(150,255,255));
+    line(color_dst,ptsW[0], ptsW[3], Scalar(150,255,255));
+    line(color_dst,ptsW[1], ptsW[2], Scalar(150,255,255));
+    line(color_dst,ptsW[2], ptsW[3], Scalar(150,255,255));
+
+    for(unsigned int i=0;i<4;i++)
+        circle(color_dst,ptsW[i],3,Scalar(150,255,255),-1);
+    imshow("Result",color_dst);
+}
+
+Point2f LocalizationSonar::rotatePt2f(Point2f pt, float angle)
+{
+    Point2f ret;
+    ret.x = pt.x*cos(angle) + pt.y*sin(angle);
+    ret.y = -pt.x*sin(angle) +pt.y*cos(angle);
+    return ret;
+}
+
+Point2f LocalizationSonar::translatePt2f(Point2f pt, Point2f center)
+{
+    Point2f ret;
+    ret.x = pt.x + center.x;
+    ret.y = pt.y + center.y;
+    return ret;
+}
+

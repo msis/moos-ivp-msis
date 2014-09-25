@@ -1,0 +1,47 @@
+// -----------------------------------------------
+//           BEHAVIOR CONFIGURATION FILE     
+// -----------------------------------------------
+
+initialize DEPLOY = true
+initialize RETURN = false
+
+set MODE = ACTIVE
+{
+  DEPLOY = true
+} INACTIVE
+
+
+Behavior = BHV_Waypoint
+{
+    name = bhv_qualification_waypoint
+    priority = 100
+    condition = MODE == T1_QUALIFICATION
+    endflag = T1_DONE = true
+    
+    points = label,survey_points:-20,-19:-10,22
+    speed = 0.5             // meters per second
+    capture_radius = 2  // meters
+    nm_radius = 3         // meters
+    repeat = 0            // number of iterations
+    lead = 4              // meters
+}
+
+// SURFACE (MODE = SURFACE)
+
+Behavior = BHV_ConstantDepth
+{
+    name = bhv_surface_depth
+    priority = 100
+    condition = MODE = INACTIVE
+    duration = no-time-limit
+    depth = 0             // meters
+}
+
+Behavior = BHV_ConstantDepth
+{
+    name = bhv_crise_depth
+    priority = 100
+    condition = MODE = ACTIVE
+    duration = 500
+    depth = 3.5             // meters
+}

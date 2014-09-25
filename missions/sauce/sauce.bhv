@@ -68,9 +68,9 @@ set MODE = SURFACE
     condition = MODE == T1_QUALIFICATION
     endflag = T1_DONE = true
     
-    points = label,survey_points:40,20:25,20:25,12.5:25,8
-    speed = 3             // meters per second
-    capture_radius = 1.5  // meters
+    points = label,survey_points:-20,-19:-10,22
+    speed = 0.5             // meters per second
+    capture_radius = 2  // meters
     nm_radius = 3         // meters
     repeat = 0            // number of iterations
     lead = 4              // meters

@@ -32,8 +32,8 @@ ProcessConfig = uDeReCISCREA
 
   SPEED_FACTOR = 0.0115
 
-  START_X = -18
-  START_Y = -2
+  START_X = -18.0
+  START_Y = -2.0
 }             
 
 ProcessConfig = pNodeReporter

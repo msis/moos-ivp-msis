@@ -103,7 +103,7 @@ void showInterfaceAndExit()
   blk("  NAV_X");
   blk("  NAV_Y");
   blk("  DESIRED_SPEED");
-  blk("  SPEED_FACTOR");
+  blk("  DR_SPEED_FACTOR");
   blk("                                                                ");
   blk("PUBLICATIONS:                                                   ");
   blk("------------------------------------                            ");

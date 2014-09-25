@@ -136,7 +136,7 @@ bool SensorViewer::OnNewMail(MOOSMSG_LIST &NewMail)
 		  float ad_interval = 0.25056;
 		  MOOSValFromString(ad_interval, msg.GetString(), "ad_interval");
 		//double scale = 60.0;
-		  double scale = 8.0;
+		  double scale = 4.0;
 		  double mag_step = scale * ad_interval / 2.0;
 		  
 		  for (double alpha = angle-2.0; alpha <angle+2.0; alpha+=0.5){

@@ -28,6 +28,9 @@ ADD_SUBDIRECTORY(pSauceCSV)
 ADD_SUBDIRECTORY(pWallFollowing)
 ADD_SUBDIRECTORY(lib_common)
 ADD_SUBDIRECTORY(lib_behaviors)
+ADD_SUBDIRECTORY(pCameraLogger)
+ADD_SUBDIRECTORY(pLocalizationSonar)
+ADD_SUBDIRECTORY(pControl)
 
 
 

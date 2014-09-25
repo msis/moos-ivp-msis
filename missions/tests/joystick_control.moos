@@ -9,7 +9,7 @@ ProcessConfig = ANTLER
 	Run = iCISCREA					@ NewConsole = false
 	Run = uMS						@ NewConsole = false
 
-  Run = uTimerScript  @ NewConsole = false
+  Run = pShare @ NewConsole = false
 }
 
 //------------------------------------------------
@@ -50,15 +50,18 @@ ProcessConfig = iCISCREA
 
 }
 
-ProcessConfig = uTimerScript
+ProcessConfig = pShare
 {
-  AppTick = 2
-  CommsTick = 2
+  Input = route=multicast_1
 
-  reset_time = end
-  reset_max = unlimited
-  delay_reset = 10
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=DEPTH, route=multicast_1
+  Output = src_name=CURRENT_BATT1, route=multicast_1
+  Output = src_name=CURRENT_BATT2, route=multicast_1
+  Output = src_name=VOLTAGE_BATT1, route=multicast_1
+  Output = src_name=VOLTAGE_BATT2, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT1, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT2, route=multicast_1
+  Output = src_name=HEADING, route=multicast_1
 
-  event = var=DESIRED_THRUST, val=100, time=0
-  event = var=DESIRED_THRUST, val=0, time=10
 }

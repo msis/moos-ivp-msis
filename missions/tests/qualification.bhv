@@ -1,0 +1,103 @@
+// -----------------------------------------------
+//             CISCREA QUALIFICATION BEHAVIOR
+// -----------------------------------------------
+
+initialize DEPLOY = false
+initialize RETURN = false
+initialize GOTO_GATE = false
+initialize GOTO_MID = false
+
+set MODE = ACTIVE
+{
+  DEPLOY = true
+  RETURN = false
+} INACTIVE
+
+set MODE = GO_MID
+{
+  MODE = ACTIVE
+  GOTO_MID = true
+  GOTO_GATE = false
+}
+
+set MODE = GO_GATE
+{
+  MODE = ACTIVE
+  GOTO_MID = false
+  GOTO_GATE = true
+}
+
+set MODE = SURFACE
+{
+  MODE = INACTIVE
+  RETURN = true
+}
+
+// SURFACE (MODE = SURFACE)
+
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_surface_depth
+    priority = 100
+    condition = MODE == SURFACE
+    duration = no-time-limit
+    depth = 0             // meters
+  }
+
+// depth
+  Behavior = BHV_ConstantDepth
+  {
+    name = bhv_nav_depth
+    priority = 100
+    condition = MODE == ACTIVE
+
+    duration = 600
+
+    depth = 1.5
+  }
+
+// go to the middle
+  Behavior = BHV_ConstantSpeed
+  {
+    name = bhv_cruise_speed
+    priority = 100
+    condition = MODE == GO_MID
+
+    duration = 160
+
+    speed = 2
+  }
+
+  Behavior = BHV_ConstantHeading
+  {
+    name = bhv_heading_to_mid
+    priority = 100
+    condition = MODE == GO_MID
+
+    duration = 160
+
+    heading = 160
+  }
+
+// go to gate
+  Behavior = BHV_ConstantSpeed
+  {
+    name = bhv_cruise_speed
+    priority = 100
+    condition = MODE == GO_MID
+
+    duration = 160
+
+    speed = 1.5
+  }
+
+  Behavior = BHV_ConstantHeading
+  {
+    name = bhv_heading_to_mid
+    priority = 100
+    condition = MODE == GO_MID
+
+    duration = 160
+
+    heading = 245
+  }  

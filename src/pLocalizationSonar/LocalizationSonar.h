@@ -34,21 +34,21 @@ class LocalizationSonar : public CMOOSApp
         void RegisterVariables();
 
     private: // Configuration variables
-        Point pt1, pt2, pool_utm;
+        Point pool_utm;
         Point2f pts[4];
         Point ptsW[4];
-        Point robot, robotUTM;
+        Point2f robot, robotUTM;
         Size pool;
         double pool_angle;
         double heading;
         double heading_razor;
+        double found;
         Mat img, edge, gray, color_dst, sonarImg;
         bool hasImage;
         RotatedRect lastPoolDetected;
 
-        unsigned int timeWindow; //200
+        unsigned int timeWindow;
         int ***ptTime;
-        Point ptW1, ptW2;
         void processImage(Mat img);
         void computePoints(Mat &sonarEdges);
         void updateAverageTimeWindow();

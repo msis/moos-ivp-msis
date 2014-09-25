@@ -73,7 +73,7 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
         if( msg.GetKey() == "HEADING")
         {
             heading = MOOSDeg2Rad(msg.GetDouble());
-            heading += pool_angle;
+            //heading += pool_angle;
         }
         if( msg.GetKey() == "SONAR_RAW_DATA")
         {
@@ -214,31 +214,32 @@ void LocalizationSonar::RegisterVariables()
 
 void LocalizationSonar::processImage(Mat img)
 {
+    found = false;
     img.copyTo(gray);
     char name[80];
     //sprintf(name,"/home/schvarcz/Desktop/sonar/SONAR_%06d.jpg",m_iterations);
     //imwrite(name,gray);
     Mat er,er2,blur,eq,thresh, sharpe, poly = Mat::zeros(Size(400,400),img.type());
     
-//    imshow("Original",gray);
+    //imshow("Original",gray);
     //GaussianBlur(gray,blur,Size(7,7),0);
-//    threshold(gray,blur,60,255,CV_THRESH_TOZERO);
+    //threshold(gray,blur,60,255,CV_THRESH_TOZERO);
     GaussianBlur(gray,blur,Size(11,11),0);
-//    imshow("Blur",blur);
+    imshow("Blur",blur);
     //GaussianBlur(gray,blur,Size(7,7),0);
     threshold(blur,blur,15,255,CV_THRESH_TOZERO);
-//    imshow("Blur2",blur);
+    imshow("Blur2",blur);
     GaussianBlur(blur,sharpe,Size(9,9),0);
     addWeighted(blur,1.5,sharpe,-0.5,0,sharpe);
-//    imshow("Sharpe",sharpe);
+    imshow("Sharpe",sharpe);
     equalizeHist(sharpe,eq);
-//    imshow("equalizeHist",eq);
+    imshow("equalizeHist",eq);
     threshold(eq,thresh,205,255,CV_THRESH_BINARY);
     //threshold(sharpe,thresh,40,255,CV_THRESH_BINARY);
-//    imshow("threshold",thresh);
+    imshow("threshold",thresh);
     
     erode(thresh,thresh,Mat(Size(3,3),CV_8U),Point(-1,-1),4);
-//    imshow("Erode",thresh);
+    imshow("Erode",thresh);
     vector<vector<Point> > contours, contoursToDraw;
     findContours(thresh,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
     for (int i =0;i<contours.size();i++)
@@ -249,7 +250,7 @@ void LocalizationSonar::processImage(Mat img)
         }
     }
     drawContours(poly,contoursToDraw,-1,Scalar(255,255,255),-1);
-//    imshow("poly",poly);
+    imshow("poly",poly);
     
 //    erode(poly,er,Mat(Size(3,3),CV_8U),Point(-1,-1),5);
 //    imshow("Erode",er);
@@ -257,56 +258,36 @@ void LocalizationSonar::processImage(Mat img)
         dilate(poly,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),11);
     else
         dilate(poly,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),9);
-//    imshow("Dilate",er2);
+    imshow("Dilate",er2);
     erode(er2,er,Mat(Size(3,3),CV_8U),Point(-1,-1),4);
-//    imshow("Erode2",er);
-//    dilate(er,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),15);
-//    imshow("Dilate2",er2);
-    
+    imshow("Erode2",er);
+    //dilate(er,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),15);
+    imshow("Dilate2",er2);
+
     Canny(er,edge,90,150);
-//    imshow("edges",edge);
+    imshow("edges",edge);
     cvtColor( gray, color_dst, CV_GRAY2BGR );
-    
-//    vector<Vec4i> lines;
-//    HoughLinesP( edge, lines, 1, CV_PI/180, 80, 30, 10 );
-//    for( size_t i = 0; i < lines.size(); i++ )
-//    {
-//        line( color_dst, Point(lines[i][0], lines[i][1]),
-//            Point(lines[i][2], lines[i][3]), Scalar(0,255,0), 3, 8 );
-//    }
-    
-//    vector<Vec2f> lines;
-//    HoughLines( edge, lines, 1, CV_PI/180, 50,100,300 );
-//    for( size_t i = 0; i < lines.size(); i++ )
-//    {
-//        float rho = lines[i][0];
-//        float theta = lines[i][1];
-//        double a = cos(theta), b = sin(theta);
-//        double x0 = a*rho, y0 = b*rho;
-//        Point pt1(cvRound(x0 + 1000*(-b)),
-//                  cvRound(y0 + 1000*(a)));
-//        Point pt2(cvRound(x0 - 1000*(-b)),
-//                  cvRound(y0 - 1000*(a)));
-//        line( color_dst, pt1, pt2, Scalar(0,255,0) );
-//    }
-    
-    
+
     computePoints(edge);
     updateAverageTimeWindow();
 
-//    drawPoints();
+    drawPoints();
 
-    if (m_iterations)
+    if (found)
     {
-        float resolution = pool.width/(pts[1].x-pts[3].x);
-        Point2f origin = translatePt2f(pts[1],Point2f(-img.cols/2.,-img.rows/2.));
-        //cout << origin.x << " - " << origin.y << endl;
+        m_iterations++;
+        float distance = sqrt(pow(pts[1].x-pts[2].x,2) + pow(pts[1].y-pts[2].y,2));
+        float resolution = pool.width/distance;
+        Point2f origin = translatePt2f(pts[2],Point2f(-img.cols/2.,-img.rows/2.));
         origin = rotatePt2f(origin,MOOSDeg2Rad(lastPoolDetected.angle));
-        origin = translatePt2f(origin,Point2f(img.cols/2.,img.rows/2.));
-        robot.x = (origin.x-img.cols/2.0)*resolution;
-        robot.y = (origin.y-img.rows/2.0)*resolution;
+        //origin = translatePt2f(origin,Point2f(img.cols/2.,img.rows/2.));
+        cout << origin.x*resolution << " - " << -origin.y*resolution << " - " << resolution<< endl;
+        robot.x = -origin.x*resolution;
+        robot.y = origin.y*resolution;
+        
+        robot = rotatePt2f(robot,-pool_angle);
 
-//        printf("x = %d\t y = %d meters\n",robot.x, robot.y);
+        //printf("x = %f\t y = %f meters\n",robot.x, robot.y);
 
         double angle = pool_angle;
         robotUTM.x = robot.x*cos(angle) + robot.y*sin(angle) + pool_utm.x;
@@ -318,12 +299,12 @@ void LocalizationSonar::processImage(Mat img)
         m_Comms.Notify("NAV_UTM_Y",robotUTM.y);
     }
 
-//    int k = waitKey(20) & 255;
-//    if (k == 10)
-//    {
-//        cout << "Saved" << endl;
-//        imwrite("simon.jpg",img);
-//    }
+    int k = waitKey(20) & 255;
+    if (k == 10)
+    {
+        cout << "Saved" << endl;
+        imwrite("simon.jpg",img);
+    }
 
 }
 
@@ -331,7 +312,7 @@ void LocalizationSonar::computePoints(Mat &sonarEdges)
 {
 
     vector<vector<Point> > contours;
-    findContours(sonarEdges,contours,CV_RETR_CCOMP,CV_CHAIN_APPROX_NONE);
+    findContours(sonarEdges,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
     int max = -1;
     for (int i =0;i<contours.size();i++)
     {
@@ -347,7 +328,7 @@ void LocalizationSonar::computePoints(Mat &sonarEdges)
         if ((rect.size.width > 200) && (rect.size.height > 200))
             if ((rect.size.width < 275) && (rect.size.height < 275))
             {
-                m_iterations++;
+                found = true;
                 rect.points(pts);
                 lastPoolDetected = rect;
             }
@@ -391,8 +372,9 @@ void LocalizationSonar::drawPoints()
     line(color_dst,pts[1], pts[2], Scalar(255,0,255));
     line(color_dst,pts[2], pts[3], Scalar(255,0,255));
 
-    for(unsigned int i=0;i<4;i++)
-        circle(color_dst,pts[i],3,Scalar(255,0,0),-1);
+//    for(unsigned int i=0;i<4;i++)
+//        circle(color_dst,pts[i],3,Scalar(255,0,0),-1);
+    circle(color_dst,pts[2],3,Scalar(255,0,0),-1);
     
     line(color_dst,ptsW[0], ptsW[1], Scalar(150,255,255));
     line(color_dst,ptsW[0], ptsW[3], Scalar(150,255,255));

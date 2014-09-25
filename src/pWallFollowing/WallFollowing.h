@@ -16,7 +16,7 @@
 #include <list>
 #include <utility>
 #include <opencv/cv.h>
-#include <opencv/highgui.h>
+#include <opencv2/highgui/highgui.hpp>
 #include "MOOS/libMOOS/App/MOOSApp.h"
 
 #define LARGEUR_MAPPING		400

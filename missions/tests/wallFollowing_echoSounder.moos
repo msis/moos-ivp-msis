@@ -1,0 +1,30 @@
+ServerHost = localhost
+ServerPort = 9008
+Community  = VICI_FOLLOWING_ES
+
+MOOSTimeWarp = 1
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB		@ NewConsole = true
+  //Run = pLogger         @ NewConsole = true
+  //Run = uSimMarine	@ NewConsole = true
+  //Run = pNodeReporter	@ NewConsole = true
+  //Run = pMarinePID	@ NewConsole = true
+  //Run = pMarineViewer	@ NewConsole = true
+  Run = pHelmIvP	@ NewConsole = false
+}
+
+ProcessConfig = pHelmIvP
+{
+  AppTick    = 4
+  CommsTick  = 4
+
+  IVP_BEHAVIOR_DIR = ../../lib
+  Behaviors  = wallFollowing_echoSounder.bhv
+  Verbose    = verbose
+  domain = slide:0:100:100
+  active_start = true
+}

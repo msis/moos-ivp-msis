@@ -1,0 +1,9 @@
+//------------------------------------------------
+// pWallFollowing config block
+
+ProcessConfig = pWallFollowing
+{
+   AppTick   = 4
+   CommsTick = 4
+}
+

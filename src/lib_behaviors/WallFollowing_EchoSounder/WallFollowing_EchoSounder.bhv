@@ -1,0 +1,11 @@
+// -----------------------------------------------
+//           BEHAVIOR CONFIGURATION FILE     
+// -----------------------------------------------
+
+Behavior = BHV_WallFollowing_EchoSounder
+{
+  // WallFollowing_EchoSounder parameters:
+    max_speed               = 50.0  // CISCREA value
+    dist_from_wall_desired  = 3.0   // m
+    speed_coeff             = 1.0
+}

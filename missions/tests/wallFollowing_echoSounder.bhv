@@ -1,0 +1,23 @@
+// -----------------------------------------------
+//           BEHAVIOR CONFIGURATION FILE     
+// -----------------------------------------------
+
+initialize DEPLOY = true
+initialize RETURN = false
+
+set MODE = ACTIVE
+{
+  DEPLOY = true
+} INACTIVE
+
+Behavior = BHV_WallFollowing_EchoSounder
+{
+  name = wallfollowing_echosounder
+  priority = 100
+  condition = MODE = ACTIVE
+  
+  // WallFollowing_EchoSounder parameters:
+    max_speed               = 50.0  // CISCREA value
+    dist_from_wall_desired  = 3.0   // m
+    speed_coeff             = 1.0
+}

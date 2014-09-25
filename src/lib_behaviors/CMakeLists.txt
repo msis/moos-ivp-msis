@@ -17,7 +17,7 @@ INCLUDE_DIRECTORIES(${LOCAL_COMMON_LIBRARY_DIRS} ${LOCAL_BHV_LIBRARY_DIRS})
 #============================================================================
 
 # Behavior libs
-#ADD_SUBDIRECTORY(Formation_Behavior)
+ADD_SUBDIRECTORY(WallFollowing_EchoSounder)
 
 ##############################################################################
 #                           END of CMakeLists.txt

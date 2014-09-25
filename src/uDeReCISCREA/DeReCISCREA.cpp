@@ -53,12 +53,14 @@ bool DeReCISCREA::OnNewMail(MOOSMSG_LIST &NewMail)
     else if (key == "NAV_HEADING")
       m_nav_heading = msg.GetDouble();
     else if (key == "NAV_X")
-      m_nav_x = msg.GetDouble();
+      if (msg.GetSource()!="uDeReCISCREA")
+        m_nav_x = msg.GetDouble();
     else if (key == "NAV_Y")
-      m_nav_y = msg.GetDouble();
+      if (msg.GetSource()!="uDeReCISCREA")
+        m_nav_y = msg.GetDouble();
     else if (key == "DESIRED_SPEED")
       m_desired_speed = msg.GetDouble();
-    else if (key == "SPEED_FACTOR")
+    else if (key == "DR_SPEED_FACTOR")
       m_speed_factor = msg.GetDouble();
 
     else if(key != "APPCAST_REQ") // handle by AppCastingMOOSApp
@@ -155,7 +157,7 @@ void DeReCISCREA::registerVariables()
   Register("NAV_HEADING",0);
   Register("NAV_X",0);
   Register("NAV_Y",0);
-  Register("SPEED_FACTOR",0);
+  Register("DR_SPEED_FACTOR",0);
 }
 
 

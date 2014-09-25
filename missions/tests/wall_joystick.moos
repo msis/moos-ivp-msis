@@ -1,0 +1,127 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+	MSBetweenLaunches = 200
+	Run = MOOSDB         			@ NewConsole = false 
+	Run = pLogger  @ NewConsole = false
+  Run = pSauceCSV @ NewConsole = false
+  Run = iCISCREA					@ NewConsole = false
+	Run = uMS						@ NewConsole = false
+  Run = iEchoSounder @ NewConsole = false
+
+
+  Run = pShare @ NewConsole = false
+
+  Run = pHelmIvP  @ NewConsole = false
+}
+
+//------------------------------------------------
+// iCISCREA config block
+
+ProcessConfig = iCISCREA
+{
+  AppTick   = 4
+  CommsTick = 4
+
+	//Serial port 
+  SERIAL_PORT = /dev/ttyUSB0
+                                                                
+  // Max number of retries before giving up
+  MAX_MODBUS_RETRIES = 10
+  MAX_TURNON_RETRIES = 100
+                                                                
+  // Lower and upper bound for motors deadzone
+  FRRI_LO_DZ = 0
+  RERI_LO_DZ = 0
+  RELE_LO_DZ = 0
+  FRLE_LO_DZ = 0
+  VERT_LO_DZ = 0
+  FRRI_UP_DZ = 0
+  RERI_UP_DZ = 0
+  RELE_UP_DZ = 0
+  FRLE_UP_DZ = 0
+  VERT_UP_DZ = 0
+                                                                
+  // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
+  FRRI_SENS = 1
+  RERI_SENS = 1
+  RELE_SENS = 1
+  FRLE_SENS = 1
+  VERT_SENS = 1
+
+  DEPTH_OFFSET = -0.02
+
+}
+
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=DEPTH, route=multicast_1
+  Output = src_name=CURRENT_BATT1, route=multicast_1
+  Output = src_name=CURRENT_BATT2, route=multicast_1
+  Output = src_name=VOLTAGE_BATT1, route=multicast_1
+  Output = src_name=VOLTAGE_BATT2, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT1, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT2, route=multicast_1
+  Output = src_name=HEADING, route=multicast_1
+
+}
+
+ProcessConfig = pHelmIvP
+{
+  AppTick    = 4
+  CommsTick  = 4
+
+  IVP_BEHAVIOR_DIR = ../../lib
+  Behaviors  = wallFollowing_echoSounder.bhv
+  Verbose    = verbose
+  domain = slide:0:100:100
+  active_start = true
+}
+
+ProcessConfig = iEchoSounder
+{
+  AppTick   = 4
+  CommsTick = 4
+  
+  SERIAL_PORT_NAME = /dev/ttyUSB4
+}
+
+
+
+ProcessConfig = pLogger
+{
+  AppTick   = 8
+  CommsTick = 8
+
+  File = VICI_data
+
+  SyncLog = false
+  AsyncLog = true
+
+  PATH     = ./
+
+
+  LogAuxSrc = true
+  WildCardLogging = true
+  WildCardPattern = *
+  WildCardOmitPattern = *_STATUS
+  WildCardOmitPattern = *_DEBUG
+  WildCardOmitPattern = *CAMERA_BOTTOM*
+  WildCardOmitPattern = *CAMERA_SIDE*
+  //WildCardExclusionLog = true
+}
+
+
+ProcessConfig = pSauceCSV
+{
+   AppTick   = 1
+   CommsTick = 5
+   
+   LOGS_FOLDER = ./
+}

@@ -2,8 +2,8 @@ ServerHost = localhost
 ServerPort = 9000
 Community = VICI_PLAYBACK
 
-LatOrigin    = 44.09623
-LongOrigin   = 9.86509
+LatOrigin    = 44.095738
+LongOrigin   = 9.865190
 
 ProcessConfig = ANTLER
 {
@@ -52,7 +52,7 @@ ProcessConfig = pMarineViewer
   CommsTick = 4                                                 
                                                                 
   // BackView Options ==========================================
-  tiff_file            = /home/tough/moos-ivp-msis/data/CMRE.tif                          
+  tiff_file            = /home/tough/moos-ivp-msis/data/CMRE_14.tif                          
   set_pan_x            = -100                                   
   set_pan_y            = -100                                   
   zoom                 = 0.65                                   

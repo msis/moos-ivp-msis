@@ -36,27 +36,22 @@ ProcessConfig = uTimerScript
   delay_reset = 5
 
   event = var=SPEED, val=2, time=0
-  event = var=DESIRED_DEPTH, val=1.3, time=0
-  event = var=DESIRED_SPEED, val=0.5, time=0
+  event = var=DESIRED_DEPTH, val=3, time=0
+  event = var=DESIRED_SPEED, val=0.1, time=0
   event = var=DESIRED_HEADING, val=50, time=0
 
   event = var=DESIRED_DEPTH, val=4, time=35
-  event = var=DESIRED_SPEED, val=1, time=35
+  event = var=DESIRED_SPEED, val=0.1, time=35
   event = var=SPEED, val=1, time=35
   event = var=DESIRED_HEADING, val=40, t(ime=35
 
   event = var=DESIRED_DEPTH, val=4, time=55
-  event = var=DESIRED_SPEED, val=1, time=55
+  event = var=DESIRED_SPEED, val=0.1, time=55
   event = var=SPEED, val=1, time=55
   event = var=DESIRED_HEADING, val=30, time=55
   
-  event = var=DESIRED_DEPTH, val=4, time=75
-  event = var=DESIRED_SPEED, val=1, time=75
-  event = var=SPEED, val=1, time=75
-  event = var=DESIRED_HEADING, val=20, time=75
-
-  event = var=DESIRED_SPEED, val=0, time=95
-  event = var=DESIRED_DEPTH, val=0, time=95
+  event = var=DESIRED_SPEED, val=0, time=65
+  event = var=DESIRED_DEPTH, val=0, time=65
 
 }
 

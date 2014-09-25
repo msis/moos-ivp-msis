@@ -37,14 +37,15 @@ class LocalizationSonar : public CMOOSApp
         Point pool_utm;
         Point2f pts[4];
         Point ptsW[4];
+        Point2f topLeft, topRight;
         Point2f robot, robotUTM;
         Size pool;
         double pool_angle;
         double heading;
-        double heading_razor;
-        double found;
+        double heading_razor,sonarScale;
+        bool found;
         Mat img, edge, gray, color_dst, sonarImg;
-        bool hasImage;
+        bool hasImage, showProcess, use_razor_heading;
         RotatedRect lastPoolDetected;
 
         unsigned int timeWindow;

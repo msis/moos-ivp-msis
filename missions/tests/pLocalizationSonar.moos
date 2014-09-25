@@ -23,7 +23,20 @@ ProcessConfig = pLocalizationSonar
    POOL_UTM_X = 569239.551532066
    POOL_UTM_Y = 4882916.595849914
    POOL_ANGLE = -1.2895641248766014
+   SONAR_SCALE = 4
    ZONE = 32T
-   USE_RAZOR_HEADING = true
+   USE_RAZOR_HEADING = false
+   SHOW_PROCESS = true
+   
+/*   //Corner 1 - Origin*/
+/*   LAT =44.095738*/
+/*   LONG = 9.865190*/
+/*   44.096157, 9.865012*/
+/*   */
+/*   //Corner 2*/
+/*   44.095737, 9.865184*/
+/*   569253.8094576951, 4882870.091076121*/
+/*   LAT = 44.*/
+/*   LONG = 9.*/
 }
 

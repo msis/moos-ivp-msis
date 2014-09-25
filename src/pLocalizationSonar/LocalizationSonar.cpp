@@ -18,6 +18,8 @@ using namespace std;
 
 LocalizationSonar::LocalizationSonar(): 
     hasImage(false),
+    showProcess(true),
+    use_razor_heading(false),
     pool(50.,50.),
     pool_utm(0.,0.) //width, height
 {
@@ -62,15 +64,15 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
         bool   mstr  = msg.IsString();
         #endif
 
-        if( msg.GetKey() == "YAW")
+        if( msg.GetKey() == "YAW" && use_razor_heading)
         {
             heading_razor = MOOSDeg2Rad(msg.GetDouble());
             double a = MOOSDeg2Rad(-12.6), b = 0.45, c = MOOSDeg2Rad(-10.5);
             heading = heading_razor - ( a*sin(heading_razor+b) + c);
 
-            heading += pool_angle;
+            //heading += pool_angle;
         }
-        if( msg.GetKey() == "HEADING")
+        if( msg.GetKey() == "HEADING" && !use_razor_heading)
         {
             heading = MOOSDeg2Rad(msg.GetDouble());
             //heading += pool_angle;
@@ -86,9 +88,7 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
 
             float ad_interval = 0.25056;
             MOOSValFromString(ad_interval, msg.GetString(), "ad_interval");
-            //double scale = 60.0;
-            double scale = 4.0;
-            double mag_step = scale * ad_interval / 2.0;
+            double mag_step = sonarScale * ad_interval / 2.0;
 
             for (double alpha = angle-2.; alpha <angle+2.; alpha+=0.5)
             {
@@ -177,7 +177,15 @@ bool LocalizationSonar::OnStartUp()
 
             if(param == "TIME_WINDOW")
                 timeWindow = atoi((char*)value.c_str());
-
+                
+            if(param == "SONAR_SCALE")
+                sonarScale = atof((char*)value.c_str());
+                
+            if(param == "USE_RAZOR_HEADING")
+                use_razor_heading = (value == "true");
+                
+            if(param == "SHOW_PROCESS")
+                showProcess = (value == "true");
         }
     }
 
@@ -208,7 +216,7 @@ void LocalizationSonar::RegisterVariables()
 {
     // m_Comms.Register("FOOBAR", 0);
     m_Comms.Register("SONAR_RAW_DATA", 0);
-    //m_Comms.Register("YAW", 0);
+    m_Comms.Register("YAW", 0);
     m_Comms.Register("HEADING", 0);
 }
 
@@ -222,24 +230,32 @@ void LocalizationSonar::processImage(Mat img)
     Mat er,er2,blur,eq,thresh, sharpe, poly = Mat::zeros(Size(400,400),img.type());
     
     //imshow("Original",gray);
-    //GaussianBlur(gray,blur,Size(7,7),0);
-    //threshold(gray,blur,60,255,CV_THRESH_TOZERO);
     GaussianBlur(gray,blur,Size(11,11),0);
-    imshow("Blur",blur);
+    if (showProcess)
+        imshow("Blur",blur);
     //GaussianBlur(gray,blur,Size(7,7),0);
     threshold(blur,blur,15,255,CV_THRESH_TOZERO);
-    imshow("Blur2",blur);
+    
+    if (showProcess)
+        imshow("Blur2",blur);
     GaussianBlur(blur,sharpe,Size(9,9),0);
     addWeighted(blur,1.5,sharpe,-0.5,0,sharpe);
-    imshow("Sharpe",sharpe);
+    
+    if (showProcess)
+        imshow("Sharpe",sharpe);
     equalizeHist(sharpe,eq);
-    imshow("equalizeHist",eq);
+    
+    if (showProcess)
+        imshow("equalizeHist",eq);
     threshold(eq,thresh,205,255,CV_THRESH_BINARY);
-    //threshold(sharpe,thresh,40,255,CV_THRESH_BINARY);
-    imshow("threshold",thresh);
+    
+    if (showProcess)
+        imshow("threshold",thresh);
     
     erode(thresh,thresh,Mat(Size(3,3),CV_8U),Point(-1,-1),4);
-    imshow("Erode",thresh);
+    
+    if (showProcess)
+        imshow("Erode",thresh);
     vector<vector<Point> > contours, contoursToDraw;
     findContours(thresh,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
     for (int i =0;i<contours.size();i++)
@@ -249,8 +265,12 @@ void LocalizationSonar::processImage(Mat img)
             contoursToDraw.push_back(contours.at(i));
         }
     }
+    
     drawContours(poly,contoursToDraw,-1,Scalar(255,255,255),-1);
-    imshow("poly",poly);
+    if (showProcess)
+    {
+        imshow("poly",poly);
+    }
     
 //    erode(poly,er,Mat(Size(3,3),CV_8U),Point(-1,-1),5);
 //    imshow("Erode",er);
@@ -258,30 +278,73 @@ void LocalizationSonar::processImage(Mat img)
         dilate(poly,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),11);
     else
         dilate(poly,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),9);
-    imshow("Dilate",er2);
+    
+    if (showProcess)
+        imshow("Dilate",er2);
     erode(er2,er,Mat(Size(3,3),CV_8U),Point(-1,-1),4);
-    imshow("Erode2",er);
+    
+    if (showProcess)
+        imshow("Erode2",er);
     //dilate(er,er2,Mat(Size(3,3),CV_8U),Point(-1,-1),15);
-    imshow("Dilate2",er2);
+    
+    if (showProcess)
+        imshow("Dilate2",er2);
 
     Canny(er,edge,90,150);
-    imshow("edges",edge);
-    cvtColor( gray, color_dst, CV_GRAY2BGR );
+    
+    if (showProcess)
+        imshow("edges",edge);
+        
+    if (showProcess)
+        cvtColor( gray, color_dst, CV_GRAY2BGR );
 
     computePoints(edge);
     updateAverageTimeWindow();
 
-    drawPoints();
+    
+    if (showProcess)
+        drawPoints();
 
     if (found)
     {
         m_iterations++;
-        float distance = sqrt(pow(pts[1].x-pts[2].x,2) + pow(pts[1].y-pts[2].y,2));
+        //My "sorting"... please! don't blame me!
+        int min1=-1, min2=-1;
+        for(int i =0; i<4;i++)
+        {
+            if (min1 == -1)
+            {
+                min1=i;
+            }
+            else if(min2 ==-1)
+            {
+                min2=i;
+            }
+            else if(pts[min1].y > pts[i].y)
+            {
+                if(pts[min2].y > pts[min1].y)
+                    min2 = min1;
+                min1 = i;
+            }
+            else if(pts[min2].y > pts[i].y)
+            {
+                min2 = i;
+            }
+        }
+        if(pts[min1].x > pts[min2].x)
+        {
+            int aux = min1;
+            min1 = min2;
+            min2 = aux;
+        }
+        topLeft = pts[min1];
+        topRight = pts[min2];
+        
+        float distance = sqrt(pow(topLeft.x-topRight.x,2) + pow(topLeft.y-topRight.y,2));
         float resolution = pool.width/distance;
-        Point2f origin = translatePt2f(pts[2],Point2f(-img.cols/2.,-img.rows/2.));
+        Point2f origin = translatePt2f(topRight,Point2f(-img.cols/2.,-img.rows/2.));
         origin = rotatePt2f(origin,MOOSDeg2Rad(lastPoolDetected.angle));
         //origin = translatePt2f(origin,Point2f(img.cols/2.,img.rows/2.));
-        cout << origin.x*resolution << " - " << -origin.y*resolution << " - " << resolution<< endl;
         robot.x = -origin.x*resolution;
         robot.y = origin.y*resolution;
         
@@ -314,6 +377,7 @@ void LocalizationSonar::computePoints(Mat &sonarEdges)
     vector<vector<Point> > contours;
     findContours(sonarEdges,contours,CV_RETR_EXTERNAL,CV_CHAIN_APPROX_NONE);
     int max = -1;
+
     for (int i =0;i<contours.size();i++)
     {
         if ((max<0) || (arcLength(contours.at(max),false) < arcLength(contours.at(i),false)))
@@ -321,9 +385,10 @@ void LocalizationSonar::computePoints(Mat &sonarEdges)
             max = i;
         }
     }
-    if (max > 0)
+    if (max >= 0)
     {
-        drawContours(color_dst,contours,max,Scalar(0,0,255),-1);
+        if(showProcess)
+            drawContours(color_dst,contours,max,Scalar(0,0,255),-1);
         RotatedRect rect = minAreaRect(contours.at(max));
         if ((rect.size.width > 200) && (rect.size.height > 200))
             if ((rect.size.width < 275) && (rect.size.height < 275))
@@ -372,9 +437,8 @@ void LocalizationSonar::drawPoints()
     line(color_dst,pts[1], pts[2], Scalar(255,0,255));
     line(color_dst,pts[2], pts[3], Scalar(255,0,255));
 
-//    for(unsigned int i=0;i<4;i++)
-//        circle(color_dst,pts[i],3,Scalar(255,0,0),-1);
-    circle(color_dst,pts[2],3,Scalar(255,0,0),-1);
+    for(unsigned int i=0;i<4;i++)
+        circle(color_dst,pts[i],3,Scalar(255,0,0),-1);
     
     line(color_dst,ptsW[0], ptsW[1], Scalar(150,255,255));
     line(color_dst,ptsW[0], ptsW[3], Scalar(150,255,255));
@@ -383,6 +447,9 @@ void LocalizationSonar::drawPoints()
 
     for(unsigned int i=0;i<4;i++)
         circle(color_dst,ptsW[i],3,Scalar(150,255,255),-1);
+        
+    circle(color_dst,topLeft,3,Scalar(255,100,150),-1);
+    circle(color_dst,topRight,3,Scalar(255,255,0),-1);
     imshow("Result",color_dst);
 }
 

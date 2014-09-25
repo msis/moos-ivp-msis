@@ -14,8 +14,8 @@ ProcessConfig = ANTLER
   Run = pMarineViewer 	 @ NewConsole = false
 
   Run = pSensorViewer    @ NewConsole = false 
-  //Run = uDeReCISCREA	 @ NewConsole = false
-  Run = pLocalizationSonar @ NewConsole = false
+  Run = uDeReCISCREA	 @ NewConsole = false
+  //Run = pLocalizationSonar @ NewConsole = false
 }
 
 
@@ -32,8 +32,8 @@ ProcessConfig = uDeReCISCREA
 
   SPEED_FACTOR = 0.0115
 
-  START_X = 0
-  START_Y = 0
+  START_X = -18
+  START_Y = -2
 }             
 
 ProcessConfig = pNodeReporter

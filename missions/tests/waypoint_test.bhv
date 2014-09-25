@@ -15,8 +15,7 @@ Behavior = BHV_Waypoint
 {
     name = bhv_qualification_waypoint
     priority = 100
-    condition = MODE == T1_QUALIFICATION
-    endflag = T1_DONE = true
+    condition = MODE = ACTIVE
     
     points = label,survey_points:-20,-19:-10,22
     speed = 0.5             // meters per second

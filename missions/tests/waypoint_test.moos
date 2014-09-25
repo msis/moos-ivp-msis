@@ -290,6 +290,11 @@ ProcessConfig = pShare
   Output = src_name=DESIRED_RUDDER, route=multicast_1
   Output = src_name=DESIRED_DEPTH, route=multicast_1
   Output = src_name=DESIRED_ELEVATOR, route=multicast_1
+  Output = src_name=NAV_X, route=multicast_1
+  Output = src_name=NAV_Y, route=multicast_1
+
+
+
 
 }
 

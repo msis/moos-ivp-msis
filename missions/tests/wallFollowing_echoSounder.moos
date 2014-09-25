@@ -25,6 +25,6 @@ ProcessConfig = pHelmIvP
   IVP_BEHAVIOR_DIR = ../../lib
   Behaviors  = wallFollowing_echoSounder.bhv
   Verbose    = verbose
-  domain = slide:0:100:100
+  domain = slide:-10:10:20
   active_start = true
 }

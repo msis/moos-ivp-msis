@@ -11,6 +11,7 @@ ProcessConfig = ANTLER
   Run = iCISCREA					@ NewConsole = false
 	Run = uMS						@ NewConsole = false
   Run = iEchoSounder @ NewConsole = false
+  Run = uMAC @ NewConsole = false
 
 
   Run = pShare @ NewConsole = false
@@ -77,7 +78,7 @@ ProcessConfig = pHelmIvP
   AppTick    = 4
   CommsTick  = 4
 
-  IVP_BEHAVIOR_DIR = ../../lib
+  IVP_BEHAVIOR_DIR = /home/vici/moos-ivp-msis/lib
   Behaviors  = wallFollowing_echoSounder.bhv
   Verbose    = verbose
   domain = slide:0:100:100

@@ -78,7 +78,7 @@ bool WallFollowing_EchoSounder::setParam(string param, string param_val)
     return true;
   }
   
-  if(param == "speed_coeff" && non_neg_number)
+  if(param == "speed_coeff")
   {
     m_speed_coeff = dval;
     return true;

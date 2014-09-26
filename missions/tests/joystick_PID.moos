@@ -24,10 +24,10 @@ ProcessConfig = uTimerScript
   //reset_time = end
   delay_reset = 5
 
-  event = var=DESIRED_THRUST, val=1, time=5
-  //event = var=SPEED, val=2, time=0
+  //event = var=DESIRED_THRUST, val=1, time=5
+  event = var=SPEED, val=0.1, time=0
   //event = var=DESIRED_DEPTH, val=1.0, time=0
-  //event = var=DESIRED_SPEED, val=2, time=0
+  event = var=DESIRED_SPEED, val=0.1, time=0
   //event = var=DESIRED_SPEED, val=0.1, time=120
   //event = var=DESIRED_HEADING, val=160, time=0
   //event = var=DESIRED_HEADING, val=245, time=120

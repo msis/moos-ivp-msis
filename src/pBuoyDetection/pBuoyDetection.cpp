@@ -15,7 +15,12 @@ using namespace std;
  * \brief Constructeur de l'application MOOS
  */
 
-pBuoyDetection::pBuoyDetection() : start_record(true), show_process(true), message_name("Buoy")
+pBuoyDetection::pBuoyDetection() : 
+     show_process(true),
+     message_name("Buoy"),
+     path_save(""),
+     folder_name_pattern("/DATASET_%F_%H-%M-%S"),
+     image_name_pattern("/image_%H_%M_%S.jpg")
 {
     m_iterations = 0;
     m_timewarp   = 1;
@@ -57,8 +62,8 @@ bool pBuoyDetection::OnNewMail(MOOSMSG_LIST &NewMail)
 
         if( msg.GetKey() == image_name)
         {
-            start_record = true;
             memcpy(img.data, msg.GetBinaryData(), img.rows*img.step);
+            detect(img);
         }
     }
 
@@ -90,69 +95,8 @@ bool pBuoyDetection::OnConnectToServer()
 bool pBuoyDetection::Iterate()
 {
     m_iterations++;
-    if (start_record)
-    {
-        //img = imread("/home/schvarcz/Desktop/Missão Eurathlon/10th/PICS_2014-09-24_16-57-37/BOTTOM_16_58_06.jpg");
-        Mat imgHSV,imgThr,imgThr2,eqHSV;
-        img = img(Rect(10,10,img.cols-20,img.rows-20));
-        blur(img,img,Size(3,3));
-        blur(img,img,Size(3,3));
-        cvtColor(img,imgHSV,CV_RGB2HSV);
-        vector<Mat> channels;
-        split(imgHSV,channels);
-        for (int i =0; i<channels.size();i++)
-            equalizeHist(channels[i],channels[i]);
-        merge(channels,eqHSV);
-        
-        inRange(imgHSV,Scalar(95,100,0),Scalar(200,200,255),imgThr);
-        inRange(eqHSV,Scalar(250,240,250),Scalar(255,255,255),imgThr2);
-        
-        Moments m1 = moments(imgThr);
-        int found = 0;
-        if (m1.m00 != 0)
-        {
-            found += 1;
-            if (show_process)
-            {
-                Point center1(m1.m10/m1.m00,m1.m01/m1.m00);
-                circle(img,center1,5,Scalar(0,0,255));
-            }
-        }
-        Moments m2 = moments(imgThr2);
-        if (m2.m00 != 0)
-        {
-            found += 2;
-            if (show_process)
-            {
-                Point center2(m2.m10/m2.m00,m2.m01/m2.m00);
-                circle(img,center2,5,Scalar(255,0,0));
-            }
-        }
-
-        switch(found)
-        {
-            case 1:
-                m_Comms.Notify(message_name, "method 1");
-                break;
-            case 2:
-                m_Comms.Notify(message_name, "method 2");
-                break;
-            case 3:
-                m_Comms.Notify(message_name, "method 1 and 2");
-                break;
-        }
-
-        if(show_process)
-        {
-            imshow("Original",img);
-            imshow("Result",imgThr);
-            imshow("Result",imgThr);
-            imshow("Result2",imgThr2);
-            imshow("imghsv",imgHSV);
-            imshow("Heq",eqHSV);
-            waitKey(20);
-        }
-    }
+//    img = imread("/home/schvarcz/Desktop/Missão Eurathlon/10th/PICS_2014-09-24_16-57-37/BOTTOM_16_58_06.jpg");
+//    detect(img);
     return(true);
 }
 
@@ -187,6 +131,18 @@ bool pBuoyDetection::OnStartUp()
             {
                 show_process = (value == "true");
             }
+            if(param == "IMAGE_NAME_PATTERN")
+            {
+                image_name_pattern = "/"+value;
+            }
+            if(param == "FOLDER_NAME_PATTERN")
+            {
+                folder_name_pattern = "/"+value;
+            }
+            if(param == "SAVE_IN_FOLDER")
+            {
+                path_save = value;
+            }
 
 
         }
@@ -194,6 +150,17 @@ bool pBuoyDetection::OnStartUp()
 
     m_timewarp = GetMOOSTimeWarp();
 
+    
+    char folder_name[80];
+    time_t     now = time(0);
+    struct tm  tstruct;
+    tstruct = *localtime(&now);
+    // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+    // for more information about date/time format
+    strftime(folder_name, sizeof(folder_name), folder_name_pattern.c_str(), &tstruct);
+    path_save += folder_name;
+    mkdir(path_save.c_str(),S_IRWXU | S_IRWXG | S_IROTH | S_IXOTH);
+    
     RegisterVariables();
     return(true);
 }
@@ -209,3 +176,76 @@ void pBuoyDetection::RegisterVariables()
     m_Comms.Register(image_name, 0);
 }
 
+void pBuoyDetection::detect(Mat img)
+{
+    Mat imgHSV,imgThr,imgThr2,eqHSV;
+    img = img(Rect(10,10,img.cols-20,img.rows-20));
+    blur(img,img,Size(3,3));
+    blur(img,img,Size(3,3));
+    cvtColor(img,imgHSV,CV_RGB2HSV);
+    vector<Mat> channels;
+    split(imgHSV,channels);
+    for (int i =0; i<channels.size();i++)
+        equalizeHist(channels[i],channels[i]);
+    merge(channels,eqHSV);
+
+    inRange(imgHSV,Scalar(95,100,0),Scalar(200,200,255),imgThr);
+    inRange(eqHSV,Scalar(250,240,250),Scalar(255,255,255),imgThr2);
+
+    Moments m1 = moments(imgThr);
+    int found = 0;
+    if (m1.m00 != 0)
+    {
+        found += 1;
+        if (show_process)
+        {
+            Point center1(m1.m10/m1.m00,m1.m01/m1.m00);
+            circle(img,center1,5,Scalar(0,0,255));
+        }
+    }
+    Moments m2 = moments(imgThr2);
+    if (m2.m00 != 0)
+    {
+        found += 2;
+        if (show_process)
+        {
+            Point center2(m2.m10/m2.m00,m2.m01/m2.m00);
+            circle(img,center2,5,Scalar(255,0,0));
+        }
+    }
+
+    switch(found)
+    {
+        case 1:
+            m_Comms.Notify(message_name, "method 1");
+            break;
+        case 2:
+            m_Comms.Notify(message_name, "method 2");
+            break;
+        case 3:
+            m_Comms.Notify(message_name, "method 1 and 2");
+            break;
+    }
+    if (found > 0)
+    {
+        char name[80];
+        time_t     now = time(0);
+        struct tm  tstruct;
+        tstruct = *localtime(&now);
+        // Visit http://en.cppreference.com/w/cpp/chrono/c/strftime
+        // for more information about date/time format
+        strftime(name, sizeof(name), image_name_pattern.c_str(), &tstruct);
+        imwrite(path_save+name, img);
+    }
+
+    if(show_process)
+    {
+        imshow("Original",img);
+        imshow("Result",imgThr);
+        imshow("Result",imgThr);
+        imshow("Result2",imgThr2);
+        imshow("imghsv",imgHSV);
+        imshow("Heq",eqHSV);
+        waitKey(20);
+    }
+}

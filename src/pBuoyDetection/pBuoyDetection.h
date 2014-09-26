@@ -15,6 +15,8 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include "MOOS/libMOOS/App/MOOSApp.h"
+#include <time.h>
+#include <sys/stat.h>
 
 using namespace std;
 using namespace cv;
@@ -33,13 +35,14 @@ class pBuoyDetection : public CMOOSApp
         void RegisterVariables();
 
     private: // Configuration variables
+        void detect(Mat img);
 
     private: // State variables
         unsigned int    m_iterations;
         double            m_timewarp;
         Mat img;
-        bool start_record, show_process;
-        string image_name, message_name;
+        bool show_process;
+        string image_name, message_name, image_name_pattern, folder_name_pattern, path_save;
 };
 
 #endif 

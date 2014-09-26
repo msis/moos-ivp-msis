@@ -24,6 +24,7 @@ ProcessConfig = uTimerScript
   //reset_time = end
   delay_reset = 5
 
+  event = var=DESIRED_THRUST, val=1, time=0
   //event = var=SPEED, val=2, time=0
   //event = var=DESIRED_DEPTH, val=1.0, time=0
   //event = var=DESIRED_SPEED, val=2, time=0

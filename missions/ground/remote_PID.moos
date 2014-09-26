@@ -53,4 +53,5 @@ ProcessConfig = pShare
   output = src_name=DESIRED_ELEVATOR_VICI, dest_name=DESIRED_ELEVATOR, route=multicast_1
   output = src_name=DESIRED_HEADING_VICI, dest_name=DESIRED_HEADING, route=multicast_1
   output = src_name=DESIRED_SPEED_VICI, dest_name=DESIRED_SPEED, route=multicast_1
+  output = src_name=DESIRED_DEPTH_VICI, dest_name=DESIRED_DEPTH, route=multicast_1
 }

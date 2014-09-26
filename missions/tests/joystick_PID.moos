@@ -12,6 +12,7 @@ ProcessConfig = ANTLER
 	Run = pMarinePID	@ NewConsole = false
 	Run = uTimerScript  @ NewConsole = false
 	Run = pEchoVar  @ NewConsole = false
+  Run = pShare @ NewConsole = false
 }
 
 
@@ -130,4 +131,22 @@ ProcessConfig = pMarinePID
   // A non-zero SPEED_FACTOR overrides use of SPEED_PID
   // Will set DESIRED_THRUST = DESIRED_SPEED * SPEED_FACTOR
   SPEED_FACTOR = 85
+}
+
+
+
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=DEPTH, route=multicast_1
+  Output = src_name=CURRENT_BATT1, route=multicast_1
+  Output = src_name=CURRENT_BATT2, route=multicast_1
+  Output = src_name=VOLTAGE_BATT1, route=multicast_1
+  Output = src_name=VOLTAGE_BATT2, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT1, route=multicast_1
+  Output = src_name=CONSUMPTION_BATT2, route=multicast_1
+  Output = src_name=HEADING, route=multicast_1
+
 }

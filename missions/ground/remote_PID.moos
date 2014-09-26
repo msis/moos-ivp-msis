@@ -30,7 +30,7 @@ ProcessConfig = uJoystick
    //AXIS = 0
    //DEST_VAR = DESIRED_SLIDE_VICI
    
-   AXIS_SCALE_RATIO = 0.0115
+   AXIS_SCALE_RATIO = 0.00115
    AXIS = 1
    DEST_VAR = DESIRED_SPEED_VICI
    

@@ -49,10 +49,10 @@ ProcessConfig = uTimerScript
   event = var=DESIRED_HEADING, val=165, time=60
 
 //turn gate
-  event = var=DESIRED_DEPTH, val=1.6, time=110
-  event = var=DESIRED_SPEED, val=0.1, time=110
-  event = var=DESIRED_HEADING, val=245, time=110
-  event = var=DESIRED_SPEED, val=2, time=113
+  event = var=DESIRED_DEPTH, val=1.6, time=113
+  event = var=DESIRED_SPEED, val=0.1, time=113
+  event = var=DESIRED_HEADING, val=245, time=113
+  event = var=DESIRED_SPEED, val=1, time=116
 
   event = var=DESIRED_DEPTH, val=1.6, time=110
   event = var=DESIRED_HEADING, val=245, time=140

@@ -42,8 +42,8 @@ class LocalizationSonar : public CMOOSApp
         Size pool;
         double pool_angle;
         double heading;
-        double heading_razor,sonarScale;
-        bool found;
+        double heading_razor,sonarScale, startAngle, readings;
+        bool found, requestLocalization;
         Mat img, edge, gray, color_dst, sonarImg;
         bool hasImage, showProcess, use_razor_heading;
         RotatedRect lastPoolDetected;

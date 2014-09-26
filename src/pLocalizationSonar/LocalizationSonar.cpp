@@ -20,13 +20,15 @@ LocalizationSonar::LocalizationSonar():
     hasImage(false),
     showProcess(true),
     use_razor_heading(false),
+    requestLocalization(false),
     pool(50.,50.),
     pool_utm(0.,0.) //width, height
 {
     m_iterations = 0;
     m_timewarp   = 1;
-    timeWindow = 50;
-    pool_angle = MOOSDeg2Rad(0.0);
+    timeWindow   = 50;
+    startAngle   = 5000;
+    pool_angle   = MOOSDeg2Rad(0.0);
     sonarImg.create(400,400,CV_8UC1);
 }
 
@@ -77,11 +79,30 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
             heading = MOOSDeg2Rad(msg.GetDouble());
             //heading += pool_angle;
         }
-        if( msg.GetKey() == "SONAR_RAW_DATA")
+        if( msg.GetKey() == "REQUEST_FOR_LOCALIZATION")
+        {
+            if(showProcess)
+                cout << endl << endl << "Request for localization" << endl;
+            requestLocalization = true;
+        }
+        if( msg.GetKey() == "SONAR_RAW_DATA" && requestLocalization)
         {
             float angle = 0;
             MOOSValFromString(angle, msg.GetString(), "bearing");
+            if(showProcess)
+                cout << "Bearing: " << angle << " - " << abs(startAngle - angle) << endl;
+            readings++;
             
+            if (startAngle == 5000)
+            {
+                startAngle = angle;
+                readings = 0;
+            }
+            
+            if((abs(startAngle - angle) < 3) && (readings>40))
+            {
+                hasImage = true;
+            }
             vector<unsigned int> scanline;
             int nRows, nCols;
             MOOSValFromString(scanline, nRows, nCols, msg.GetString(), "scanline");
@@ -103,7 +124,15 @@ bool LocalizationSonar::OnNewMail(MOOSMSG_LIST &NewMail)
                         sonarImg.at<unsigned char>(x,y) = scanline[i];
                 }
             }
-            hasImage = true;
+//            float alpha = 0.99;
+//            addWeighted( sonarImg, alpha, Mat::zeros(Size(sonarImg.cols,sonarImg.rows),sonarImg.type()), 1.-alpha, 0.0, sonarImg);
+//            blur(sonarImg,sonarImg,Size(3,3));
+            //threshold(sonarImg,sonarImg,60,255,CV_THRESH_TOZERO);
+            if(showProcess)
+            {
+                imshow("Original", sonarImg);
+                waitKey(33);
+            }
         }
     }
 
@@ -218,6 +247,7 @@ void LocalizationSonar::RegisterVariables()
     m_Comms.Register("SONAR_RAW_DATA", 0);
     m_Comms.Register("YAW", 0);
     m_Comms.Register("HEADING", 0);
+    m_Comms.Register("REQUEST_FOR_LOCALIZATION", 0);
 }
 
 void LocalizationSonar::processImage(Mat img)
@@ -340,6 +370,13 @@ void LocalizationSonar::processImage(Mat img)
         topLeft = pts[min1];
         topRight = pts[min2];
         
+        if(showProcess)
+        {
+            circle(color_dst,topLeft,3,Scalar(255,100,150),-1);
+            circle(color_dst,topRight,3,Scalar(255,255,0),-1);
+            imshow("Result",color_dst);
+        }
+        
         float distance = sqrt(pow(topLeft.x-topRight.x,2) + pow(topLeft.y-topRight.y,2));
         float resolution = pool.width/distance;
         Point2f origin = translatePt2f(topRight,Point2f(-img.cols/2.,-img.rows/2.));
@@ -360,9 +397,12 @@ void LocalizationSonar::processImage(Mat img)
         m_Comms.Notify("NAV_Y",robot.y);
         m_Comms.Notify("NAV_UTM_X",robotUTM.x);
         m_Comms.Notify("NAV_UTM_Y",robotUTM.y);
+        hasImage = false;
+        requestLocalization = false;
+        startAngle = 5000;
     }
 
-    int k = waitKey(20) & 255;
+    int k = waitKey(33) & 255;
     if (k == 10)
     {
         cout << "Saved" << endl;
@@ -447,10 +487,6 @@ void LocalizationSonar::drawPoints()
 
     for(unsigned int i=0;i<4;i++)
         circle(color_dst,ptsW[i],3,Scalar(150,255,255),-1);
-        
-    circle(color_dst,topLeft,3,Scalar(255,100,150),-1);
-    circle(color_dst,topRight,3,Scalar(255,255,0),-1);
-    imshow("Result",color_dst);
 }
 
 Point2f LocalizationSonar::rotatePt2f(Point2f pt, float angle)

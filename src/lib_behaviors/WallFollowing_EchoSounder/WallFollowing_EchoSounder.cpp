@@ -78,7 +78,7 @@ bool WallFollowing_EchoSounder::setParam(string param, string param_val)
     return true;
   }
   
-  if(param == "speed_coeff" && non_neg_number)
+  if(param == "speed_coeff")
   {
     m_speed_coeff = dval;
     return true;
@@ -139,15 +139,15 @@ IvPFunction* WallFollowing_EchoSounder::IvPFunctionToFollowTheWall()
   else
     desired_slide = min(m_max_speed, desired_slide);
   
-  postMessage("DIST_FROM_WALL_DESIRED", m_dist_from_wall_desired);
-  postMessage("DIST_FROM_WALL", m_dist_from_wall);
-  postMessage("DESIRED_SLIDE", desired_slide);
+  postMessage("WFES_DIST_FROM_WALL_DESIRED", m_dist_from_wall_desired);
+  postMessage("WFES_DIST_FROM_WALL", m_dist_from_wall);
+  postMessage("WFES_DESIRED_SLIDE", desired_slide);
   
   ZAIC_PEAK slide_zaic(m_domain, "slide");
   // summit, pwidth, bwidth, delta, minutil, maxutil
   slide_zaic.setParams(desired_slide, 
-                        m_max_speed * 0.1, 
-                        m_max_speed * 0.2, 
+                        2.0, 
+                        4.0, 
                         20., 
                         0., 
                         100.);

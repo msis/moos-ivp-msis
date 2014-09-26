@@ -84,14 +84,14 @@ ProcessConfig = uTimerScript
   event = var=DESIRED_SPEED, val=2, time=330
 
 //turn wall 2
-  event = var=DESIRED_DEPTH, val=1.6, time=330
-  event = var=DESIRED_HEADING, val=45, time=330
-  event = var=DESIRED_SPEED, val=2, time=330
+  event = var=DESIRED_DEPTH, val=1.6, time=410
+  event = var=DESIRED_HEADING, val=45, time=410
+  event = var=DESIRED_SPEED, val=2, time=410
 
 
-  event = var=DESIRED_DEPTH, val=0.5, time=400
-  event = var=DESIRED_HEADING, val=5, time=400
-  event = var=DESIRED_SPEED, val=2, time=400
+  event = var=DESIRED_DEPTH, val=0.5, time=460
+  event = var=DESIRED_HEADING, val=5, time=460
+  event = var=DESIRED_SPEED, val=2, time=460
 
   
 

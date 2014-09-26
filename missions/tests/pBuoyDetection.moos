@@ -1,0 +1,21 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+    MSBetweenLaunches = 200
+    Run = MOOSDB                     @ NewConsole = false 
+    Run = pBuoyDetection             @ NewConsole = false
+    Run = uMS                        @ NewConsole = false
+}
+
+ProcessConfig = pBuoyDetection
+{
+   AppTick   = 10
+   CommsTick = 10
+   VARIABLE_IMAGE_NAME = iCamera_SIDE
+   VARIABLE_WHEN_FOUND = BuoyPipes
+   SHOW_PROCESS = true
+}
+

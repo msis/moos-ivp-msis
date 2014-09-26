@@ -1,0 +1,12 @@
+//------------------------------------------------
+// pBuoyDetection config block
+
+ProcessConfig = pBuoyDetection
+{
+   AppTick   = 10
+   CommsTick = 10
+   VARIABLE_IMAGE_NAME = iCamera_SIDE
+   VARIABLE_WHEN_FOUND = BuoyPipes
+   SHOW_PROCESS = true
+}
+

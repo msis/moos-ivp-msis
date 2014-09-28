@@ -34,9 +34,9 @@ ProcessConfig = uJoystick
    AXIS = 1
    DEST_VAR = DESIRED_THRUST_VICI
    
-   //AXIS_SCALE_RATIO = 0.5
-   //AXIS = 2
-   //DEST_VAR = DESIRED_RUDDER_VICI
+   AXIS_SCALE_RATIO = 0.1
+   AXIS = 2
+   DEST_VAR = DESIRED_RUDDER_VICI
    
    AXIS_SCALE_RATIO = 0.5
    AXIS = 3

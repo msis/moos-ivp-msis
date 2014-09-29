@@ -17,7 +17,7 @@ ProcessConfig = ANTLER
   Run = iCISCREA    @ NewConsole = false
 
   Run = iSonar           @ NewConsole = false
-  Run = pSensorViewer    @ NewConsole = false 
+  //Run = pSensorViewer    @ NewConsole = false 
   Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
   Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
 
@@ -157,6 +157,8 @@ ProcessConfig = pShare
   Output = src_name=VOLTAGE_BATT2, route=multicast_1
   Output = src_name=HEADING, route=multicast_1
   Output = src_name=NODE_REPORT, route=multicast_1
+  Output = src_name=CAMERA_SIDE, route=multicast_1
+  Output = src_name=CAMERA_BOTTOM, route=multicast_1
   Output = src_name=SONAR_RAW_DATA, route=multicast_1
 
 }

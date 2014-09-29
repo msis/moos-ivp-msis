@@ -17,7 +17,7 @@ ProcessConfig = ANTLER
   Run = iCISCREA    @ NewConsole = false
 
   Run = iSonar           @ NewConsole = false
-  //Run = pSensorViewer    @ NewConsole = false 
+  Run = pSensorViewer    @ NewConsole = false 
   Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
   Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
 

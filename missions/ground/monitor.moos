@@ -1,0 +1,18 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = GROUND
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+  Run = MOOSDB          @ NewConsole = false
+  Run = uMS             @ NewConsole = false
+    
+  # Software communications
+  Run = pShare          @ NewConsole = false
+}
+
+ProcessConfig = pShare
+{
+  input = route = multicast_1
+}

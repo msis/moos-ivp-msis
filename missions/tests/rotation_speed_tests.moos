@@ -1,0 +1,105 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+	MSBetweenLaunches = 200
+	Run = MOOSDB         			@ NewConsole = false 
+	Run = iCISCREA					@ NewConsole = false
+	Run = uMS						@ NewConsole = false
+
+  Run = uTimerScript  @ NewConsole = false
+}
+
+//------------------------------------------------
+// iCISCREA config block
+
+ProcessConfig = iCISCREA
+{
+    AppTick   = 4
+    CommsTick = 4
+
+	  //Serial port 
+  SERIAL_PORT = /dev/ttyUSB0
+                                                                
+  // Max number of retries before giving up
+  MAX_MODBUS_RETRIES = 10
+  MAX_TURNON_RETRIES = 100
+                                                                
+  // Lower and upper bound for motors deadzone
+  FRRI_LO_DZ = 0
+  RERI_LO_DZ = 0
+  RELE_LO_DZ = 0
+  FRLE_LO_DZ = 0
+  VERT_LO_DZ = 0
+  FRRI_UP_DZ = 0
+  RERI_UP_DZ = 0
+  RELE_UP_DZ = 0
+  FRLE_UP_DZ = 0
+  VERT_UP_DZ = 0
+                                                                
+  // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
+  FRRI_SENS = 1
+  RERI_SENS = 1
+  RELE_SENS = 1
+  FRLE_SENS = 1
+  VERT_SENS = 1
+
+  DEPTH_OFFSET = -0.02
+
+}
+
+ProcessConfig = uTimerScript
+{
+  AppTick = 2
+  CommsTick = 2
+
+  reset_time = end
+  reset_max = unlimited
+  delay_reset = 10
+
+  event = var=DESIRED_RUDDER, val=10, time=0
+  event = var=DESIRED_RUDDER, val=0, time=5
+  event = var=DESIRED_RUDDER, val=20, time=10
+  event = var=DESIRED_RUDDER, val=0, time=15
+  event = var=DESIRED_RUDDER, val=30, time=20
+  event = var=DESIRED_RUDDER, val=0, time=25
+  event = var=DESIRED_RUDDER, val=40, time=30
+  event = var=DESIRED_RUDDER, val=0, time=35
+  event = var=DESIRED_RUDDER, val=50, time=40
+  event = var=DESIRED_RUDDER, val=0, time=45
+  event = var=DESIRED_RUDDER, val=60, time=50
+  event = var=DESIRED_RUDDER, val=0, time=55
+  event = var=DESIRED_RUDDER, val=70, time=60
+  event = var=DESIRED_RUDDER, val=0, time=65
+  event = var=DESIRED_RUDDER, val=80, time=70
+  event = var=DESIRED_RUDDER, val=0, time=75
+  event = var=DESIRED_RUDDER, val=90, time=80
+  event = var=DESIRED_RUDDER, val=0, time=85
+  event = var=DESIRED_RUDDER, val=100, time=90
+  event = var=DESIRED_RUDDER, val=0, time=95
+
+  event = var=DESIRED_RUDDER, val=-10, time=100
+  event = var=DESIRED_RUDDER, val=0, time=105
+  event = var=DESIRED_RUDDER, val=-20, time=110
+  event = var=DESIRED_RUDDER, val=0, time=115
+  event = var=DESIRED_RUDDER, val=-30, time=120
+  event = var=DESIRED_RUDDER, val=0, time=125
+  event = var=DESIRED_RUDDER, val=-40, time=130
+  event = var=DESIRED_RUDDER, val=0, time=135
+  event = var=DESIRED_RUDDER, val=-50, time=140
+  event = var=DESIRED_RUDDER, val=0, time=145
+  event = var=DESIRED_RUDDER, val=-60, time=150
+  event = var=DESIRED_RUDDER, val=0, time=155
+  event = var=DESIRED_RUDDER, val=-70, time=160
+  event = var=DESIRED_RUDDER, val=0, time=165
+  event = var=DESIRED_RUDDER, val=-80, time=170
+  event = var=DESIRED_RUDDER, val=0, time=175
+  event = var=DESIRED_RUDDER, val=-90, time=180
+  event = var=DESIRED_RUDDER, val=0, time=185
+  event = var=DESIRED_RUDDER, val=-100, time=190
+  event = var=DESIRED_RUDDER, val=0, time=195
+
+
+}

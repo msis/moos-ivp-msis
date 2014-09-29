@@ -1,0 +1,13 @@
+//------------------------------------------------
+// pCameraLogger config block
+
+ProcessConfig = pCameraLogger
+{
+	AppTick   = 10
+	CommsTick = 10
+	VARIABLE_IMAGE_NAME = CAMERA_SIDE
+	DISPLAY_IMAGE = false
+	SAVE_IN_FOLDER = /home/schvarcz/Desktop/images
+	IMAGE_NAME_PATTERN = image_%06d.jpg
+}
+

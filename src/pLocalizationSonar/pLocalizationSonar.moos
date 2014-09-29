@@ -1,0 +1,25 @@
+//------------------------------------------------
+// pLocalizationSonar config block
+
+ProcessConfig = pLocalizationSonar
+{
+   POOL_WIDTH = 144.7762461813487
+   POOL_HEIGHT = 62.29228753464289
+   POOL_UTM_X = 569239.551532066
+   POOL_UTM_Y = 4882916.595849914
+   POOL_ANGLE = -1.2895641248766014
+   ZONE = 32T
+   USE_RAZOR_HEADING = true
+   
+/*   //Corner 1 - Origin*/
+/*   LAT =44.095738*/
+/*   LONG = 9.865190*/
+/*   44.096157, 9.865012*/
+/*   */
+/*   //Corner 2*/
+/*   44.095737, 9.865184*/
+/*   569253.8094576951, 4882870.091076121*/
+/*   LAT = 44.*/
+/*   LONG = 9.*/
+}
+

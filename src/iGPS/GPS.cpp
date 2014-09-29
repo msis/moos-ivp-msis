@@ -137,6 +137,16 @@ bool GPS::OnStartUp()
   AddMOOSVariable("N", "", "GPS_N", dGPSPeriod);
   AddMOOSVariable("E", "", "GPS_E", dGPSPeriod);
   AddMOOSVariable("Raw", "", "GPS_RAW", dGPSPeriod);
+  AddMOOSVariable("Longitude", "", "GPS_LONG", dGPSPeriod);
+  AddMOOSVariable("Latitude", "", "GPS_LAT", dGPSPeriod);
+  AddMOOSVariable("Satellites", "", "GPS_SATS", dGPSPeriod);
+  AddMOOSVariable("Altitude", "", "GPS_ALTITUDE", dGPSPeriod);
+  AddMOOSVariable("Speed", "", "GPS_SPEED", dGPSPeriod);
+  AddMOOSVariable("Heading", "", "GPS_HEADING", dGPSPeriod);
+  AddMOOSVariable("Yaw", "", "GPS_YAW", dGPSPeriod);
+
+
+
 
   RegisterMOOSVariables();
   RegisterVariables();
@@ -208,7 +218,155 @@ bool GPS::ParseNMEAString(string &sNMEAString)
     return false;
   }
   string sCopy = sNMEAString;
-  string sMessage = MOOSChomp(sNMEAString,",");
+  string sHeader = MOOSChomp(sNMEAString,",");
+  bool bQuality = true;
 
+  if (sHeader == "$GPRMC")
+  {
+    double dTimeMOOS = MOOSTime();
+    // will only be used for speed and heading!
+    string sTmp = MOOSChomp(sNMEAString,","); //UTC
+    sTmp = MOOSChomp(sNMEAString, ","); // Validity
+    if (sTmp == "V")
+      bQuality = false;
+    sTmp = MOOSChomp(sNMEAString, ","); // Lat
+    sTmp = MOOSChomp(sNMEAString, ","); // N/S
+    sTmp = MOOSChomp(sNMEAString, ","); // Long
+    sTmp = MOOSChomp(sNMEAString, ","); // E/W
+    
+    sTmp = MOOSChomp(sNMEAString, ","); // Speed in knots
+    double dSpeed = atof(sTmp.c_str());
+
+    sTmp = MOOSChomp(sNMEAString, ","); // True course
+    double dHeading = atof(sTmp.c_str());
+
+    if (bQuality)
+    {
+      dSpeed = Knots2MPS(dSpeed);
+      SetMOOSVar("Speed",dSpeed,dTimeMOOS);
+      
+      while(dHeading > 180) dHeading -= 360;
+      while(dHeading < -180) dHeading += 360;
+      double dYaw = -dHeading*M_PI/180.0;
+      SetMOOSVar("Heading",dHeading,dTimeMOOS);
+      SetMOOSVar("Yaw",dYaw,dTimeMOOS);
+    }
+
+
+  } else if (sHeader == "$GPGGA") {
+    double dLat, dLong;
+    double dTimeMOOS = MOOSTime();
+    string sTmp = MOOSChomp(sNMEAString,",");
+
+    // First time
+    double dTime = atof(sTmp.c_str());
+
+    // then Latitude
+    sTmp = MOOSChomp(sNMEAString, ",");
+    if (sTmp.size() == 0)
+    {
+      bQuality = false;
+      MOOSTrace("NMEA message received with no Latitude.");
+      return false;
+    } else {
+      dLat = atof(sTmp.c_str());
+      sTmp = MOOSChomp(sNMEAString, ",");
+      string sNS = sTmp;
+      if (sNS == "S")
+        dLat *= -1.0;
+    }
+
+    // then Longitude
+    sTmp = MOOSChomp(sNMEAString, ",");
+    if (sTmp.size() == 0)
+    {
+      bQuality = false;
+      MOOSTrace("NMEA message received with no Longitude.");
+      return false;
+    } else {
+      dLong = atof(sTmp.c_str());
+      sTmp = MOOSChomp(sNMEAString, ",");
+      string sEW = sTmp;
+      if (sEW == "W")
+        dLong *= -1.0;
+    }
+
+    // then GPS FIX Verification
+    sTmp = MOOSChomp(sNMEAString, ",");
+    int iFix = atoi(sTmp.c_str());
+    if (iFix == 0)
+      bQuality = false;
+
+    // then number of stellites
+    sTmp = MOOSChomp(sNMEAString, ",");
+    int iSatellites = atoi(sTmp.c_str());
+    if (iSatellites < 4)
+      bQuality = false;
+
+    // then Horizontal Dilution of Precision HDOP
+    sTmp = MOOSChomp(sNMEAString, ",");
+    double dHDOP = atof(sTmp.c_str());
+
+    // then altitude above mean sea level
+    sTmp = MOOSChomp(sNMEAString, ",");
+    double dAltitude = atof(sTmp.c_str());
+    sTmp = MOOSChomp(sNMEAString, ","); //removes M of meters.
+
+    // then height of geoid above WGS84 ellipsoid
+    sTmp = MOOSChomp(sNMEAString, ",");
+    double dHeightGeoid = atof(sTmp.c_str());
+    sTmp = MOOSChomp(sNMEAString, ","); //removes M of meters.
+
+    // then time since last DGPS and DGPS ID
+    // ignored
+
+    // Conversion
+    dLat = DMS2DecDeg(dLat);
+    dLong = DMS2DecDeg(dLong);
+
+    double dXLocal; // X coordinate in local
+    double dYLocal; // Y coordinate in local
+    double dNLocal; // Northing in local
+    double dELocal; // Easting in local
+
+    if (bQuality)
+    {
+      if (m_Geodesy.LatLong2LocalUTM(dLat,dLong,dNLocal,dELocal))
+      {
+        if (bQuality)
+        {
+          SetMOOSVar("N",dNLocal,dTimeMOOS);
+          SetMOOSVar("E",dELocal,dTimeMOOS);
+        }
+      }
+      if (m_Geodesy.LatLong2LocalUTM(dLat,dLong,dYLocal,dXLocal))
+      {
+        if (bQuality)
+        {
+          SetMOOSVar("X",dXLocal,dTimeMOOS);
+          SetMOOSVar("Y",dYLocal,dTimeMOOS);
+        }
+      }
+      SetMOOSVar("Longitude",dLong,dTimeMOOS);
+      SetMOOSVar("Latitude",dLat,dTimeMOOS);
+      SetMOOSVar("Satellites",iSatellites,dTimeMOOS);
+      SetMOOSVar("Altitude",dAltitude,dTimeMOOS);
+    }
+  }
   return true;
+}
+
+
+double GPS::DMS2DecDeg(double dfVal)
+{
+  int nDeg = (int)(dfVal/100.0);
+
+  double dfTmpDeg = (100.0*(dfVal/100.0-nDeg))/60.0;
+
+  return  dfTmpDeg+nDeg;
+}
+
+double GPS::Knots2MPS(double speed)
+{
+  return speed*KNOTS2MPS;
 }

@@ -11,6 +11,8 @@
 #include "MOOS/libMOOS/MOOSLib.h"
 #include "MOOS/libMOOSGeodesy/MOOSGeodesy.h"
 
+#define KNOTS2MPS 0.5144444444
+
 class GPS : public CMOOSInstrument
 {
  public:
@@ -29,6 +31,10 @@ class GPS : public CMOOSInstrument
    bool GetData();
    bool PublishData();
    bool ParseNMEAString(std::string &s);
+
+   double DMS2DecDeg(double d);
+
+   double Knots2MPS(double s);
 
  private: // Configuration variables
 

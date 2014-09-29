@@ -25,11 +25,11 @@ ProcessConfig = ANTLER
 
   //Run = iEchoSounder    @ NewConsole = false
   Run = iGPS    @ NewConsole = false
+  Run = pNodeReporter  @ NewConsole = false
   
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM  
 
-  
 }
 
 
@@ -156,5 +156,18 @@ ProcessConfig = pShare
   Output = src_name=VOLTAGE_BATT1, route=multicast_1
   Output = src_name=VOLTAGE_BATT2, route=multicast_1
   Output = src_name=HEADING, route=multicast_1
+  Output = src_name=NODE_REPORT, route=multicast_1
 
 }
+
+ProcessConfig = pNodeReporter
+{
+  AppTick   = 4                                                 
+  CommsTick = 4                                                 
+                                                                
+  // Configure key aspects of the node                          
+  platform_type      = auv   // or {uuv,auv,ship,kayak}   
+  platform_length    = 0.5
+}
+
+

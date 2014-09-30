@@ -40,6 +40,7 @@ ProcessConfig = pEchoVar
   Echo    = DEPTH   ->  NAV_DEPTH
   Echo    = HEADING ->  NAV_HEADING
   Echo    = GPS_HEADING ->  NAV_HEADING
+  Echo    = GPS_YAW ->  NAV_YAW
   Echo    = GPS_SPEED   ->  NAV_SPEED
   Echo    = GPS_X   ->  NAV_X
   Echo    = GPS_Y   ->  NAV_Y
@@ -169,7 +170,9 @@ ProcessConfig = pShare
   Output = src_name=VOLTAGE_BATT1, route=multicast_1
   Output = src_name=VOLTAGE_BATT2, route=multicast_1
   Output = src_name=HEADING, route=multicast_1
+  Output = src_name=YAW, route=multicast_1
   Output = src_name=NODE_REPORT, route=multicast_1
+  Output = src_name=NODE_REPORT_LOCAL, route=multicast_1
   Output = src_name=CAMERA_SIDE, route=multicast_1
   Output = src_name=CAMERA_BOTTOM, route=multicast_1
   Output = src_name=SONAR_RAW_DATA, route=multicast_1

@@ -16,14 +16,29 @@ ProcessConfig = ANTLER
   //Run = pMarineViewer	@ NewConsole = true
   Run = pHelmIvP	@ NewConsole = false
 
+  Run = pEchoVar  @ NewConsole = false
+
+
   Run = iCISCREA 
   Run = iCamera @ NewConsole = false ~ iCamera_BOTTOM
   Run = iCamera @ NewConsole = false ~ iCamera_SIDE
 
-  
-  Run = uTimerScript  @ NewConsole = false
 
+  Run = uTimerScript  @ NewConsole = false
+  Run = pSensorViewer    @ NewConsole = false 
 }
+
+
+                                                            
+ProcessConfig = pEchoVar
+{
+  AppTick   = 4
+  CommsTick = 4
+                                                                
+  Echo    = DEPTH   ->  NAV_DEPTH
+  Echo    = HEADING ->  NAV_HEADING
+  Echo    = SPEED   ->  NAV_SPEED
+}  
 
 ProcessConfig = uTimerScript
 {

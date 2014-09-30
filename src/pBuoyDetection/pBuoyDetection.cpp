@@ -25,6 +25,7 @@ pBuoyDetection::pBuoyDetection() :
 {
     m_iterations = 0;
     m_timewarp   = 1;
+    img.create(288,360,CV_8UC3);
 }
 
 /**
@@ -83,7 +84,7 @@ bool pBuoyDetection::OnConnectToServer()
     // m_MissionReader.GetConfigurationParam("Name", <string>);
     // m_Comms.Register("VARNAME", 0);
 
-    RegisterVariables();
+    //RegisterVariables();
     return(true);
 }
 

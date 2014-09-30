@@ -45,28 +45,28 @@ ProcessConfig = uTimerScript
   event = var=DESIRED_HEADING, val=150, time=30
 
   event = var=DESIRED_DEPTH, val=4.0, time=60
-  event = var=DESIRED_SPEED, val=1, time=60
+  event = var=DESIRED_SPEED, val=2, time=60
   event = var=DESIRED_HEADING, val=150, time=60
 
 //turn structure
-  event = var=DESIRED_DEPTH, val=4, time=90
-  event = var=DESIRED_SPEED, val=0.1, time=90
-  event = var=DESIRED_HEADING, val=150, time=90
+  event = var=DESIRED_DEPTH, val=4, time=120
+  event = var=DESIRED_SPEED, val=0.1, time=120
+  event = var=DESIRED_HEADING, val=150, time=120
   
-  event = var=DESIRED_DEPTH, val=4, time=100
-  event = var=DESIRED_HEADING, val=150, time=100
-  event = var=DESIRED_SPEED, val=0.1, time=100
+  event = var=DESIRED_DEPTH, val=4, time=140
+  event = var=DESIRED_HEADING, val=150, time=140
+  event = var=DESIRED_SPEED, val=0.1, time=140
 
 //turn gate
-  event = var=DESIRED_DEPTH, val=4, time=110
-  event = var=DESIRED_HEADING, val=65, time=110
-  event = var=DESIRED_SPEED, val=0.1, time=110
+  event = var=DESIRED_DEPTH, val=4, time=160
+  event = var=DESIRED_HEADING, val=65, time=160
+  event = var=DESIRED_SPEED, val=0.1, time=160
 
   
 
 
-  event = var=DESIRED_SPEED, val=0.1, time=130
-  event = var=DESIRED_DEPTH, val=0.5, time=130
+  event = var=DESIRED_SPEED, val=0.1, time=190
+  event = var=DESIRED_DEPTH, val=0.5, time=190
 
 }
 

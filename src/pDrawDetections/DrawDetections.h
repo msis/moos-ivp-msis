@@ -33,6 +33,7 @@ class DrawDetections : public AppCastingMOOSApp
 
   private: // State variables
     double m_nav_x, m_nav_y;
+    int m_iteration;
 };
 
 #endif 

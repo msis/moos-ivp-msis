@@ -18,6 +18,7 @@ DrawDetections::DrawDetections()
 {
   m_nav_x = 0.;
   m_nav_y = 0.;
+  m_iteration = 0;
 }
 
 //---------------------------------------------------------
@@ -53,10 +54,14 @@ bool DrawDetections::OnNewMail(MOOSMSG_LIST &NewMail)
     {
       if(msg.GetString() != "false")
       {
+        m_iteration ++;
         XYCircle circle;
         circle.setX(m_nav_x);
         circle.setY(m_nav_y);
-        circle.set_label("detection");
+        
+        ostringstream strs;
+        strs << "d" << m_iteration;
+        circle.set_label(strs.str());
         circle.set_active("true");
         circle.set_color("label", "orange");
         circle.set_color("edge", "orange");

@@ -8,6 +8,7 @@ ProcessConfig = pCameraLogger
 	VARIABLE_IMAGE_NAME = CAMERA_SIDE
 	DISPLAY_IMAGE = false
 	SAVE_IN_FOLDER = /home/schvarcz/Desktop/images
-	IMAGE_NAME_PATTERN = image_%06d.jpg
+	IMAGE_NAME_PATTERN = image_%H_%M_%S.jpg
+	FOLDER_NAME_PATTERN = DATASET_%F_%H-%M-%S
 }
 

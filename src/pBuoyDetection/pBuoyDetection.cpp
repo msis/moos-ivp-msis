@@ -200,7 +200,7 @@ void pBuoyDetection::detect(Mat img)
     Point2f centerDetection(0,0);
 
     int found = 0;
-    if (m1.m00 != 0)
+    /*if (m1.m00 != 0)
     {
         centerDetection.x = m1.m10/m1.m00;
         centerDetection.y = m1.m01/m1.m00;
@@ -210,7 +210,7 @@ void pBuoyDetection::detect(Mat img)
             Point center1(m1.m10/m1.m00,m1.m01/m1.m00);
             circle(img,center1,5,Scalar(0,0,255));
         }
-    }
+    }*/
     Moments m2 = moments(imgThr2);
     if (m2.m00 != 0)
     {

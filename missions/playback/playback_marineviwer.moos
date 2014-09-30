@@ -2,8 +2,8 @@ ServerHost = localhost
 ServerPort = 9000
 Community = VICI
 
-LatOrigin    = 44.095738
-LongOrigin   = 9.865190
+LatOrigin    = 44.0957128
+LongOrigin   = 9.86493978
 
 ProcessConfig = ANTLER
 {
@@ -15,7 +15,7 @@ ProcessConfig = ANTLER
 
   Run = pSensorViewer    @ NewConsole = false 
   Run = uDeReCISCREA	 @ NewConsole = false
-  Run = pLocalizationSonar @ NewConsole = false
+  //Run = pLocalizationSonar @ NewConsole = false
 }
 
 

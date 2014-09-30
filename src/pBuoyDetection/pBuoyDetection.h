@@ -41,7 +41,7 @@ class pBuoyDetection : public CMOOSApp
         unsigned int    m_iterations;
         double            m_timewarp;
         Mat img;
-        bool show_process;
+        bool show_process, hasImage;
         string image_name, message_name, image_name_pattern, folder_name_pattern, path_save;
 };
 

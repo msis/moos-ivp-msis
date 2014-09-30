@@ -1,5 +1,16 @@
 //------------------------------------------------
-// pBuoyDetection config block
+// pPositionTarget config block
+
+ProcessConfig = pPositionTarget
+{
+	AppTick   = 1
+	CommsTick = 1
+	VARIABLE_IMAGE_NAME = CAMERA_SIDE
+	DISPLAY_IMAGE = false
+	SAVE_IN_FOLDER = /home/schvarcz/Desktop/images
+	IMAGE_NAME_PATTERN = image_%H_%M_%S.jpg
+	FOLDER_NAME_PATTERN = DATASET_%F_%H-%M-%S
+}
 
 ProcessConfig = pBuoyDetection
 {

@@ -18,6 +18,8 @@ INCLUDE_DIRECTORIES(${LOCAL_COMMON_LIBRARY_DIRS} ${LOCAL_BHV_LIBRARY_DIRS})
 
 # Behavior libs
 ADD_SUBDIRECTORY(WallFollowing_EchoSounder)
+#ADD_SUBDIRECTORY(TrackingThePlume)
+ADD_SUBDIRECTORY(PipeInspection)
 
 ##############################################################################
 #                           END of CMakeLists.txt

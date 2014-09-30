@@ -1,0 +1,32 @@
+ServerHost = localhost
+ServerPort = 9000
+Community  = VICI_FOLLOWING_ES
+
+MOOSTimeWarp = 1
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB		@ NewConsole = true
+  //Run = pLogger         @ NewConsole = true
+  //Run = uSimMarine	@ NewConsole = true
+  //Run = pNodeReporter	@ NewConsole = true
+  //Run = pMarinePID	@ NewConsole = true
+  //Run = pMarineViewer	@ NewConsole = true
+  Run = pHelmIvP	@ NewConsole = false
+}
+
+ProcessConfig = pHelmIvP
+{
+  AppTick    = 4
+  CommsTick  = 4
+
+  IVP_BEHAVIOR_DIR  = ../../lib
+  Behaviors         = pipeInspection.bhv
+  Verbose           = verbose
+  Domain            = course:0:359:360
+  Domain            = depth:0:10:200
+  ok_skew           = any
+  active_start      = true
+}

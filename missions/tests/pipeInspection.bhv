@@ -1,0 +1,24 @@
+// -----------------------------------------------
+//           BEHAVIOR CONFIGURATION FILE     
+// -----------------------------------------------
+
+initialize DEPLOY = true
+initialize RETURN = false
+
+set MODE = ACTIVE
+{
+  DEPLOY = true
+} INACTIVE
+
+Behavior = BHV_PipeInspection
+{
+  name = pipe_inspection_tuesday
+  priority = 100
+  condition = MODE = ACTIVE
+  
+  // BHV_PipeInspection parameters:
+    inactive_area_w_ratio = 0.1  // [-1,1]
+    inactive_area_h_ratio = 0.1  // [-1,1]
+    delta_heading         = 3.0
+    delta_depth           = 0.10
+}

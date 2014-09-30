@@ -17,6 +17,7 @@ using namespace std;
 
 pBuoyDetection::pBuoyDetection() : 
      show_process(true),
+     hasImage(false),
      message_name("Buoy"),
      path_save(""),
      folder_name_pattern("/DATASET_%F_%H-%M-%S"),
@@ -63,6 +64,7 @@ bool pBuoyDetection::OnNewMail(MOOSMSG_LIST &NewMail)
         if( msg.GetKey() == image_name)
         {
             memcpy(img.data, msg.GetBinaryData(), img.rows*img.step);
+            hasImage = true;
         }
     }
 
@@ -94,8 +96,10 @@ bool pBuoyDetection::OnConnectToServer()
 bool pBuoyDetection::Iterate()
 {
     m_iterations++;
-    //img = imread("/home/schvarcz/Desktop/Missão Eurathlon/9th/PICS_2014-09-24_16-30-00/BOTTOM_16_31_43.jpg");
-    detect(img);
+//    img = imread("/home/schvarcz/Desktop/Missão Eurathlon/9th/PICS_2014-09-24_16-30-00/BOTTOM_16_31_43.jpg");
+//    hasImage = true;
+    if (hasImage)
+        detect(img);
     return(true);
 }
 

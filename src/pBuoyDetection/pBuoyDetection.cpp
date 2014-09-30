@@ -63,7 +63,6 @@ bool pBuoyDetection::OnNewMail(MOOSMSG_LIST &NewMail)
         if( msg.GetKey() == image_name)
         {
             memcpy(img.data, msg.GetBinaryData(), img.rows*img.step);
-            detect(img);
         }
     }
 
@@ -95,8 +94,8 @@ bool pBuoyDetection::OnConnectToServer()
 bool pBuoyDetection::Iterate()
 {
     m_iterations++;
-//    img = imread("/home/schvarcz/Desktop/Missão Eurathlon/10th/PICS_2014-09-24_16-57-37/BOTTOM_16_58_06.jpg");
-//    detect(img);
+    //img = imread("/home/schvarcz/Desktop/Missão Eurathlon/9th/PICS_2014-09-24_16-30-00/BOTTOM_16_31_43.jpg");
+    detect(img);
     return(true);
 }
 
@@ -193,9 +192,13 @@ void pBuoyDetection::detect(Mat img)
     inRange(eqHSV,Scalar(250,240,250),Scalar(255,255,255),imgThr2);
 
     Moments m1 = moments(imgThr);
+    Point2f centerDetection(0,0);
+
     int found = 0;
     if (m1.m00 != 0)
     {
+        centerDetection.x = m1.m10/m1.m00;
+        centerDetection.y = m1.m01/m1.m00;
         found += 1;
         if (show_process)
         {
@@ -206,6 +209,13 @@ void pBuoyDetection::detect(Mat img)
     Moments m2 = moments(imgThr2);
     if (m2.m00 != 0)
     {
+        centerDetection.x += m2.m10/m2.m00;
+        centerDetection.y += m2.m01/m2.m00;
+        if (found == 1)
+        {
+            centerDetection.x /= 2.;
+            centerDetection.y /= 2.;
+        }
         found += 2;
         if (show_process)
         {
@@ -214,18 +224,9 @@ void pBuoyDetection::detect(Mat img)
         }
     }
 
-    switch(found)
-    {
-        case 1:
-            m_Comms.Notify(message_name, "method 1");
-            break;
-        case 2:
-            m_Comms.Notify(message_name, "method 2");
-            break;
-        case 3:
-            m_Comms.Notify(message_name, "method 1 and 2");
-            break;
-    }
+    centerDetection.x -= img.cols/2.;
+    centerDetection.y -= img.rows/2.;
+
     if (found > 0)
     {
         char name[80];
@@ -236,7 +237,14 @@ void pBuoyDetection::detect(Mat img)
         // for more information about date/time format
         strftime(name, sizeof(name), image_name_pattern.c_str(), &tstruct);
         imwrite(path_save+name, img);
+
+        char message[80];
+        sprintf(message,"x=%f,y=%f,img_w=%d,img_h=%d",centerDetection.x,-centerDetection.y,img.cols,img.rows);
+
+        m_Comms.Notify(message_name, message);
     }
+    else
+        m_Comms.Notify(message_name, "false");
 
     if(show_process)
     {

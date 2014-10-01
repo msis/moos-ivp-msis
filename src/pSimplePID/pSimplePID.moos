@@ -1,0 +1,18 @@
+//------------------------------------------------
+// pSimplePID config block
+
+ProcessConfig = pSimplePID
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   GOAL_NAME = DESIRED_DEPTH
+   VAR_NAME  = DEPTH
+   OUTPUT_NAME = DESIRED_ELEVATOR
+   MAX_OUTPUT = 100
+   PID_KP = 1
+   PID_KD = 0
+   PID_KI = 0
+   INTEGRAL_LIMIT = 10
+}
+

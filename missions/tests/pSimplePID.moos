@@ -7,7 +7,7 @@ ProcessConfig = ANTLER
   Run = MOOSDB		@ NewConsole = false
   Run = uMS			@ NewConsole = false 
 
-  Run = pLogger   @ NewConsole = false
+  //Run = pLogger   @ NewConsole = false
   Run = pShare @ NewConsole = false
 	
   Run = iCISCREA					@ NewConsole = false
@@ -21,10 +21,10 @@ ProcessConfig = ANTLER
 
   Run = iIMU_RazorAHRS  @ NewConsole = false
 
-  Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
-  Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
+  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
+  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
 
-  Run = iGPS    @ NewConsole = false
+  //Run = iGPS    @ NewConsole = false
 }
 
 ProcessConfig = pSimplePID
@@ -36,7 +36,7 @@ ProcessConfig = pSimplePID
    VAR_NAME  = DEPTH
    OUTPUT_NAME = DESIRED_ELEVATOR
    MAX_OUTPUT = 100
-   PID_KP = 33
+   PID_KP = 70
    PID_KD = 10
    PID_KI = 0
    INTEGRAL_LIMIT = 10
@@ -160,7 +160,7 @@ ProcessConfig = iCISCREA
   RERI_SENS = 1
   RELE_SENS = 1
   FRLE_SENS = 1
-  VERT_SENS = 1
+  VERT_SENS = -1
 
   DEPTH_OFFSET = -0.02
 }

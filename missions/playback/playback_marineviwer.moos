@@ -13,6 +13,9 @@ ProcessConfig = ANTLER
   Run = pNodeReporter	 @ NewConsole = false
   Run = pMarineViewer 	 @ NewConsole = false
 
+  Run = pEchoVar	 @ NewConsole = false
+  Run = uTimerScript	 @ NewConsole = false
+
   Run = pSensorViewer    @ NewConsole = false 
   Run = uDeReCISCREA	 @ NewConsole = false
   //Run = pLocalizationSonar @ NewConsole = false
@@ -31,6 +34,21 @@ ProcessConfig = pSensorViewer
 {
   AppTick   = 4
   CommsTick = 4
+}
+
+ProcessConfig = uTimerScript
+{
+  event = var=SPEED, val=0, time=1
+}
+
+ProcessConfig = pEchoVar
+{
+  AppTick = 4
+  CommsTick = 4
+
+  echo = SPEED -> NAV_SPEED
+  echo = HEADING -> NAV_HEADING
+  echo = DEPTH -> NAV_DEPTH
 }
 
 ProcessConfig = uDeReCISCREA

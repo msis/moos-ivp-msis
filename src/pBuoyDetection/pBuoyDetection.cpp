@@ -188,28 +188,31 @@ void pBuoyDetection::detect(Mat img)
     cvtColor(img,imgHSV,CV_RGB2HSV);
     vector<Mat> channels;
     split(imgHSV,channels);
-    for (int i =0; i<channels.size();i++)
-        equalizeHist(channels[i],channels[i]);
+    //for (int i =0; i<channels.size();i++)
+    //    equalizeHist(channels[i],channels[i]);
     merge(channels,eqHSV);
 
     inRange(imgHSV,Scalar(95,100,0),Scalar(200,200,255),imgThr);
-    inRange(eqHSV,Scalar(250,240,250),Scalar(255,255,255),imgThr2);
-
-    Moments m1 = moments(imgThr);
-    Point2f centerDetection(0,0);
+    inRange(eqHSV,Scalar(86,40,0),Scalar(255,255,255),imgThr2);
+    dilate(imgThr2,imgThr2,Mat(Size(5,5),CV_8U),Point(-1,-1),3);
+    erode(imgThr2,imgThr2,Mat(Size(5,5),CV_8U),Point(-1,-1),12,BORDER_CONSTANT,Scalar(0,0,0));
 
     int found = 0;
-    if (m1.m00 != 0)
-    {
-        centerDetection.x = m1.m10/m1.m00;
-        centerDetection.y = m1.m01/m1.m00;
-        found += 1;
-        if (show_process)
-        {
-            Point center1(m1.m10/m1.m00,m1.m01/m1.m00);
-            circle(img,center1,5,Scalar(0,0,255));
-        }
-    }
+
+    //Moments m1 = moments(imgThr);
+    //Point2f centerDetection(0,0);
+
+    //if (m1.m00 != 0)
+    //{
+    //    centerDetection.x = m1.m10/m1.m00;
+    //    centerDetection.y = m1.m01/m1.m00;
+    //    found += 1;
+    //    if (show_process)
+    //    {
+    //        Point center1(m1.m10/m1.m00,m1.m01/m1.m00);
+    //        circle(img,center1,5,Scalar(0,0,255));
+    //    }
+    //}
     Moments m2 = moments(imgThr2);
     if (m2.m00 != 0)
     {

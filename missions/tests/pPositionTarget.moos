@@ -1,0 +1,38 @@
+//------------------------------------------------
+// pPositionTarget config block
+ServerHost = localhost
+ServerPort = 9000
+Community = ciscreaSaucE
+
+ProcessConfig = ANTLER
+{
+    MSBetweenLaunches = 0
+    Run = MOOSDB                     @ NewConsole = false 
+    Run = pPositionTarget             @ NewConsole = false
+    Run = pBuoyDetection             @ NewConsole = false
+    Run = uMS                        @ NewConsole = false
+}
+
+ProcessConfig = pPositionTarget
+{
+	AppTick   = 1
+	CommsTick = 1
+	VARIABLE_IMAGE_NAME = CAMERA_SIDE
+	DISPLAY_IMAGE = false
+	SAVE_IN_FOLDER = /home/schvarcz/Desktop/images
+	IMAGE_NAME_PATTERN = image_%H_%M_%S.jpg
+	FOLDER_NAME_PATTERN = DATASET_%F_%H-%M-%S
+}
+
+ProcessConfig = pBuoyDetection
+{
+   AppTick   = 10
+   CommsTick = 10
+   VARIABLE_IMAGE_NAME = CAMERA_SIDE
+   VARIABLE_WHEN_FOUND = PIPE_DETECTION
+   SHOW_PROCESS = true
+	SAVE_IN_FOLDER = /home/schvarcz/Desktop/
+	IMAGE_NAME_PATTERN = image_%H_%M_%S.jpg
+	FOLDER_NAME_PATTERN = DATASET_%F_%H-%M-%S
+}
+

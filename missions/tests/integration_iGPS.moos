@@ -2,6 +2,9 @@ ServerHost = localhost
 ServerPort = 9000
 Community = ciscreaSaucE
 
+LatOrigin    = 44.095738
+LongOrigin   = 9.865190
+
 ProcessConfig = ANTLER
 {
   MSBetweenLaunches = 200
@@ -14,19 +17,34 @@ ProcessConfig = ANTLER
   Run = iCISCREA    @ NewConsole = false
 
   Run = iSonar           @ NewConsole = false
-  Run = pSensorViewer    @ NewConsole = false 
+  //Run = pSensorViewer    @ NewConsole = false 
   Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
   Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
 
   Run = iIMU_RazorAHRS  @ NewConsole = false
 
-  Run = iEchoSounder    @ NewConsole = false
+  //Run = iEchoSounder    @ NewConsole = false
+  Run = iGPS    @ NewConsole = false
+  Run = pNodeReporter  @ NewConsole = false
   
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM  
 
-  
 }
+
+ProcessConfig = pEchoVar
+{
+  AppTick   = 4
+  CommsTick = 4
+                                                                
+  Echo    = DEPTH   ->  NAV_DEPTH
+  Echo    = HEADING ->  NAV_HEADING
+  Echo    = GPS_HEADING ->  NAV_HEADING
+  Echo    = GPS_YAW ->  NAV_YAW
+  Echo    = GPS_SPEED   ->  NAV_SPEED
+  Echo    = GPS_X   ->  NAV_X
+  Echo    = GPS_Y   ->  NAV_Y
+}     
 
 
 
@@ -83,12 +101,15 @@ ProcessConfig = iIMU_RazorAHRS
    
 }
 
-ProcessConfig = iEchoSounder
+ProcessConfig = iGPS
 {
-  AppTick   = 4
-  CommsTick = 4
-  
-  SERIAL_PORT_NAME = /dev/ttyUSB4
+   AppTick   = 4
+   CommsTick = 4
+
+   PORT = /dev/ttyUSB4
+   BAUDRATE = 4800
+   MAX_RETRIES = 5
+   PUBLISHRAW = true
 }
 
 ProcessConfig = pCameraLogger_SIDE
@@ -149,5 +170,23 @@ ProcessConfig = pShare
   Output = src_name=VOLTAGE_BATT1, route=multicast_1
   Output = src_name=VOLTAGE_BATT2, route=multicast_1
   Output = src_name=HEADING, route=multicast_1
+  Output = src_name=YAW, route=multicast_1
+  Output = src_name=NODE_REPORT, route=multicast_1
+  Output = src_name=NODE_REPORT_LOCAL, route=multicast_1
+  Output = src_name=CAMERA_SIDE, route=multicast_1
+  Output = src_name=CAMERA_BOTTOM, route=multicast_1
+  Output = src_name=SONAR_RAW_DATA, route=multicast_1
 
 }
+
+ProcessConfig = pNodeReporter
+{
+  AppTick   = 4                                                 
+  CommsTick = 4                                                 
+                                                                
+  // Configure key aspects of the node                          
+  platform_type      = auv   // or {uuv,auv,ship,kayak}   
+  platform_length    = 0.5
+}
+
+

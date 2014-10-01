@@ -10,14 +10,15 @@ set MODE = ACTIVE
   DEPLOY = true
 } INACTIVE
 
-Behavior = BHV_WallFollowing_EchoSounder
+Behavior = BHV_PipeInspection
 {
-  name = wallfollowing_echosounder
+  name = pipe_inspection_tuesday
   priority = 100
   condition = MODE = ACTIVE
   
-  // WallFollowing_EchoSounder parameters:
-    max_speed               = 10.0  // CISCREA value
-    dist_from_wall_desired  = 3.0   // m
-    speed_coeff             = 1.0
+  // BHV_PipeInspection parameters:
+    inactive_area_w_ratio = 0.1  // [-1,1]
+    inactive_area_h_ratio = 0.1  // [-1,1]
+    delta_heading         = 3.0
+    delta_depth           = 0.10
 }

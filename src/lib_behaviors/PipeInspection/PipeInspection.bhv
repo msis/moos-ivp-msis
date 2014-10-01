@@ -1,0 +1,12 @@
+// -----------------------------------------------
+//           BEHAVIOR CONFIGURATION FILE     
+// -----------------------------------------------
+
+Behavior = BHV_PipeInspection
+{
+  // PipeInspection parameters:
+    inactive_area_w_ratio = 0.1  // [-1,1]
+    inactive_area_h_ratio = 0.1  // [-1,1]
+    delta_heading         = 3.0
+    delta_depth           = 0.10
+}

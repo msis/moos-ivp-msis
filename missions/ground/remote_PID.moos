@@ -1,0 +1,57 @@
+ServerHost = localhost
+ServerPort = 9000
+Community = GROUND
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+    Run = MOOSDB          @ NewConsole = false
+    Run = uMS             @ NewConsole = false
+
+	# Command
+    Run = uJoystick       @ NewConsole = false
+    
+  # Software communications
+    Run = pShare          @ NewConsole = false
+}
+
+ProcessConfig = uJoystick
+{
+   AppTick   = 4
+   CommsTick = 4
+   
+   SHOW_ALL_EVENTS = 1
+   
+   SCALE = 100
+   
+   DEVICE_NAME = /dev/input/js0
+   
+   //AXIS_SCALE_RATIO = 0.5
+   //AXIS = 0
+   //DEST_VAR = DESIRED_SLIDE_VICI
+   
+   AXIS_SCALE_RATIO = 0.00115
+   AXIS = 1
+   DEST_VAR = DESIRED_SPEED_VICI
+   
+   AXIS_SCALE_RATIO = 1.8
+   AXIS = 2
+   DEST_VAR = DESIRED_HEADING_VICI
+   
+   AXIS_SCALE_RATIO = 0.04
+   AXIS = 3
+   DEST_VAR = DESIRED_DEPTH_VICI
+}
+
+ProcessConfig = pShare
+{
+  input = route = multicast_1
+  
+  output = src_name=DESIRED_SLIDE_VICI, dest_name=DESIRED_SLIDE, route=multicast_1
+  output = src_name=DESIRED_THRUST_VICI, dest_name=DESIRED_THRUST, route=multicast_1
+  output = src_name=DESIRED_RUDDER_VICI, dest_name=DESIRED_RUDDER, route=multicast_1
+  output = src_name=DESIRED_ELEVATOR_VICI, dest_name=DESIRED_ELEVATOR, route=multicast_1
+  output = src_name=DESIRED_HEADING_VICI, dest_name=DESIRED_HEADING, route=multicast_1
+  output = src_name=DESIRED_SPEED_VICI, dest_name=DESIRED_SPEED, route=multicast_1
+  output = src_name=DESIRED_DEPTH_VICI, dest_name=DESIRED_DEPTH, route=multicast_1
+}

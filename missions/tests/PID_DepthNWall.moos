@@ -1,0 +1,232 @@
+ServerHost = localhost
+ServerPort = 9000
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 500
+  Run = MOOSDB		@ NewConsole = false
+  Run = uMS			@ NewConsole = false 
+
+  //Run = pLogger   @ NewConsole = false
+  Run = pShare @ NewConsole = false
+	
+  Run = iCISCREA					@ NewConsole = false
+
+  Run = pSimplePID    @ NewConsole = false ~ pSimplePID_DEPTH
+  Run = pSimplePID		@ NewConsole = false ~ pSimplePID_WALL
+  
+  Run = iSonar           @ NewConsole = false
+  Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
+  Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
+  Run = pSensorViewer    @ NewConsole = false 
+
+  Run = iIMU_RazorAHRS  @ NewConsole = false
+
+  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
+  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
+
+  Run = iEchoSounder @ NewConsole = false
+}
+
+ProcessConfig = pSimplePID_DEPTH
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   GOAL_NAME = DESIRED_DEPTH
+   VAR_NAME  = DEPTH
+   OUTPUT_NAME = DESIRED_ELEVATOR
+   MAX_OUTPUT = 100
+   PID_KP = 70
+   PID_KD = 10
+   PID_KI = 0
+   INTEGRAL_LIMIT = 10
+}
+
+ProcessConfig = pSimplePID_WALL
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   GOAL_NAME = DESIRED_DISTANCE
+   VAR_NAME  = ECHOSOUNDER_DISTANCE
+   OUTPUT_NAME = DESIRED_SLIDE
+   MAX_OUTPUT = 5
+   PID_KP = 1
+   PID_KD = 10
+   PID_KI = 0
+   INTEGRAL_LIMIT = 10
+
+
+   ACTIVE_START = false
+   ACTIVATION_VAR = ACTIVATE_WALL
+}
+
+ProcessConfig = iGPS
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   PORT = /dev/ttyUSB4
+   BAUDRATE = 4800
+   MAX_RETRIES = 5
+   PUBLISHRAW = true
+}
+
+ProcessConfig = iEchoSounder
+{
+  AppTick   = 4
+  CommsTick = 4
+  
+  SERIAL_PORT_NAME = /dev/ttyUSB4
+}
+
+ProcessConfig = pCameraLogger_SIDE
+{
+  AppTick   = 4
+  CommsTick = 4
+  VARIABLE_IMAGE_NAME = CAMERA_SIDE
+  DISPLAY_IMAGE = false
+  SAVE_IN_FOLDER = ./
+  // http://www.cplusplus.com/reference/ctime/strftime/
+  IMAGE_NAME_PATTERN = SIDE_%H_%M_%S.jpg
+  FOLDER_NAME_PATTERN = PICS_%F_%H-%M-%S
+}
+
+
+
+ProcessConfig = pCameraLogger_BOTTOM
+{
+  AppTick   = 4
+  CommsTick = 4
+  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
+  DISPLAY_IMAGE = false
+  SAVE_IN_FOLDER = ./
+  // http://www.cplusplus.com/reference/ctime/strftime/
+  IMAGE_NAME_PATTERN = BOTTOM_%H_%M_%S.jpg
+  FOLDER_NAME_PATTERN = PICS_%F_%H-%M-%S
+}
+
+ProcessConfig = iIMU_RazorAHRS
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SERIAL_PORT = /dev/ttyUSB1
+
+  MODE = ANGLES_CALIBRATED_SENSOR_DATA
+       // RAW_SENSOR_DATA
+       // CALIBRATED_SENSOR_DATA
+       // ANGLES_CALIBRATED_SENSOR_DATA
+       // ANGLES_RAW_SENSOR_DATA
+       // ANGLES
+}
+
+ProcessConfig = pSensorViewer
+{
+  AppTick   = 4
+  CommsTick = 4
+}
+
+ProcessConfig = iCamera_BOTTOM
+{
+  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
+  IDENTIFIANT_CV_CAMERA = 0
+  DISPLAY_IMAGE = false
+  INVERT_IMAGE = true
+}
+
+ProcessConfig = iCamera_SIDE
+{
+  VARIABLE_IMAGE_NAME = CAMERA_SIDE
+  IDENTIFIANT_CV_CAMERA = 1
+  DISPLAY_IMAGE = false
+  INVERT_IMAGE = false
+}
+
+ProcessConfig = iSonar
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SERIAL_PORT_NAME = /dev/ttyUSB2
+  RANGE = 75 //IN METERS
+  NBINS = 150 //NUMBER OF SAMPLES PER SCANLINE
+  ANGLESTEP = 1.8 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)
+  GAIN = 30 // MUST BE BETWEEN 0 AND 100 (PERCENTAGE)
+  CONTINUOUS = true //TRUE FOR 360  ROTATION. SET RIGHT AND LEFT LIMIT IF FALSE 
+  //LEFTLIMIT = 70.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
+  //RIGHTLIMIT = 110.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
+}
+
+ProcessConfig = iCISCREA
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  //Serial port 
+  SERIAL_PORT = /dev/ttyUSB0
+                                                                
+  // Max number of retries before giving up
+  MAX_MODBUS_RETRIES = 10
+  MAX_TURNON_RETRIES = 100
+                                                                
+  // Lower and upper bound for motors deadzone
+  FRRI_LO_DZ = 0
+  RERI_LO_DZ = 0
+  RELE_LO_DZ = 0
+  FRLE_LO_DZ = 0
+  VERT_LO_DZ = 0
+  FRRI_UP_DZ = 0
+  RERI_UP_DZ = 0
+  RELE_UP_DZ = 0
+  FRLE_UP_DZ = 0
+  VERT_UP_DZ = 0
+                                                                
+  // Motors' sens of rotation (when the motor value is positive, motors should push water away from the body.
+  FRRI_SENS = 1
+  RERI_SENS = 1
+  RELE_SENS = 1
+  FRLE_SENS = 1
+  VERT_SENS = -1
+
+  DEPTH_OFFSET = -0.02
+}
+
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=DEPTH, route=multicast_1
+  Output = src_name=VOLTAGE_BATT1, route=multicast_1
+  Output = src_name=VOLTAGE_BATT2, route=multicast_1
+  Output = src_name=HEADING, route=multicast_1
+  Output = src_name=YAW, route=multicast_1
+  Output = src_name=NODE_REPORT, route=multicast_1
+  Output = src_name=NODE_REPORT_LOCAL, route=multicast_1
+  Output = src_name=SONAR_RAW_DATA, route=multicast_1
+}
+
+ProcessConfig = pLogger
+{
+  AppTick   = 8
+  CommsTick = 8
+
+  File = VICI_data
+
+  SyncLog = false
+  AsyncLog = true
+
+  PATH     = ./
+
+
+  LogAuxSrc = true
+  WildCardLogging = true
+  WildCardPattern = *
+  WildCardOmitPattern = *_STATUS
+  WildCardOmitPattern = *_DEBUG
+  WildCardOmitPattern = CAMERA_BOTTOM
+  WildCardOmitPattern = CAMERA_SIDE
+  //WildCardExclusionLog = true
+}

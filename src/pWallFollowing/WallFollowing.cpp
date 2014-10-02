@@ -447,7 +447,7 @@ void WallFollowing::computeAndSendCommands(double angle, double distance)
   
 	if(m_activation)
   {
-    Notify("DESIRED_HEADING", desired_heading);
+//    Notify("DESIRED_HEADING", desired_heading);
     Notify("DESIRED_SLIDE", u_y);
   }
   

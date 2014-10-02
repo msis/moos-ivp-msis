@@ -40,8 +40,8 @@ ProcessConfig = pWallFollowing
 
 ProcessConfig = pSimplePID_DEPTH
 {
-   AppTick   = 4
-   CommsTick = 4
+   AppTick   = 20
+   CommsTick = 20
 
    GOAL_NAME = DESIRED_DEPTH
    VAR_NAME  = DEPTH
@@ -60,8 +60,8 @@ ProcessConfig = pSimplePID_DEPTH
 
 ProcessConfig = pSimplePID_HEADING
 {
-   AppTick   = 4
-   CommsTick = 4
+   AppTick   = 20
+   CommsTick = 20
 
    GOAL_NAME = DESIRED_HEADING
    VAR_NAME  = HEADING
@@ -139,7 +139,7 @@ ProcessConfig = iCISCREA
   RERI_SENS = 1
   RELE_SENS = 1
   FRLE_SENS = 1
-  VERT_SENS = 1
+  VERT_SENS = -1
 
   DEPTH_OFFSET = -0.02
 

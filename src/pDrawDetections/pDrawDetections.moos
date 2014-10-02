@@ -1,0 +1,11 @@
+//------------------------------------------------
+// pDrawDetections config block
+
+ProcessConfig = pDrawDetections
+{
+   AppTick   = 4
+   CommsTick = 4
+   
+   LOGS_FOLDER = "./logs"
+}
+

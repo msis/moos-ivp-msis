@@ -15,10 +15,17 @@ ADD_EXECUTABLE(pWallFollowing ${SRC})
 
 TARGET_LINK_LIBRARIES(pWallFollowing
    ${MOOS_LIBRARIES}
+   apputil
    mbutil
    m
    pthread
-   #geometry
+   geometry
+   ivpbuild
+   logic
+   ivpcore
+   bhvutil
+   mbutil
+   geometry 
    opencv_core
    opencv_imgproc
    opencv_highgui

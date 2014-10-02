@@ -104,9 +104,9 @@ ProcessConfig = pWallFollowing
   //VALUES_MIN_ANGLE = 0
   //VALUES_MAX_ANGLE = 359.9
   
-  GAP_DESIRED = 6.0
+  GAP_DESIRED = 3.0
   
-  COEFF_SLIDE = -10
+  COEFF_SLIDE = 2
   
   SCALE_DISPLAY = 6
   

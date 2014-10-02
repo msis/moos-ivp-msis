@@ -41,6 +41,11 @@ ProcessConfig = pSimplePID_DEPTH
    PID_KD = 10
    PID_KI = 0
    INTEGRAL_LIMIT = 10
+
+   ACTIVE_START = true
+   ACTIVATION_VAR = ACTIVATE_DEPTH
+
+   ANGULAR_VAR = false
 }
 
 ProcessConfig = pSimplePID_HEADING
@@ -52,8 +57,8 @@ ProcessConfig = pSimplePID_HEADING
    VAR_NAME  = HEADING
    OUTPUT_NAME = DESIRED_RUDDER
    MAX_OUTPUT = 3
-   PID_KP = 0.2
-   PID_KD = 1.0
+   PID_KP = 0.1
+   PID_KD = 0.5
    PID_KI = 0
    INTEGRAL_LIMIT = 0.07
 

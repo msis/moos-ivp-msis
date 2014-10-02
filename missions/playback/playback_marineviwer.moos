@@ -19,6 +19,14 @@ ProcessConfig = ANTLER
   Run = pSensorViewer    @ NewConsole = false 
   Run = uDeReCISCREA	 @ NewConsole = false
   //Run = pLocalizationSonar @ NewConsole = false
+  Run = pDrawDetections @ NewConsole = false
+}
+
+ProcessConfig = pDrawDetections
+{
+  AppTick   = 4
+  CommsTick = 4
+>>>>>>> pDrawDetections
 }
 
 

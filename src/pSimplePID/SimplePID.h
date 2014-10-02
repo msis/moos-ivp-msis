@@ -32,8 +32,8 @@ class SimplePID : public CMOOSApp
 
    ScalarPID m_pid;
 
-   double m_current_time;
-   double m_speed_factor;
+   bool m_active;
+
    double m_max_output;
 
 };

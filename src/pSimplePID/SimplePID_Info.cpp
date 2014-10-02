@@ -74,6 +74,18 @@ void showExampleConfigAndExit()
   blk("  AppTick   = 4                                                 ");
   blk("  CommsTick = 4                                                 ");
   blk("                                                                ");
+  blk("  GOAL_NAME = DESIRED_DEPTH                                                 ");
+  blk("  VAR_NAME = DEPTH                                                 ");
+  blk("  OUTPUT_NAME = DESIRED_ELEVATOR                                                 ");
+  blk("  MAX_OUTPUT = 100                                                 ");
+  blk("  PID_KP = 4                                                 ");
+  blk("  PID_KD = 4                                                 ");
+  blk("  PID_KI = 4                                                 ");
+  blk("  INTEGRAL_LIMIT = 4                                                 ");
+  blk("                                                                ");
+  blk("  ACTIVE_START = false // TRUE, false                                                 ");
+  blk("  ACTIVATION_VAR = ACTIVATE_PID                                                 ");
+  blk("                                                                ");
   blk("}                                                               ");
   blk("                                                                ");
   exit(0);

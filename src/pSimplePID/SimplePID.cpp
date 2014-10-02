@@ -18,6 +18,8 @@ SimplePID::SimplePID()
 {
   m_iterations = 0;
   m_timewarp   = 1;
+  m_active = true;
+  m_angular = true;
 }
 
 //---------------------------------------------------------
@@ -75,21 +77,38 @@ bool SimplePID::OnConnectToServer()
 bool SimplePID::Iterate()
 {
   m_iterations++;
+  bool b_last_activation = m_active;
 
-  double d_goal = GetMOOSVar("GOAL")->GetDoubleVal();
-  double d_current = GetMOOSVar("CURRENT")->GetDoubleVal();
+  string s_activation = GetMOOSVar("ACTIVATE")->GetStringVal();
+  if (s_activation == "true")
+    m_active = true;
+  else {
+    m_active = false;
+  }
+
   double d_output = 0;
+  if (m_active)
+  {
+    double d_goal = GetMOOSVar("GOAL")->GetDoubleVal();
+    double d_current = GetMOOSVar("CURRENT")->GetDoubleVal();
+    if (m_angular)
+      d_goal = angle180(d_goal);
 
-  double d_error = d_current - d_goal;
+    double d_error = d_current - d_goal;
+    
+    if (m_angular)
+      d_error = angle180(d_error);
 
-  m_pid.Run(d_error,MOOSTime(),d_output);
+    m_pid.Run(d_error,MOOSTime(),d_output);
 
-  // enforce output
-  MOOSAbsLimit(d_output,m_max_output);
-
-  SetMOOSVar("OUTPUT",d_output,MOOSTime());
-
-  PublishFreshMOOSVariables();
+    // enforce output
+    MOOSAbsLimit(d_output,m_max_output);
+    SetMOOSVar("OUTPUT",d_output,MOOSTime());
+  }
+  if( (b_last_activation!=m_active) && !(m_active))
+    SetMOOSVar("OUTPUT",d_output,MOOSTime());
+  PublishFreshMOOSVariables();  
+  
   return(true);
 }
 
@@ -100,7 +119,7 @@ bool SimplePID::Iterate()
 bool SimplePID::OnStartUp()
 {
   double d_kp,d_ki,d_kd,d_ilimit;
-  string s_goal,s_current,s_output;
+  string s_goal,s_current,s_output,s_activation;
 
   list<string> sParams;
   m_MissionReader.EnableVerbatimQuoting(false);
@@ -136,6 +155,26 @@ bool SimplePID::OnStartUp()
       else if(param == "INTEGRAL_LIMIT") {
         d_ilimit = dval;
       }
+      else if(param == "ACTIVE_START") {
+        value = toupper(value);
+        if (value == "FALSE")
+        {
+          m_active = false;
+        } else {
+          m_active = true;
+        }
+      }
+      else if(param == "ACTIVATION_VAR") {
+        s_activation = value;
+      }
+      else if(param == "ANGULAR_VAR") {
+        if (value == "FALSE")
+        {
+          m_angular = false;
+        } else {
+          m_angular = true;
+        }
+      }
     }
   }
 
@@ -146,6 +185,7 @@ bool SimplePID::OnStartUp()
   AddMOOSVariable("GOAL",s_goal,"",period);
   AddMOOSVariable("CURRENT",s_current,"",period);
   AddMOOSVariable("OUTPUT","",s_output,period);
+  AddMOOSVariable("ACTIVATE",s_activation,"",period);
   
   m_timewarp = GetMOOSTimeWarp();
 

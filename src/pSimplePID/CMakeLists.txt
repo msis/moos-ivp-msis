@@ -18,6 +18,7 @@ ADD_EXECUTABLE(pSimplePID ${SRC})
 
 TARGET_LINK_LIBRARIES(pSimplePID
    ${MOOS_LIBRARIES}
+   geometry
    mbutil
    m
    pthread)

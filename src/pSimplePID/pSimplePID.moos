@@ -14,5 +14,11 @@ ProcessConfig = pSimplePID
    PID_KD = 0
    PID_KI = 0
    INTEGRAL_LIMIT = 10
+
+   ACTIVE_START = false
+
+   ACTIVATION_VAR = ACTIVATE_PID
+
+   ANGULAR_VAR = false
 }
 

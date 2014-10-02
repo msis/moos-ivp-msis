@@ -1,0 +1,44 @@
+ServerHost = localhost
+ServerPort = 9000 
+Community  = VICI_FOLLOWING_ES
+
+MOOSTimeWarp = 1
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB		        @ NewConsole = false
+  Run = pWallFollowing		@ NewConsole = false
+  Run = pSensorViewer     @ NewConsole = false 
+  //Run = uMS			          @ NewConsole = false 
+}
+
+ProcessConfig = pWallFollowing
+{
+  AppTick    = 10
+  CommsTick  = 10
+  
+  VALUES_MIN_DISTANCE = 2.0
+  VALUES_MAX_DISTANCE = 50.0
+  
+  VALUES_MIN_ANGLE = 80.0
+  VALUES_MAX_ANGLE = -70.0
+ 
+  //VALUES_MIN_ANGLE = 0
+  //VALUES_MAX_ANGLE = 359.9
+  
+  GAP_DESIRED = 6.0
+  
+  COEFF_SLIDE = -10
+  
+  SCALE_DISPLAY = 6
+  
+  HISTORY_LENGTH = 100
+}
+
+ProcessConfig = pSensorViewer
+{
+  AppTick   = 4
+  CommsTick = 4
+}

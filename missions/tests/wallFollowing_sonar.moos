@@ -11,10 +11,28 @@ ProcessConfig = ANTLER
   Run = MOOSDB		        @ NewConsole = false
   Run = pWallFollowing		@ NewConsole = false
   Run = pSensorViewer     @ NewConsole = false 
-  //Run = uMS			          @ NewConsole = false 
-  Run = pShare @ NewConsole = false
-  Run = iCISCREA @ NewConsole = false
-  Run = iSonar @ NewConsole = false
+  Run = uMS			          @ NewConsole = false 
+  Run = pShare            @ NewConsole = false
+  Run = iCISCREA          @ NewConsole = false
+  Run = iSonar            @ NewConsole = false
+}
+
+ProcessConfig = pWallFollowing
+{
+  AppTick    = 10
+  CommsTick  = 10
+  
+  VALUES_MIN_DISTANCE = 2.0
+  VALUES_MAX_DISTANCE = 50.0
+  
+  VALUES_MIN_ANGLE = 80.0
+  VALUES_MAX_ANGLE = -70.0
+  
+  GAP_DESIRED = 3.0
+  COEFF_SLIDE = 2
+  SCALE_DISPLAY = 6
+  HISTORY_LENGTH = 100
+  ACTIVATION_VAR = ACTIVATION_WF
 }
 
 ProcessConfig = iSonar
@@ -32,7 +50,6 @@ ProcessConfig = iSonar
   //RIGHTLIMIT = 110.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
 }
 
-
 ProcessConfig = pShare
 {
   Input = route=multicast_1
@@ -48,10 +65,6 @@ ProcessConfig = pShare
   Output = src_name=HEADING, route=multicast_1
 
 }
-
-
-//------------------------------------------------
-// iCISCREA config block
 
 ProcessConfig = iCISCREA
 {
@@ -86,31 +99,6 @@ ProcessConfig = iCISCREA
 
   DEPTH_OFFSET = -0.02
 
-}
-
-
-
-ProcessConfig = pWallFollowing
-{
-  AppTick    = 10
-  CommsTick  = 10
-  
-  VALUES_MIN_DISTANCE = 2.0
-  VALUES_MAX_DISTANCE = 50.0
-  
-  VALUES_MIN_ANGLE = 80.0
-  VALUES_MAX_ANGLE = -70.0
- 
-  //VALUES_MIN_ANGLE = 0
-  //VALUES_MAX_ANGLE = 359.9
-  
-  GAP_DESIRED = 3.0
-  
-  COEFF_SLIDE = 2
-  
-  SCALE_DISPLAY = 6
-  
-  HISTORY_LENGTH = 100
 }
 
 ProcessConfig = pSensorViewer

@@ -59,7 +59,9 @@ class WallFollowing : public CMOOSApp
     double m_coeff_slide;
     double m_scale_display;
     int m_history_length;
-		
+		string m_activation_var;
+    bool m_activation;
+    
 		bool m_regulate;
 		double m_current_heading, m_last_heading;
 };

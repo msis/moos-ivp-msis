@@ -29,7 +29,9 @@ WallFollowing::WallFollowing()
 	m_map = Mat::zeros(LARGEUR_MAPPING, HAUTEUR_MAPPING, CV_8UC3);
 	m_regulate = false;
 	m_regulate = true;
+  m_activation = true;
   
+  m_activation_var = "ACTIVATION_WF";
   m_history_length = 80;
   
   /*m_obstacles.push_back(make_pair(80., 2.5));
@@ -136,6 +138,11 @@ bool WallFollowing::OnNewMail(MOOSMSG_LIST &NewMail)
 				m_obstacles.pop_front();
 			}
 		}
+    
+		if(msg.GetKey() == m_activation_var)
+		{
+      m_activation = (msg.GetString() == "true");
+    }
 		  
 		#if 0 // Keep these around just for template
 			string key   = msg.GetKey();
@@ -382,6 +389,12 @@ bool WallFollowing::OnStartUp()
 			
 			else if(param == "HISTORY_LENGTH")
         m_history_length = atoi(value.c_str());
+			
+			else if(param == "ACTIVATION_VAR")
+      {
+        m_activation_var = value;
+        m_Comms.Register(m_activation_var);
+      }
 		}
 	}
 
@@ -432,8 +445,11 @@ void WallFollowing::computeAndSendCommands(double angle, double distance)
   line(m_map, Point(LARGEUR_MAPPING / 2, HAUTEUR_MAPPING / 2), Point(LARGEUR_MAPPING / 2 + cos(angle_cadrant) * arrow_length, HAUTEUR_MAPPING / 2 + sin(angle_cadrant) * arrow_length), Scalar(173, 127, 68), 2, 8, 0);
   line(m_map, Point(LARGEUR_MAPPING / 2, HAUTEUR_MAPPING / 2), Point(LARGEUR_MAPPING / 2 + cos(MOOSDeg2Rad(m_current_heading)) * arrow_length, HAUTEUR_MAPPING / 2 + sin(MOOSDeg2Rad(m_current_heading)) * arrow_length), Scalar(68, 127, 173), 1, 8, 0);
   
-	Notify("DESIRED_HEADING", desired_heading);
-	Notify("DESIRED_SLIDE", u_y);
+	if(m_activation)
+  {
+    Notify("DESIRED_HEADING", desired_heading);
+    Notify("DESIRED_SLIDE", u_y);
+  }
   
 	cout << "CURRENT_HEADING: " << m_current_heading << endl;
   cout << "DESIRED_HEADING: " << desired_heading << endl;

@@ -3,7 +3,18 @@
 
 ProcessConfig = pWallFollowing
 {
-   AppTick   = 4
-   CommsTick = 4
+  AppTick    = 10
+  CommsTick  = 10
+  
+  VALUES_MIN_DISTANCE = 2.0
+  VALUES_MAX_DISTANCE = 50.0
+  
+  VALUES_MIN_ANGLE = 80.0
+  VALUES_MAX_ANGLE = -70.0
+  
+  GAP_DESIRED = 3.0
+  COEFF_SLIDE = 2
+  SCALE_DISPLAY = 6
+  HISTORY_LENGTH = 100
+  ACTIVATION_VAR = ACTIVATION_WF
 }
-

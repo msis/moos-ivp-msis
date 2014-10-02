@@ -11,17 +11,14 @@ SET(SRC
   main.cpp
 )
 
-SET(SRC_LINREG
-  regression_lineaire/linreg.cpp
-)
-
-ADD_EXECUTABLE(pWallFollowing ${SRC} ${SRC_LINREG})
+ADD_EXECUTABLE(pWallFollowing ${SRC})
 
 TARGET_LINK_LIBRARIES(pWallFollowing
    MOOS
    mbutil
    m
    pthread
+   geometry
    opencv_core
    opencv_imgproc
    opencv_highgui

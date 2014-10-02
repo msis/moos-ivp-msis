@@ -18,6 +18,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include "MOOS/libMOOS/App/MOOSApp.h"
+#include "AngleUtils.h"
 
 #define LARGEUR_MAPPING		400
 #define HAUTEUR_MAPPING		400
@@ -49,6 +50,15 @@ class WallFollowing : public CMOOSApp
 		float 			m_angle_precedent;
 		int				m_nb_data;
 		list<pair<float,float> > 	m_obstacles;
+    
+    double m_values_min_distance;
+    double m_values_max_distance;
+    double m_values_min_angle;
+    double m_values_max_angle;
+    double m_gap_desired;
+    double m_coeff_slide;
+    double m_scale_display;
+    int m_history_length;
 		
 		bool m_regulate;
 		double m_current_heading, m_last_heading;

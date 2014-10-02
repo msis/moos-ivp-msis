@@ -19,6 +19,7 @@ SimplePID::SimplePID()
   m_iterations = 0;
   m_timewarp   = 1;
   m_active = true;
+  m_angular = true;
 }
 
 //---------------------------------------------------------
@@ -90,8 +91,13 @@ bool SimplePID::Iterate()
   {
     double d_goal = GetMOOSVar("GOAL")->GetDoubleVal();
     double d_current = GetMOOSVar("CURRENT")->GetDoubleVal();
+    if (m_angular)
+      d_goal = angle180(d_goal);
 
     double d_error = d_current - d_goal;
+    
+    if (m_angular)
+      d_error = angle180(d_error);
 
     m_pid.Run(d_error,MOOSTime(),d_output);
 
@@ -160,6 +166,14 @@ bool SimplePID::OnStartUp()
       }
       else if(param == "ACTIVATION_VAR") {
         s_activation = value;
+      }
+      else if(param == "ANGULAR_VAR") {
+        if (value == "FALSE")
+        {
+          m_angular = false;
+        } else {
+          m_angular = true;
+        }
       }
     }
   }

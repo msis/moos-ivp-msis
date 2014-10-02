@@ -9,6 +9,7 @@
 #define SimplePID_HEADER
 
 #include "MOOS/libMOOS/MOOSLib.h"
+#include "AngleUtils.h"
 #include "ScalarPID.h"
 
 class SimplePID : public CMOOSApp
@@ -33,6 +34,7 @@ class SimplePID : public CMOOSApp
    ScalarPID m_pid;
 
    bool m_active;
+   bool m_angular;
 
    double m_max_output;
 

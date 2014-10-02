@@ -18,5 +18,7 @@ ProcessConfig = pSimplePID
    ACTIVE_START = false
 
    ACTIVATION_VAR = ACTIVATE_PID
+
+   ANGULAR_VAR = false
 }
 

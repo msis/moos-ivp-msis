@@ -44,7 +44,7 @@ ProcessConfig = uTimerScript
   
   event = var=DESIRED_THRUST, val=20, time=0
   event = var=DESIRED_HEADING, val=70, time=0
-  event = var=DESIRED_THRUST, val=0, time=30
+  //event = var=DESIRED_THRUST, val=0, time=30
   event = var=DESIRED_THRUST, val=0, time=60
   event = var=DESIRED_THRUST, val=20, time=90
   event = var=DESIRED_HEADING, val=165, time=70

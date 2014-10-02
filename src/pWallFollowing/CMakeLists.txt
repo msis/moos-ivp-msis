@@ -27,7 +27,7 @@ TARGET_LINK_LIBRARIES(pWallFollowing
    opencv_features2d
    opencv_calib3d
    opencv_objdetect
-   opencv_contrib
+   #opencv_contrib
    opencv_legacy
    opencv_flann)
 

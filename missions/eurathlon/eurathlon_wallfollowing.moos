@@ -38,7 +38,7 @@ ProcessConfig = uTimerScript
   //reset_time = end
   delay_reset = 5
 
-  event = var=DESIRED_DEPTH, val=2, time=0
+  event = var=DESIRED_DEPTH, val=1.6, time=0
   event = var=ACTIVATE_DEPTH, val=true, time=0
   event = var=ACTIVATE_HEADING, val=true, time=0
   
@@ -49,9 +49,19 @@ ProcessConfig = uTimerScript
   event = var=DESIRED_THRUST, val=20, time=90
   event = var=DESIRED_HEADING, val=165, time=70
   //ACTIVATE_HEADING=true ACTIVATE_DEPTH=true DESIRED_DEPTH=1 DESIRED_HEADING=165 DESIRED_THRUST=0 ACTIVATION_WF=false DESIRED_SLIDE=0
-  event = var=DESIRED_DEPTH, val=0, time=120
-  event = var=DESIRED_THRUST, val=0, time=120
-  event = var=ACTIVATION_WF, val=false, time=120
+  event = var=DESIRED_THRUST, val=0, time=150
+  event = var=ACTIVATION_WF, val=false, time=150
+  event = var=DESIRED_DEPTH, val=3.6, time=150
+  event = var=DESIRED_HEADING, val=252, time=150
+  event = var=DESIRED_THRUST, val=20, time=155
+  
+  event = var=DESIRED_THRUST, val=0, time=250
+  event = var=DESIRED_HEADING, val=342, time=250
+  event = var=DESIRED_THRUST, val=20, time=255
+
+
+  event = var=DESIRED_THRUST, val=0, time=300
+  event = var=DESIRED_DEPTH, val=0, time=300
 
 }
 

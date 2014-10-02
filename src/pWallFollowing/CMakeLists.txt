@@ -14,11 +14,18 @@ SET(SRC
 ADD_EXECUTABLE(pWallFollowing ${SRC})
 
 TARGET_LINK_LIBRARIES(pWallFollowing
-   MOOS
+   ${MOOS_LIBRARIES}
+   apputil
    mbutil
    m
    pthread
    geometry
+   ivpbuild
+   logic
+   ivpcore
+   bhvutil
+   mbutil
+   geometry 
    opencv_core
    opencv_imgproc
    opencv_highgui
@@ -29,5 +36,6 @@ TARGET_LINK_LIBRARIES(pWallFollowing
    opencv_objdetect
    #opencv_contrib
    opencv_legacy
-   opencv_flann)
+   opencv_flann
+   Ciscrea_Images)
 

@@ -1,6 +1,8 @@
 ServerHost = localhost
 ServerPort = 9000 
 Community  = VICI_FOLLOWING_ES
+LatOrigin    = 44.095741
+LongOrigin   = 9.865207
 
 MOOSTimeWarp = 1
 
@@ -28,7 +30,7 @@ ProcessConfig = ANTLER
   Run = pSimplePID    @ NewConsole = false ~ pSimplePID_DEPTH
   Run = pSimplePID    @ NewConsole = false ~ pSimplePID_HEADING
 
-  Run = uDeReCISCREA   @ NewConsole = false
+  //Run = uDeReCISCREA   @ NewConsole = false
   Run = pNodeReporter  @ NewConsole = false
 
   //Run = pWallFollowing		@ NewConsole = false
@@ -134,7 +136,7 @@ ProcessConfig = pSimplePID_HEADING
    PID_KI = 0
    INTEGRAL_LIMIT = 0.07
 
-   ACTIVE_START =o true
+   ACTIVE_START = true
    ACTIVATION_VAR = ACTIVATE_HEADING
 
    ANGULAR_VAR = true

@@ -23,13 +23,13 @@ ProcessConfig = ANTLER
   Run = iIMU_RazorAHRS  @ NewConsole = false
   Run = iEchoSounder @ NewConsole = false
   Run = iGPS @ NewConsole = false
-  
+
   Run = pEchoVar   @ NewConsole = false
 
   Run = pSimplePID    @ NewConsole = false ~ pSimplePID_DEPTH
   Run = pSimplePID    @ NewConsole = false ~ pSimplePID_HEADING
 
-  //Run = uDeReCISCREA   @ NewConsole = false
+  Run = uDeReCISCREA   @ NewConsole = false
   Run = pNodeReporter  @ NewConsole = false
 
   //Run = pWallFollowing		@ NewConsole = false
@@ -278,8 +278,8 @@ ProcessConfig = pEchoVar
   AppTick = 4
   CommsTick = 4
 
-  echo = GPS_X -> NAX_X
-  echo = GPS_Y -> NAX_Y
+  echo = GPS_X -> NAV_X
+  echo = GPS_Y -> NAV_Y
   echo = HEADING -> NAV_HEADING
   echo = DEPTH -> NAV_DEPTH
   echo = GPS_SPEED -> NAV_SPEED

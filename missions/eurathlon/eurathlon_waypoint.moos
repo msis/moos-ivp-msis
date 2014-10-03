@@ -1,6 +1,6 @@
 ServerHost = localhost
 ServerPort = 9000 
-Community  = VICI_FOLLOWING_ES
+Community  = VICI
 LatOrigin    = 44.095741
 LongOrigin   = 9.865207
 
@@ -23,8 +23,7 @@ ProcessConfig = ANTLER
   Run = iIMU_RazorAHRS  @ NewConsole = false
   Run = iEchoSounder @ NewConsole = false
   Run = iGPS @ NewConsole = false
-
-
+  
   Run = pEchoVar   @ NewConsole = false
 
   Run = pSimplePID    @ NewConsole = false ~ pSimplePID_DEPTH

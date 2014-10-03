@@ -316,7 +316,4 @@ ProcessConfig = iGPS
    BAUDRATE = 4800
    MAX_RETRIES = 5
    PUBLISHRAW = true
-
-   LatOrigin    = 44.095738
-   LongOrigin   = 9.865190
 }

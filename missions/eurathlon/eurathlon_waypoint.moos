@@ -37,6 +37,8 @@ ProcessConfig = ANTLER
   //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
 
   //Run = uTimerScript  @ NewConsole = false
+
+  Run = pHelmIvP        @ NewConsole = true
 }
 
 ProcessConfig = pShare
@@ -316,4 +318,21 @@ ProcessConfig = iGPS
    BAUDRATE = 4800
    MAX_RETRIES = 5
    PUBLISHRAW = true
+}
+
+ProcessConfig = pHelmIvP
+{
+  AppTick    = 2
+  CommsTick  = 2
+  
+  Behaviors    = waypoint.bhv  
+  Verbose      = false
+  Domain       = course:0:359:36
+  Domain       = speed:0:0.5:15
+  Domain       = depth:0:0.1:10:optional
+
+  IVP_BEHAVIOR_DIR = ./../../lib
+
+  ok_skew = any
+  active_start = true
 }

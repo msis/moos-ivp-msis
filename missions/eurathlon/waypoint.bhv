@@ -1,0 +1,50 @@
+// -----------------------------------------------
+//             CISCREA SAUC-E BEHAVIOR
+// -----------------------------------------------
+
+initialize DEPLOY = false
+initialize RETURN = false
+
+set MODE = ACTIVE
+{
+  DEPLOY = true
+} INACTIVE
+
+set MODE = SURFACE
+{
+  MODE = ACTIVE
+  RETURN = true
+}
+
+Behavior = BHV_ConstantDepth
+{
+  name = bhv_surface_depth
+  priority = 100
+  condition = MODE = SURFACE
+  duration = no-time-limit
+  depth = 0             // meters
+}
+
+Behavior = BHV_Waypoint
+{
+  name = bhv_waypoint
+  priority = 100
+  condition = MODE = DEPLOY
+  endflag = RETURN = true
+  
+  points = label,survey_points:0,-19
+  speed = 0.5           // meters per second
+  capture_radius = 2    // meters
+  nm_radius = 3         // meters
+  repeat = 0            // number of iterations
+  lead = 4              // meters
+}
+
+Behavior = BHV_ConstantDepth
+{
+  name = bhv_cruise_depth
+  priority = 100
+  condition = MODE = DEPLOY
+  duration = no-time-limit
+  depth = 1.6             // meters
+}

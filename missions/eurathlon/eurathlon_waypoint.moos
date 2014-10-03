@@ -43,7 +43,7 @@ ProcessConfig = pShare
   Input = route=multicast_1
 
   Output = src_name=CISCREA_ON, route=multicast_1
-  Output = src_name=NODE_REPORT, route=multicast_1
+  Output = src_name=NODE_REPORT_LOCAL, route=multicast_1
 
 }
 

@@ -63,7 +63,7 @@ ProcessConfig = uTimerScript
   event = var=DIRECTION, val=1, time=0
   event = var=DIRECTION, val=2, time=60
   event = var=DIRECTION, val=3, time=150
-  event = var=ACTIVATION_WF, val=false, time=150
+  event = var=ACTIVATION_WF, val=false, time=160
   //event = var=DIRECTION, val=2, time=60
   event = var=DESIRED_DEPTH, val=2.8, time=150
 

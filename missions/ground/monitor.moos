@@ -2,6 +2,10 @@ ServerHost = localhost
 ServerPort = 9000
 Community = GROUND
 
+LatOrigin = 44.095741
+LongOrigin = 9.865207
+
+
 ProcessConfig = ANTLER
 {
   MSBetweenLaunches = 200
@@ -27,7 +31,7 @@ ProcessConfig = pMarineViewer
   CommsTick = 4                                                 
                                                                 
   // BackView Options ==========================================
-  tiff_file            = $HOME/moos-ivp-msis/data/CMRE_14.tif                          
+  tiff_file            = /home/tough/moos-ivp-msis/data/CMRE_14.tif                          
   set_pan_x            = -100                                   
   set_pan_y            = -100                                   
   zoom                 = 1                                   

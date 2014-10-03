@@ -65,10 +65,12 @@ ProcessConfig = uTimerScript
   event = var=DIRECTION, val=3, time=150
   event = var=ACTIVATION_WF, val=false, time=150
   //event = var=DIRECTION, val=2, time=60
-  
-  event = var=DIRECTION, val=0, time=170
-  event = var=DESIRED_DEPTH, val=0.6, time=170
-  event = var=ACTIVATE_HEADING, val=false, time=170
+  event = var=DESIRED_DEPTH, val=2.8, time=150
+
+
+  event = var=DIRECTION, val=0, time=200
+  event = var=DESIRED_DEPTH, val=0.6, time=200
+  event = var=ACTIVATE_HEADING, val=false, time=200
 
 }
 

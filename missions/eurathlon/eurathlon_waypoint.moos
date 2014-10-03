@@ -66,12 +66,13 @@ ProcessConfig = uTimerScript
   event = var=DIRECTION, val=3, time=40
   event = var=DIRECTION, val=4, time=60
   
-  event = var=DESIRED_DEPTH, val=0, time=80
+  event = var=DIRECTION, val=0, time=80
+  event = var=DESIRED_DEPTH, val=0.6, time=80
   event = var=ACTIVATE_HEADING, val=false, time=80
 
 }
 
-ProcessConfig = uTimerScript_MIL
+ProcessConfig = uTimerScript_NURC
 {
   AppTick = 2
   CommsTick = 2
@@ -86,7 +87,7 @@ ProcessConfig = uTimerScript_MIL
   event = var=DESIRED_THRUST, val=20, time=5
 }
 
-ProcessConfig = uTimerScript_NURC
+ProcessConfig = uTimerScript_CRANE
 {
   AppTick = 2
   CommsTick = 2
@@ -101,7 +102,7 @@ ProcessConfig = uTimerScript_NURC
   event = var=DESIRED_THRUST, val=20, time=5
 }
 
-ProcessConfig = uTimerScript_CRANE
+ProcessConfig = uTimerScript_SEA
 {
   AppTick = 2
   CommsTick = 2
@@ -116,7 +117,7 @@ ProcessConfig = uTimerScript_CRANE
   event = var=DESIRED_THRUST, val=20, time=5
 }
 
-ProcessConfig = uTimerScript_SEA
+ProcessConfig = uTimerScript_MIL
 {
   AppTick = 2
   CommsTick = 2

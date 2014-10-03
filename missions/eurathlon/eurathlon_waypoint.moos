@@ -71,6 +71,8 @@ ProcessConfig = uTimerScript
   event = var=DIRECTION, val=0, time=200
   event = var=DESIRED_DEPTH, val=0.6, time=200
   event = var=ACTIVATE_HEADING, val=false, time=200
+  event = var=DESIRED_RUDDER, val=0, time=200
+
 
 }
 

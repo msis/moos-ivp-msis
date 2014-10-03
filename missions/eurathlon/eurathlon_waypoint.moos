@@ -1,0 +1,307 @@
+ServerHost = localhost
+ServerPort = 9000 
+Community  = VICI_FOLLOWING_ES
+
+MOOSTimeWarp = 1
+
+ProcessConfig = ANTLER
+{
+  MSBetweenLaunches = 200
+
+  Run = MOOSDB		        @ NewConsole = false
+  //Run = pSensorViewer     @ NewConsole = false 
+  //Run = pLogger   @ NewConsole = false
+  Run = uMS     @ NewConsole = false 
+  Run = pShare @ NewConsole = false
+
+
+
+  Run = iCISCREA          @ NewConsole = false
+  Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
+  Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
+  Run = iSonar            @ NewConsole = false
+  Run = iIMU_RazorAHRS  @ NewConsole = false
+  Run = iEchoSounder @ NewConsole = false
+
+  Run = pEchoVar   @ NewConsole = false
+
+  Run = pSimplePID    @ NewConsole = false ~ pSimplePID_DEPTH
+  Run = pSimplePID    @ NewConsole = false ~ pSimplePID_HEADING
+
+  Run = uDeReCISCREA   @ NewConsole = false
+  Run = pNodeReporter  @ NewConsole = false
+
+  //Run = pWallFollowing		@ NewConsole = false
+  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
+  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
+
+  //Run = uTimerScript  @ NewConsole = false
+}
+
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=NODE_REPORT, route=multicast_1
+
+}
+
+ProcessConfig = uTimerScript
+{
+  AppTick = 2
+  CommsTick = 2
+
+  //reset_time = end
+  delay_reset = 5
+
+  event = var=DESIRED_DEPTH, val=1.6, time=0
+  event = var=ACTIVATE_DEPTH, val=true, time=0
+  event = var=ACTIVATE_HEADING, val=true, time=0
+  
+  event = var=DESIRED_THRUST, val=20, time=0
+  event = var=DESIRED_HEADING, val=70, time=0
+  //event = var=DESIRED_THRUST, val=0, time=30
+  event = var=DESIRED_THRUST, val=0, time=60
+  event = var=DESIRED_THRUST, val=20, time=90
+  event = var=DESIRED_HEADING, val=165, time=70
+  //ACTIVATE_HEADING=true ACTIVATE_DEPTH=true DESIRED_DEPTH=1 DESIRED_HEADING=165 DESIRED_THRUST=0 ACTIVATION_WF=false DESIRED_SLIDE=0
+  event = var=DESIRED_THRUST, val=0, time=150
+  event = var=ACTIVATION_WF, val=false, time=150
+  event = var=DESIRED_DEPTH, val=3.6, time=150
+  event = var=DESIRED_HEADING, val=252, time=150
+  event = var=DESIRED_THRUST, val=20, time=155
+  
+  event = var=DESIRED_THRUST, val=0, time=250
+  event = var=DESIRED_HEADING, val=342, time=250
+  event = var=DESIRED_THRUST, val=20, time=255
+
+
+  event = var=DESIRED_THRUST, val=0, time=300
+  event = var=DESIRED_DEPTH, val=0, time=300
+
+}
+
+ProcessConfig = pWallFollowing
+{
+  AppTick    = 10
+  CommsTick  = 10
+  
+  VALUES_MIN_DISTANCE = 2.0
+  VALUES_MAX_DISTANCE = 40.0
+  
+  VALUES_MIN_ANGLE = 80.0
+  VALUES_MAX_ANGLE = -70.0
+  
+  GAP_DESIRED = 3.0
+  COEFF_SLIDE = 2
+  SCALE_DISPLAY = 6
+  HISTORY_LENGTH = 100
+  ACTIVATION_VAR = ACTIVATION_WF
+}
+
+ProcessConfig = pSimplePID_DEPTH
+{
+   AppTick   = 20
+   CommsTick = 20
+
+   GOAL_NAME = DESIRED_DEPTH
+   VAR_NAME  = DEPTH
+   OUTPUT_NAME = DESIRED_ELEVATOR
+   MAX_OUTPUT = 100
+   PID_KP = 70
+   PID_KD = 10
+   PID_KI = 0
+   INTEGRAL_LIMIT = 10
+
+   ACTIVE_START = true
+   ACTIVATION_VAR = ACTIVATE_DEPTH
+
+   ANGULAR_VAR = false
+}
+
+ProcessConfig = pSimplePID_HEADING
+{
+   AppTick   = 20
+   CommsTick = 20
+
+   GOAL_NAME = DESIRED_HEADING
+   VAR_NAME  = HEADING
+   OUTPUT_NAME = DESIRED_RUDDER
+   MAX_OUTPUT = 3
+   PID_KP = 0.1
+   PID_KD = 0.5
+   PID_KI = 0
+   INTEGRAL_LIMIT = 0.07
+
+   ACTIVE_START =o true
+   ACTIVATION_VAR = ACTIVATE_HEADING
+
+   ANGULAR_VAR = true
+}
+
+ProcessConfig = iSonar
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SERIAL_PORT_NAME = /dev/ttyUSB2
+  RANGE = 75 //IN METERS
+  NBINS = 150 //NUMBER OF SAMPLES PER SCANLINE
+  ANGLESTEP = 1.8 //ANGULAR RESOLUTION (MUST BE A MULTIPLE OF 0.09)
+  GAIN = 30 // MUST BE BETWEEN 0 AND 100 (PERCENTAGE)
+  CONTINUOUS = true //TRUE FOR 360  ROTATION. SET RIGHT AND LEFT LIMIT IF FALSE
+  //LEFTLIMIT = 70.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
+  //RIGHTLIMIT = 110.0 //IN DEGREES. ONLY WHEN CONTINUOUS IS FALSE
+}
+
+ProcessConfig = iCISCREA
+{
+    AppTick   = 4
+    CommsTick = 4
+
+          //Serial port
+  SERIAL_PORT = /dev/ttyUSB0
+
+  // Max number of retries before giving up
+  MAX_MODBUS_RETRIES = 10
+  MAX_TURNON_RETRIES = 100
+
+  // Lower and upper bound for motors deadzone
+  FRRI_LO_DZ = 0
+  RERI_LO_DZ = 0
+  RELE_LO_DZ = 0
+  FRLE_LO_DZ = 0
+  VERT_LO_DZ = 0
+  FRRI_UP_DZ = 0
+  RERI_UP_DZ = 0
+  RELE_UP_DZ = 0
+  FRLE_UP_DZ = 0
+  VERT_UP_DZ = 0
+
+  // Motors' sens of rotation (when the motor value is positive, motors should push water away from th$
+  FRRI_SENS = 1
+  RERI_SENS = 1
+  RELE_SENS = 1
+  FRLE_SENS = 1
+  VERT_SENS = -1
+
+  DEPTH_OFFSET = -0.02
+
+}
+
+ProcessConfig = pLogger
+{
+  AppTick   = 8
+  CommsTick = 8
+
+  File = VICI_data
+
+  SyncLog = false
+  AsyncLog = true
+
+  PATH     = ./
+
+
+  LogAuxSrc = true
+  WildCardLogging = true
+  WildCardPattern = *
+  WildCardOmitPattern = *_STATUS
+  WildCardOmitPattern = *_DEBUG
+  WildCardOmitPattern = CAMERA_BOTTOM
+  WildCardOmitPattern = CAMERA_SIDE
+  //WildCardExclusionLog = true
+}
+
+ProcessConfig = pCameraLogger_SIDE
+{
+  AppTick   = 4
+  CommsTick = 4
+  VARIABLE_IMAGE_NAME = CAMERA_SIDE
+  DISPLAY_IMAGE = false
+  SAVE_IN_FOLDER = ./
+  // http://www.cplusplus.com/reference/ctime/strftime/
+  IMAGE_NAME_PATTERN = SIDE_%H_%M_%S.jpg
+  FOLDER_NAME_PATTERN = PICS_%F_%H-%M-%S
+}
+
+
+
+ProcessConfig = pCameraLogger_BOTTOM
+{
+  AppTick   = 4
+  CommsTick = 4
+  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
+  DISPLAY_IMAGE = false
+  SAVE_IN_FOLDER = ./
+  // http://www.cplusplus.com/reference/ctime/strftime/
+  IMAGE_NAME_PATTERN = BOTTOM_%H_%M_%S.jpg
+  FOLDER_NAME_PATTERN = PICS_%F_%H-%M-%S
+}
+
+
+ProcessConfig = iCamera_BOTTOM
+{
+  VARIABLE_IMAGE_NAME = CAMERA_BOTTOM
+  IDENTIFIANT_CV_CAMERA = 0
+  DISPLAY_IMAGE = false
+  INVERT_IMAGE = true
+}
+
+ProcessConfig = iCamera_SIDE
+{
+  VARIABLE_IMAGE_NAME = CAMERA_SIDE
+  IDENTIFIANT_CV_CAMERA = 1
+  DISPLAY_IMAGE = false
+  INVERT_IMAGE = false
+}
+
+
+ProcessConfig = iIMU_RazorAHRS
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SERIAL_PORT = /dev/ttyUSB1
+
+  MODE = ANGLES_CALIBRATED_SENSOR_DATA
+       // RAW_SENSOR_DATA
+       // CALIBRATED_SENSOR_DATA
+       // ANGLES_CALIBRATED_SENSOR_DATA
+       // ANGLES_RAW_SENSOR_DATA
+       // ANGLES
+}
+
+ProcessConfig = pEchoVar
+{
+  AppTick = 4
+  CommsTick = 4
+
+  echo = GPS_X -> NAX_X
+  echo = GPS_Y -> NAX_Y
+  echo = HEADING -> NAV_HEADING
+  echo = DEPTH -> NAV_DEPTH
+  echo = GPS_SPEED -> NAV_SPEED
+}
+
+
+ProcessConfig = uDeReCISCREA
+{
+  AppTick   = 4
+  CommsTick = 4
+
+  SPEED_FACTOR = 0.0115
+
+  START_X = -18.0
+  START_Y = -2.0
+}   
+
+ProcessConfig = pNodeReporter
+{
+  AppTick   = 4                                                 
+  CommsTick = 4                                                 
+                                                                
+  // Configure key aspects of the node                          
+  platform_type      = auv   // or {uuv,auv,ship,kayak}   
+  platform_length    = 0.5
+}

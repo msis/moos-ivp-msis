@@ -332,8 +332,6 @@ ProcessConfig = pHelmIvP
   Domain       = speed:0:0.5:15
   Domain       = depth:0:0.1:10:optional
 
-  IVP_BEHAVIOR_DIR = ./../../lib
-
   ok_skew = any
   active_start = true
 }

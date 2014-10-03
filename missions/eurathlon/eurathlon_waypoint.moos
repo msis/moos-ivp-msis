@@ -36,19 +36,14 @@ ProcessConfig = ANTLER
   //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
   //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
 
-  //Run = uTimerScript  @ NewConsole = false
+  Run = uTimerScript  @ NewConsole = false ~ uTimerScript_MIL
+  Run = uTimerScript  @ NewConsole = false ~ uTimerScript_SEA
+  Run = uTimerScript  @ NewConsole = false ~ uTimerScript_NURC
+  Run = uTimerScript  @ NewConsole = false ~ uTimerScript_CRANE
+  
+  Run = uTimerScript  @ NewConsole = false
 
-  Run = pHelmIvP        @ NewConsole = true
-}
-
-ProcessConfig = pShare
-{
-  Input = route=multicast_1
-
-  Output = src_name=CISCREA_ON, route=multicast_1
-  Output = src_name=NODE_REPORT_LOCAL, route=multicast_1
-  Output = src_name=APPCAST, route=multicast_1
-
+  //Run = pHelmIvP        @ NewConsole = true
 }
 
 ProcessConfig = uTimerScript
@@ -59,30 +54,91 @@ ProcessConfig = uTimerScript
   //reset_time = end
   delay_reset = 5
 
-  event = var=DESIRED_DEPTH, val=1.6, time=0
   event = var=ACTIVATE_DEPTH, val=true, time=0
   event = var=ACTIVATE_HEADING, val=true, time=0
+  event = var=DESIRED_DEPTH, val=1.6, time=0
   
   event = var=DESIRED_THRUST, val=20, time=0
-  event = var=DESIRED_HEADING, val=70, time=0
-  //event = var=DESIRED_THRUST, val=0, time=30
-  event = var=DESIRED_THRUST, val=0, time=60
-  event = var=DESIRED_THRUST, val=20, time=90
-  event = var=DESIRED_HEADING, val=165, time=70
-  //ACTIVATE_HEADING=true ACTIVATE_DEPTH=true DESIRED_DEPTH=1 DESIRED_HEADING=165 DESIRED_THRUST=0 ACTIVATION_WF=false DESIRED_SLIDE=0
-  event = var=DESIRED_THRUST, val=0, time=150
-  event = var=ACTIVATION_WF, val=false, time=150
-  event = var=DESIRED_DEPTH, val=3.6, time=150
-  event = var=DESIRED_HEADING, val=252, time=150
-  event = var=DESIRED_THRUST, val=20, time=155
   
-  event = var=DESIRED_THRUST, val=0, time=250
-  event = var=DESIRED_HEADING, val=342, time=250
-  event = var=DESIRED_THRUST, val=20, time=255
+  event = var=DIRECTION, val=1, time=0
+  
+  event = var=DIRECTION, val=2, time=20
+  event = var=DIRECTION, val=3, time=40
+  event = var=DIRECTION, val=4, time=60
+  
+  event = var=DESIRED_DEPTH, val=0, time=80
+  event = var=ACTIVATE_HEADING, val=false, time=80
+
+}
+
+ProcessConfig = uTimerScript_MIL
+{
+  AppTick = 2
+  CommsTick = 2
+
+  reset_time = end
+  delay_reset = 10
+
+  condition = DIRECTION = 1
+
+  event = var=DESIRED_THRUST, val=0, time=0
+  event = var=DESIRED_HEADING, val=70, time=0
+  event = var=DESIRED_THRUST, val=20, time=5
+}
+
+ProcessConfig = uTimerScript_NURC
+{
+  AppTick = 2
+  CommsTick = 2
+
+  reset_time = end
+  delay_reset = 10
+
+  condition = DIRECTION = 2
+
+  event = var=DESIRED_THRUST, val=0, time=0
+  event = var=DESIRED_HEADING, val=160, time=0
+  event = var=DESIRED_THRUST, val=20, time=5
+}
+
+ProcessConfig = uTimerScript_CRANE
+{
+  AppTick = 2
+  CommsTick = 2
+
+  reset_time = end
+  delay_reset = 10
+
+  condition = DIRECTION = 3
+
+  event = var=DESIRED_THRUST, val=0, time=0
+  event = var=DESIRED_HEADING, val=250, time=0
+  event = var=DESIRED_THRUST, val=20, time=5
+}
+
+ProcessConfig = uTimerScript_SEA
+{
+  AppTick = 2
+  CommsTick = 2
+
+  reset_time = end
+  delay_reset = 10
+
+  condition = DIRECTION = 4
+
+  event = var=DESIRED_THRUST, val=0, time=0
+  event = var=DESIRED_HEADING, val=340, time=0
+  event = var=DESIRED_THRUST, val=20, time=5
+}
 
 
-  event = var=DESIRED_THRUST, val=0, time=300
-  event = var=DESIRED_DEPTH, val=0, time=300
+ProcessConfig = pShare
+{
+  Input = route=multicast_1
+
+  Output = src_name=CISCREA_ON, route=multicast_1
+  Output = src_name=NODE_REPORT_LOCAL, route=multicast_1
+  Output = src_name=APPCAST, route=multicast_1
 
 }
 

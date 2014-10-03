@@ -60,10 +60,10 @@ ProcessConfig = uTimerScript
   
   event = var=DESIRED_THRUST, val=20, time=0
   
-  event = var=DIRECTION, val=4, time=0
-  event = var=DIRECTION, val=3, time=20
-  event = var=DIRECTION, val=2, time=40
-  event = var=DIRECTION, val=1, time=60
+  event = var=DIRECTION, val=3, time=0
+  event = var=DIRECTION, val=4, time=20
+  event = var=DIRECTION, val=1, time=40
+  event = var=DIRECTION, val=2, time=60
   
   event = var=DIRECTION, val=0, time=80
   event = var=DESIRED_DEPTH, val=0.6, time=80

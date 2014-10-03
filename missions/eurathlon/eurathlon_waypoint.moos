@@ -14,14 +14,14 @@ ProcessConfig = ANTLER
   Run = uMS     @ NewConsole = false 
   Run = pShare @ NewConsole = false
 
-
-
   Run = iCISCREA          @ NewConsole = false
   Run = iCamera          @ NewConsole = false ~ iCamera_BOTTOM
   Run = iCamera          @ NewConsole = false ~ iCamera_SIDE
   Run = iSonar            @ NewConsole = false
   Run = iIMU_RazorAHRS  @ NewConsole = false
   Run = iEchoSounder @ NewConsole = false
+  Run = iGPS @ NewConsole = false
+
 
   Run = pEchoVar   @ NewConsole = false
 
@@ -304,4 +304,18 @@ ProcessConfig = pNodeReporter
   // Configure key aspects of the node                          
   platform_type      = auv   // or {uuv,auv,ship,kayak}   
   platform_length    = 0.5
+}
+
+ProcessConfig = iGPS
+{
+   AppTick   = 4
+   CommsTick = 4
+
+   PORT = /dev/ttyUSB0
+   BAUDRATE = 4800
+   MAX_RETRIES = 5
+   PUBLISHRAW = true
+
+   LatOrigin    = 44.095738
+   LongOrigin   = 9.865190
 }

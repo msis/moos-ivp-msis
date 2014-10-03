@@ -12,7 +12,7 @@ ProcessConfig = ANTLER
 
   Run = MOOSDB		        @ NewConsole = false
   //Run = pSensorViewer     @ NewConsole = false 
-  //Run = pLogger   @ NewConsole = false
+  Run = pLogger   @ NewConsole = false
   Run = uMS     @ NewConsole = false 
   Run = pShare @ NewConsole = false
 
@@ -32,9 +32,9 @@ ProcessConfig = ANTLER
   Run = uDeReCISCREA   @ NewConsole = false
   Run = pNodeReporter  @ NewConsole = false
 
-  //Run = pWallFollowing		@ NewConsole = false
-  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
-  //Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
+  Run = pWallFollowing		@ NewConsole = false
+  Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_SIDE
+  Run = pCameraLogger @ NewConsole = false ~ pCameraLogger_BOTTOM
 
   Run = uTimerScript  @ NewConsole = false ~ uTimerScript_MIL
   Run = uTimerScript  @ NewConsole = false ~ uTimerScript_SEA
@@ -60,14 +60,15 @@ ProcessConfig = uTimerScript
   
   event = var=DESIRED_THRUST, val=20, time=0
   
-  event = var=DIRECTION, val=3, time=0
-  event = var=DIRECTION, val=4, time=20
-  event = var=DIRECTION, val=1, time=40
+  event = var=DIRECTION, val=1, time=0
   event = var=DIRECTION, val=2, time=60
+  event = var=DIRECTION, val=3, time=150
+  event = var=ACTIVATION_WF, val=false, time=150
+  //event = var=DIRECTION, val=2, time=60
   
-  event = var=DIRECTION, val=0, time=80
-  event = var=DESIRED_DEPTH, val=0.6, time=80
-  event = var=ACTIVATE_HEADING, val=false, time=80
+  event = var=DIRECTION, val=0, time=170
+  event = var=DESIRED_DEPTH, val=0.6, time=170
+  event = var=ACTIVATE_HEADING, val=false, time=170
 
 }
 
@@ -77,7 +78,7 @@ ProcessConfig = uTimerScript_NURC
   CommsTick = 2
 
   reset_time = end
-  delay_reset = 10
+  delay_reset = 15
 
   condition = DIRECTION = 1
 
@@ -92,12 +93,12 @@ ProcessConfig = uTimerScript_CRANE
   CommsTick = 2
 
   reset_time = end
-  delay_reset = 10
+  delay_reset = 15
 
   condition = DIRECTION = 2
 
   event = var=DESIRED_THRUST, val=0, time=0
-  event = var=DESIRED_HEADING, val=160, time=0
+  event = var=DESIRED_HEADING, val=165, time=0
   event = var=DESIRED_THRUST, val=20, time=5
 }
 
@@ -107,12 +108,12 @@ ProcessConfig = uTimerScript_SEA
   CommsTick = 2
 
   reset_time = end
-  delay_reset = 10
+  delay_reset = 15
 
   condition = DIRECTION = 3
 
   event = var=DESIRED_THRUST, val=0, time=0
-  event = var=DESIRED_HEADING, val=250, time=0
+  event = var=DESIRED_HEADING, val=252, time=0
   event = var=DESIRED_THRUST, val=20, time=5
 }
 
@@ -122,7 +123,7 @@ ProcessConfig = uTimerScript_MIL
   CommsTick = 2
 
   reset_time = end
-  delay_reset = 10
+  delay_reset = 15
 
   condition = DIRECTION = 4
 
